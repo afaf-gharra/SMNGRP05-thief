@@ -1,0 +1,38 @@
+MIT License
+
+Copyright (c) 2026 Group uoh-ag12 — University of Haifa, Department of Computer Science
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+THIRD-PARTY NOTICE
+
+This project is an independent, clean-room implementation written for the
+"Orchestration of AI Agents" final project. It is NOT derived from, and
+contains no source code copied from, the course reference simulator
+(https://github.com/rmisegal/Game-P2P-Cop-Chase), which is distributed under a
+restrictive educational EULA.
+
+What this project deliberately keeps identical to that reference is the
+*interoperability surface* only — the MCP tool names, the JSON wire-message
+field names, and the four report-artifact field names — because the project
+book (Appendix F) mandates those as the common protocol every team must speak
+in order to play against every other team. Interface names are not expressive
+authorship; the implementation behind them here is entirely our own.

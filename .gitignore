@@ -1,0 +1,42 @@
+# --- Secrets: NEVER commit these (book Appendix A, mandatory rules 39-40) ---
+.env
+*.env
+!.env-example
+credentials.json
+token.json
+*.pem
+*.key
+client_secret*.json
+secrets/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# --- Tooling ---
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Runtime output ---
+logs/
+state/
+*.log
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Scratch directories from local experiment runs
+_tmp_*/
+_capture/
+_live/
