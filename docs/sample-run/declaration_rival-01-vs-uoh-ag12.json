@@ -12,8 +12,8 @@
     "result": "result_rival-01-vs-uoh-ag12.json"
   },
   "timezone": "Asia/Jerusalem",
-  "game_started_at": "2026-07-28T23:21:23.479601+00:00",
-  "game_ended_at": "2026-07-28T23:21:42.782574+00:00",
+  "game_started_at": "2026-08-02T20:31:58.485954+00:00",
+  "game_ended_at": "2026-08-02T20:32:03.281407+00:00",
   "num_sub_games": 2,
   "max_tokens_per_game": 200000,
   "groups": {
@@ -21,8 +21,8 @@
       "group_id": "rival-01",
       "group_name": "RIVAL-01",
       "members": [
-        "<student-1-id>",
-        "<student-2-id>"
+        "208123232",
+        "212018899"
       ],
       "repos": {
         "cop": "https://github.com/afaf-gharra/uoh-ag12-police",
@@ -41,14 +41,14 @@
         "gpu_model": "NVIDIA GeForce RTX 3070",
         "vram_gb": 8.0
       },
-      "signature": "12aa6b23a266432fcc7679c54655c6f140f95a9da052e9987387d5efaa787444"
+      "signature": "890c6b732398c6f307ceb43ac6bb05cb6ba2fa838bfdc2a65fc24b958c8df472"
     },
     "group_2": {
       "group_id": "uoh-ag12",
       "group_name": "UOH-AG12",
       "members": [
-        "<student-1-id>",
-        "<student-2-id>"
+        "208123232",
+        "212018899"
       ],
       "repos": {
         "cop": "https://github.com/afaf-gharra/uoh-ag12-police",
@@ -67,8 +67,8 @@
         "gpu_model": "NVIDIA GeForce RTX 3070",
         "vram_gb": 8.0
       },
-      "signature": "d406518dc0eb97e63400dc1fe9812bf59474b7984492052a88afdd775bfd7963"
+      "signature": "91b7a8a1650bd2f42bcc6595ae1c716a40c208d76422775d9a2a8b46b2ff43d6"
     }
   },
-  "declaration_sha256": "14d7a7bce06af9162aa5f2677fec8b04b265df3b22df70c29dc4f82358a36a69"
+  "declaration_sha256": "8254409ecb080d2e144e3dce6b935dc1f7f2e047e223995dd17335e1573016bf"
 }

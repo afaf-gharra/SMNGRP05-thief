@@ -12,26 +12,17 @@ in :mod:`p2p_chase.strategy`, what a message means lives in
 :mod:`p2p_chase.infra`. This file only decides when each of them runs.
 """
 
-import random
 import time
 
 from p2p_chase.constants import Outcome, Role
-from p2p_chase.domain.belief import BeliefGrid
-from p2p_chase.domain.own_state import OwnGameState
 from p2p_chase.domain.phases import GamePhaseMachine, Phase
 from p2p_chase.domain.protocol import TurnMessage
-from p2p_chase.domain.rules import GameRules
-from p2p_chase.domain.smell import SmellField
-from p2p_chase.domain.trust import TrustEstimator
 from p2p_chase.peer import turn_sender
 from p2p_chase.peer.deadline import DeadlineTracker
 from p2p_chase.peer.handshake import negotiate
 from p2p_chase.peer.sealing import identity_from_config, now_iso, sealed_spec_record
 from p2p_chase.peer.summary import build_summary, live_view
-from p2p_chase.peer.turn_handler import TurnHandler
-from p2p_chase.strategy.factory import resolve_brain
-from p2p_chase.strategy.talk import landmarks as geo
-from p2p_chase.strategy.talk.factory import resolve_talker
+from p2p_chase.peer.world import build_world
 
 
 class PeerRuntime:
@@ -50,32 +41,18 @@ class PeerRuntime:
         self.game_id: str | None = None
         self.game_uid: str | None = None
 
-        size = config.require("board.size")
-        start = tuple(config.require(f"positions.{'thief' if self.role is Role.THIEF else 'cop'}_start"))
-        self.state = OwnGameState(self.role, start, size, config.get("rules.move_set"))
-        self.barriers_max = int(config.get("rules.barriers_max", 0))
-        self.state.set_quota(self.barriers_max)
-        self.emit_intensity = float(config.require("smell.emit_intensity"))
-
-        self.belief = BeliefGrid(self.state.board, config.get("belief.smell_trust_weight", 4.0))
-        self.opponent_scent = self._field(config, size)
-        self.own_scent = self._field(config, size)
-        self.trust = TrustEstimator(
-            floor=config.get("belief.hint_trust_floor", 0.05),
-            ceiling=config.get("belief.hint_trust_ceiling", 0.95),
-            board_cells=self.state.board.cells,
-        )
-        self.rules = GameRules(
-            config.require("rules.survival_threshold"), config.get("rules.max_moves")
-        )
-        self.handler = TurnHandler(
-            self.state, self.belief, self.opponent_scent, self.rules, self.trust,
-            landmarks=geo.landmark_index(self.state.board, config.get("play.setting", "") or ""),
-        )
-        rng = random.Random(config.get("play.seed"))
-        talker = resolve_talker(config, self.state.board, rng)
-        self.brain = resolve_brain(config, self.role, talker=talker, rng=rng)
-        self.talker = talker
+        world = build_world(self.role, config)
+        self.state = world.state
+        self.belief = world.belief
+        self.own_scent = world.own_scent
+        self.opponent_scent = world.opponent_scent
+        self.trust = world.trust
+        self.rules = world.rules
+        self.handler = world.handler
+        self.brain = world.brain
+        self.talker = world.talker
+        self.barriers_max = world.barriers_max
+        self.emit_intensity = world.emit_intensity
 
         self.phases = GamePhaseMachine()
         self.deadlines = DeadlineTracker(config.get("network.turn_timeout_seconds", 180))
@@ -85,16 +62,6 @@ class PeerRuntime:
         self.started_at = now_iso()
         self._started = time.monotonic()
         self._result: tuple[str, str] | None = None
-
-    @staticmethod
-    def _field(config, size: int) -> SmellField:
-        return SmellField(
-            board_size=size,
-            grid_size=config.require("smell.grid_size"),
-            decay=config.require("smell.decay_per_step"),
-            min_center=config.get("smell.min_center_intensity", 0.0),
-            falloff=config.get("smell.falloff", "linear"),
-        )
 
     # ------------------------------------------------------------------ hooks
 

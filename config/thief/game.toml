@@ -11,7 +11,7 @@ version = "1.00"
 [game]
 group_id   = "uoh-ag12"
 group_name = "UOH-AG12"
-members    = ["<student-1-id>", "<student-2-id>"]
+members    = ["208123232", "212018899"]  # Afaf Gharra, Reem Awawdy
 repos      = { cop = "https://github.com/afaf-gharra/uoh-ag12-police", thief = "https://github.com/afaf-gharra/uoh-ag12-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
