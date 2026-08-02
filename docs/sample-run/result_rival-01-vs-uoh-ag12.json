@@ -24,13 +24,13 @@
         "uoh-ag12": "police",
         "rival-01": "thief"
       },
-      "started_at": "2026-08-02T20:31:58.485954+00:00",
-      "ended_at": "2026-08-02T20:32:00.615954+00:00",
+      "started_at": "2026-08-02T20:40:06.973638+00:00",
+      "ended_at": "2026-08-02T20:40:09.183638+00:00",
       "result": "survival",
       "winner_group": "rival-01",
       "tie": false,
       "github_commit": {
-        "uoh-ag12": "0edc132fc070748f4c074d23f233636cabe4e871",
+        "uoh-ag12": "96b40868e7fef9b171ef574f5e7d7fb1a29e9999",
         "rival-01": "declared-in-their-own-report"
       },
       "tokens": {
@@ -56,13 +56,13 @@
         "uoh-ag12": "thief",
         "rival-01": "police"
       },
-      "started_at": "2026-08-02T20:32:00.841407+00:00",
-      "ended_at": "2026-08-02T20:32:03.281407+00:00",
+      "started_at": "2026-08-02T20:40:09.467778+00:00",
+      "ended_at": "2026-08-02T20:40:23.987778+00:00",
       "result": "survival",
       "winner_group": "uoh-ag12",
       "tie": false,
       "github_commit": {
-        "uoh-ag12": "0edc132fc070748f4c074d23f233636cabe4e871",
+        "uoh-ag12": "96b40868e7fef9b171ef574f5e7d7fb1a29e9999",
         "rival-01": "declared-in-their-own-report"
       },
       "tokens": {
