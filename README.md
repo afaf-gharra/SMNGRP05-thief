@@ -356,6 +356,7 @@ disaster (Appendix A, rules 30, 39–40).
 
 | Document | What it covers |
 |---|---|
+| [docs/RUNBOOK.md](docs/RUNBOOK.md) | Match-day procedure: what to agree, what to check, what to do afterwards |
 | [docs/PRD.md](docs/PRD.md) | Requirements, acceptance criteria, scope |
 | [docs/PLAN.md](docs/PLAN.md) | C4 architecture and the ADRs behind the design |
 | [docs/TODO.md](docs/TODO.md) | Task breakdown and milestones |
