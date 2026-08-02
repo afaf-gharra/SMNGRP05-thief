@@ -13,17 +13,17 @@
   "summary": {
     "sub_game_number": 1,
     "group_id": "uoh-ag12",
-    "role": "police",
+    "role": "thief",
     "opponent_group_id": "rival-01",
     "result": "survival",
     "winner_role": "thief",
-    "steps": 19,
+    "steps": 20,
     "timezone": "Asia/Jerusalem",
-    "started_at": "2026-08-02T20:40:06.973638+00:00",
-    "ended_at": "2026-08-02T20:40:09.183638+00:00",
-    "duration_seconds": 2.21,
+    "started_at": "2026-08-02T20:41:48.743352+00:00",
+    "ended_at": "2026-08-02T20:41:51.473352+00:00",
+    "duration_seconds": 2.73,
     "tokens_total": 0,
-    "barriers_used": 3,
+    "barriers_used": 0,
     "phase_trail": [
       "WAITING_FOR_OPPONENT",
       "COMPUTING_MOVE",
@@ -121,37 +121,39 @@
       "AWAITING_REVEAL",
       "VERIFYING",
       "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
       "AUDITING",
       "GAME_OVER"
     ],
     "opponent_profile": {
-      "trust": 0.446,
-      "estimated_lie_rate": 0.554,
-      "hints_seen": 20,
-      "hints_scored": 20,
-      "alpha": 9.03,
-      "beta": 11.235
+      "trust": 0.373,
+      "estimated_lie_rate": 0.627,
+      "hints_seen": 19,
+      "hints_scored": 19,
+      "alpha": 5.304,
+      "beta": 8.92
     },
     "talker": {
       "provider": "template",
       "tokens": 0,
-      "self_credibility": 0.373,
+      "self_credibility": 0.446,
       "target_lie_rate": 0.45,
-      "hints_sent": 19,
-      "hints_falsifiable": 19
+      "hints_sent": 20,
+      "hints_falsifiable": 20
     },
     "audit": {
       "passed": true,
       "self_check": {
         "passed": true,
-        "verified_steps": 20,
-        "total_steps": 20,
+        "verified_steps": 21,
+        "total_steps": 21,
         "failed_steps": []
       },
       "opponent": {
         "passed": true,
-        "verified_steps": 21,
-        "total_steps": 21,
+        "verified_steps": 20,
+        "total_steps": 20,
         "failed_steps": []
       },
       "opponent_present": true,
@@ -179,9 +181,9 @@
         "model": "template-zero-token",
         "provider": "template",
         "code_version": "1.00",
-        "github_commit": "96b40868e7fef9b171ef574f5e7d7fb1a29e9999",
+        "github_commit": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
         "git": {
-          "commit": "96b40868e7fef9b171ef574f5e7d7fb1a29e9999",
+          "commit": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
           "branch": "main",
           "tag": "v1.0-submission"
         },
@@ -200,210 +202,42 @@
             "after_7_turns": 0.4305
           }
         },
-        "declared_at": "2026-08-02T20:40:06.973521+00:00"
+        "declared_at": "2026-08-02T20:41:48.743225+00:00"
       },
-      "nonce": "e73aabc2c7f74b7a5093bb76819d1678",
-      "commit": "6429adfb7e468bdf537fdf1ccb9097881f3379666a8617e92d1c9373abddbaa5"
+      "nonce": "17d3af1f599eb5cb82ef6ab857213f0c",
+      "commit": "ab018934192db333601667aed91e0038f915ec747698b5e45ee88b7d93347fbe"
     },
     {
       "payload": {
         "step": 1,
-        "state": "grid=7x7;self=[0, 1];barriers=[]",
-        "position": [
-          0,
-          1
-        ],
-        "move": "MOVE:E",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "I am closing around columbia; the doors are shutting.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "banking credibility with a true hint",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=5.78 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.496,
-        "claims_capture": false
-      },
-      "nonce": "25e9456ca28e63a9703e8d280de84434",
-      "commit": "d2f769baf51d09e23f95b73d132497b8947ca0231b753c69aeb7e7926f9219d1"
-    },
-    {
-      "payload": {
-        "step": 2,
-        "state": "grid=7x7;self=[1, 1];barriers=[]",
-        "position": [
-          1,
-          1
-        ],
-        "move": "MOVE:S",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "Sweeping near columbia — you left more of a trail than you think.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "banking credibility with a true hint",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=5.14 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.44,
-        "claims_capture": false
-      },
-      "nonce": "82f7776c65f27da61be324c76b34a3de",
-      "commit": "695cd0e7a7867226e6f484a58ecf9ea60edcfcbc4b52c0fe1988739552838778"
-    },
-    {
-      "payload": {
-        "step": 3,
-        "state": "grid=7x7;self=[1, 2];barriers=[]",
-        "position": [
-          1,
-          2
-        ],
-        "move": "MOVE:E",
-        "intent": "lie",
-        "verdict": "lie",
-        "hint": "I have dumbo covered. Try me.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "spending credibility 0.56 on a decoy (urgency 0.26)",
-          "bluff_classification": "lie",
-          "move_rationale": "pressure=4.19 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.405,
-        "claims_capture": false
-      },
-      "nonce": "c3f0f21aa6acbce0cea91e11c2d226cb",
-      "commit": "2fcc8a621a9e971eafb439bd912eee80522d4286fc3bfcc7e97cda676711b1c4"
-    },
-    {
-      "payload": {
-        "step": 4,
-        "state": "grid=7x7;self=[1, 3];barriers=[]",
-        "position": [
-          1,
-          3
-        ],
-        "move": "MOVE:E",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "Sweeping past bronx — you left more of a trail than you think.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=3.40 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.384,
-        "claims_capture": false
-      },
-      "nonce": "0891cd6387bc75e8b585e62fdc2168dc",
-      "commit": "82b9b05234ca94a9cb8eab01e4ef178a1f1aa96b31149c149e782c4a504a292c"
-    },
-    {
-      "payload": {
-        "step": 5,
-        "state": "grid=7x7;self=[2, 3];barriers=[]",
-        "position": [
-          2,
-          3
-        ],
-        "move": "MOVE:S",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "My people are by bronx. Nowhere left to run.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "banking credibility with a true hint",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=2.86 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.447,
-        "claims_capture": false
-      },
-      "nonce": "c0d38804e53b3f25a32960ce22625adb",
-      "commit": "66f94753bdc37505874fc2fb9f5cf5d37ed3f60d00fea84a99ad024a75f16174"
-    },
-    {
-      "payload": {
-        "step": 6,
-        "state": "grid=7x7;self=[2, 4];barriers=[]",
-        "position": [
-          2,
-          4
-        ],
-        "move": "MOVE:E",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "I am closing past yankee; the doors are shutting.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "banking credibility with a true hint",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=2.48 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.418,
-        "claims_capture": false
-      },
-      "nonce": "d69a2b1df26d406cf06233921f2a4a61",
-      "commit": "3d6d44f54703eecdb2bbf12aabeb3cb740eebee77e62edabff7e8d15d846e0e4"
-    },
-    {
-      "payload": {
-        "step": 7,
         "state": "grid=7x7;self=[3, 4];barriers=[]",
         "position": [
           3,
           4
         ],
-        "move": "MOVE:S",
+        "move": "MOVE:E",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "My people are near midtown. Nowhere left to run.",
+        "hint": "Slipping by midtown while you waste time.",
         "prompt_discussion": {
           "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "llm_reasoning": "banking credibility with a true hint",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=2.11 containment=48.0 walls_left=14"
+          "move_rationale": "room=48/49 gap=7 exits=4"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.399,
+        "opponent_trust": 0.5,
         "claims_capture": false
       },
-      "nonce": "652bdb8e5a5bd1a91d3ec43eb6165ad4",
-      "commit": "8a95613656aea36a0fb13b495fbc2bfb0196737366310266a8d1e4ae7414e8d3"
+      "nonce": "43adec4dcbf0a035e6e254515453edb3",
+      "commit": "d2f4a6572cecf42835ca189b60c1ef8b3836690a91e6166ab0f719a8f5be5805"
     },
     {
       "payload": {
-        "step": 8,
+        "step": 2,
         "state": "grid=7x7;self=[3, 5];barriers=[]",
         "position": [
           3,
@@ -412,180 +246,152 @@
         "move": "MOVE:E",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "I have gramercy covered. Try me.",
+        "hint": "Every alley around gramercy knows me better than you do.",
         "prompt_discussion": {
           "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "llm_reasoning": "banking credibility with a true hint",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=1.82 containment=48.0 walls_left=14"
+          "move_rationale": "room=48/49 gap=7 exits=4"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.44,
+        "opponent_trust": 0.508,
         "claims_capture": false
       },
-      "nonce": "24804ccd961b0ff8f91860f80de1e421",
-      "commit": "0395926eec239bf8ed2ae05442be827321055ee3e167c29ff4a92e5e4dfd6bff"
+      "nonce": "f30f70364b1cc0478b7a6d9a21b9a027",
+      "commit": "9ab7a09ca0ac30781cc230767af1a5fe32511cf34db2ffa710301a58701e2bba"
     },
     {
       "payload": {
-        "step": 9,
-        "state": "grid=7x7;self=[4, 5];barriers=[]",
+        "step": 3,
+        "state": "grid=7x7;self=[3, 6];barriers=[]",
         "position": [
-          4,
-          5
-        ],
-        "move": "MOVE:S",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "I have gramercy covered. Try me.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=1.74 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.42,
-        "claims_capture": false
-      },
-      "nonce": "4ffd9baada429b3a8e795563ae743bcb",
-      "commit": "6fbbc5315aa6ee083ee12563a5368f16762ae03ae60d6cdfe0b844b053fb5d67"
-    },
-    {
-      "payload": {
-        "step": 10,
-        "state": "grid=7x7;self=[5, 5];barriers=[]",
-        "position": [
-          5,
-          5
-        ],
-        "move": "MOVE:S",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "Working near dumbo now, and the walls are going up.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=1.77 containment=48.0 walls_left=14"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.449,
-        "claims_capture": false
-      },
-      "nonce": "866cb77bd8e0bff9d4237e362bfa6ad0",
-      "commit": "aa0d541b8544728d720ef824025f1f4453926aeacc0a3c8f3cc6625fba434c74"
-    },
-    {
-      "payload": {
-        "step": 11,
-        "state": "grid=7x7;self=[5, 6];barriers=[]",
-        "position": [
-          5,
+          3,
           6
         ],
         "move": "MOVE:E",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "Sweeping through dumbo — you left more of a trail than you think.",
+        "hint": "Already by gramercy, and still moving.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=1.99 containment=48.0 walls_left=14"
+          "move_rationale": "room=48/49 gap=7 exits=3"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.43,
+        "opponent_trust": 0.564,
         "claims_capture": false
       },
-      "nonce": "39711c8a72d6bc98ff38cd2abd1e1fab",
-      "commit": "ad6ad0c1367aec98ff6e41db683e5566ee92403edf92914df6b6f9cc23934fb9"
+      "nonce": "dda7056663ae9ba0f7b182efb2d6a848",
+      "commit": "b7a6b6ef0759399134f76fbc00da9e27200195cbadf110e83d13bc10a179cce9"
     },
     {
       "payload": {
-        "step": 12,
-        "state": "grid=7x7;self=[5, 6];barriers=[[6, 6]]",
+        "step": 4,
+        "state": "grid=7x7;self=[4, 6];barriers=[]",
+        "position": [
+          4,
+          6
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping around un while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=8 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.446,
+        "claims_capture": false
+      },
+      "nonce": "90b0533915eba83ca7862bbdc9eb5462",
+      "commit": "f780a96b2b7c9068fd1b352475cfc70c3fdcbce8f92d96bb6ef645d72b7c3b87"
+    },
+    {
+      "payload": {
+        "step": 5,
+        "state": "grid=7x7;self=[5, 6];barriers=[]",
         "position": [
           5,
           6
         ],
-        "move": "BARRIER:S",
+        "move": "MOVE:S",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "Working through dumbo now, and the walls are going up.",
+        "hint": "You will not find me anywhere near brooklyn.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "seal (6, 6): thief room 48.0->47.0, anchors=2, p(occupied)=0.09, own room 48"
+          "move_rationale": "room=48/49 gap=9 exits=3"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.455,
+        "opponent_trust": 0.478,
         "claims_capture": false
       },
-      "nonce": "c37934c51eb8a9124fb026cb1eda8c57",
-      "commit": "16cca3c946da1cbd614446ed6fa76fcbdaf72dd058592d362e6e9528d2fd6a22"
+      "nonce": "ccb1e779c0c187a594d7088578d06cfb",
+      "commit": "e3f9ce1470cd7046f03ce3335ed51a08fed71b5fb18d84f2ff6cac04bfbaeb24"
     },
     {
       "payload": {
-        "step": 13,
-        "state": "grid=7x7;self=[5, 5];barriers=[[6, 6]]",
+        "step": 6,
+        "state": "grid=7x7;self=[6, 6];barriers=[]",
         "position": [
-          5,
+          6,
+          6
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already by dumbo, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=10 exits=2"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.464,
+        "claims_capture": false
+      },
+      "nonce": "2aacd838df2d651d20596672d850601c",
+      "commit": "d7b163e849713fe4c47267017bb243e6afc0bcbf18a008af9ff47bdcd811ec2a"
+    },
+    {
+      "payload": {
+        "step": 7,
+        "state": "grid=7x7;self=[6, 5];barriers=[]",
+        "position": [
+          6,
           5
         ],
         "move": "MOVE:W",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "I am closing by brooklyn; the doors are shutting.",
+        "hint": "Every alley around brooklyn knows me better than you do.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=1.66 containment=47.0 walls_left=13"
-        },
-        "model": "template-zero-token",
-        "tokens_step": 0,
-        "tokens_total": 0,
-        "response_seconds": 0.0,
-        "opponent_trust": 0.441,
-        "claims_capture": false
-      },
-      "nonce": "67c14122566f516d8db7e507e5c82def",
-      "commit": "b808e5930f3f7795c2210271f761db66f927dfea8a5171102dbcf4968af93f10"
-    },
-    {
-      "payload": {
-        "step": 14,
-        "state": "grid=7x7;self=[5, 4];barriers=[[6, 6]]",
-        "position": [
-          5,
-          4
-        ],
-        "move": "MOVE:W",
-        "intent": "truth",
-        "verdict": "truth",
-        "hint": "Sweeping around soho — you left more of a trail than you think.",
-        "prompt_discussion": {
-          "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
-          "bluff_classification": "truth",
-          "move_rationale": "pressure=1.68 containment=47.0 walls_left=13"
+          "move_rationale": "room=48/49 gap=9 exits=3"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
@@ -594,13 +400,125 @@
         "opponent_trust": 0.427,
         "claims_capture": false
       },
-      "nonce": "fa4c272c4c8c6c3262b9053cf3bd83a1",
-      "commit": "fe9f5d9bc717c8f26249daa4b46e0ad02d2b637fa775de41275a4186bfff2b4b"
+      "nonce": "230bf2ff92b6939167fa2c41ef664f99",
+      "commit": "87b1d6c2b40bac4ff5a018c7b9f0fcda3d6dd3f3dc51ef9491853ac7c8d4e485"
     },
     {
       "payload": {
-        "step": 15,
-        "state": "grid=7x7;self=[5, 5];barriers=[[6, 6]]",
+        "step": 8,
+        "state": "grid=7x7;self=[6, 4];barriers=[]",
+        "position": [
+          6,
+          4
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near chinatown.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=6 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.426,
+        "claims_capture": false
+      },
+      "nonce": "8ed504fc180a732432f43d7bbeba4b49",
+      "commit": "3f55f26a6930c0308326e8511d68110aca4699fbe9a333971e77105fa1c1eb78"
+    },
+    {
+      "payload": {
+        "step": 9,
+        "state": "grid=7x7;self=[6, 3];barriers=[]",
+        "position": [
+          6,
+          3
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping around chinatown while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=6 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.396,
+        "claims_capture": false
+      },
+      "nonce": "0f409b0861a939a9e51bd9336ed14e4e",
+      "commit": "debde39430719fc9a5edc0992d02046ddd51fb7dc66dd0b78a86c3a96a3adb97"
+    },
+    {
+      "payload": {
+        "step": 10,
+        "state": "grid=7x7;self=[6, 4];barriers=[]",
+        "position": [
+          6,
+          4
+        ],
+        "move": "MOVE:E",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near chinatown.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.374,
+        "claims_capture": false
+      },
+      "nonce": "c320d168939a70b0f33fccf4f02198bf",
+      "commit": "dbb8c389579803c59c14936bd000dc69b3f150a2b10a0060f7a50cf847e382a1"
+    },
+    {
+      "payload": {
+        "step": 11,
+        "state": "grid=7x7;self=[5, 4];barriers=[]",
+        "position": [
+          5,
+          4
+        ],
+        "move": "MOVE:N",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping around chinatown while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=6 exits=4"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.385,
+        "claims_capture": false
+      },
+      "nonce": "5de41b2f909a3d0be4429890796e8bcb",
+      "commit": "05ee8dd66affc66268725354b7a2d3d04b8b35e2c2535904a52906e3eb0cf9d1"
+    },
+    {
+      "payload": {
+        "step": 12,
+        "state": "grid=7x7;self=[5, 5];barriers=[]",
         "position": [
           5,
           5
@@ -608,139 +526,251 @@
         "move": "MOVE:E",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "Working near brooklyn now, and the walls are going up.",
+        "hint": "You will not find me anywhere near brooklyn.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=1.76 containment=47.0 walls_left=13"
+          "move_rationale": "room=48/49 gap=5 exits=4"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.417,
+        "opponent_trust": 0.384,
         "claims_capture": false
       },
-      "nonce": "77eb396280d5955beeeed16f9c9e1f71",
-      "commit": "094d0460d82ea5ce127bea1c1f9ecf39971af4bb533dd35909a48b1a9e9c110b"
+      "nonce": "b9fff62d7321205ce41079daeac55644",
+      "commit": "968760f792a326e5852b091ab489183b4eba07776032193b203d321b1a34ab4d"
     },
     {
       "payload": {
-        "step": 16,
-        "state": "grid=7x7;self=[5, 4];barriers=[[6, 6]]",
+        "step": 13,
+        "state": "grid=7x7;self=[6, 5];barriers=[[6, 6]]",
         "position": [
-          5,
-          4
+          6,
+          5
         ],
-        "move": "MOVE:W",
+        "move": "MOVE:S",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "Working near chinatown now, and the walls are going up.",
+        "hint": "Already through brooklyn, and still moving.",
         "prompt_discussion": {
           "llm_prompt": "",
-          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "llm_reasoning": "banking credibility with a true hint",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=1.74 containment=47.0 walls_left=13"
+          "move_rationale": "room=47/49 gap=4 exits=2"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.399,
+        "opponent_trust": 0.393,
         "claims_capture": false
       },
-      "nonce": "632933c84ac00cefe288132925af88dc",
-      "commit": "aa66787de0b632ee3c765e8a43e86f999b43a4def3d919a28eff1276cb1e1753"
+      "nonce": "8e8c3b694a6502c4c1a50c9f8dcd5f24",
+      "commit": "6cc86c01cb127a40a38c588530074c43d6f229d74bd83b1e9d92f63db4510edd"
     },
     {
       "payload": {
-        "step": 17,
+        "step": 14,
         "state": "grid=7x7;self=[6, 4];barriers=[[6, 6]]",
         "position": [
           6,
           4
         ],
-        "move": "MOVE:S",
+        "move": "MOVE:W",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "Working through chinatown now, and the walls are going up.",
+        "hint": "Every alley around chinatown knows me better than you do.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=1.82 containment=47.0 walls_left=13"
+          "move_rationale": "room=47/49 gap=3 exits=3"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.422,
+        "opponent_trust": 0.375,
         "claims_capture": false
       },
-      "nonce": "b5b9c114f6e42515480d9ed3307d2895",
-      "commit": "b28605a683fc2bbbc6ae2decd9717e720de85db9af14c6e8f99ac87f9c842a7f"
+      "nonce": "b03bed01e90f040bb7f22acde2673bbd",
+      "commit": "ebb6fd87c1ea7d02f078e5337e43cdfa8fc52c6fc5f707a4d83257e5be1b9173"
+    },
+    {
+      "payload": {
+        "step": 15,
+        "state": "grid=7x7;self=[6, 3];barriers=[[6, 6]]",
+        "position": [
+          6,
+          3
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping past soho while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=4 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.373,
+        "claims_capture": false
+      },
+      "nonce": "d9990b9eb478eddd64e9e81e0aed5d67",
+      "commit": "b07604210b632912b1e4b7cd80fe53542b8a893b7a9780d8d5bff41f50bf7d68"
+    },
+    {
+      "payload": {
+        "step": 16,
+        "state": "grid=7x7;self=[6, 2];barriers=[[6, 6]]",
+        "position": [
+          6,
+          2
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Catch your breath — I am past battery.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=4 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.377,
+        "claims_capture": false
+      },
+      "nonce": "b87f612cd6c7afd2ac6b3de8ac507545",
+      "commit": "e19a2699305bc276ab44e84eae0ec239f43f7f6898381e968b5a45c27f512956"
+    },
+    {
+      "payload": {
+        "step": 17,
+        "state": "grid=7x7;self=[6, 1];barriers=[[6, 6]]",
+        "position": [
+          6,
+          1
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near tribeca.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=6 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.379,
+        "claims_capture": false
+      },
+      "nonce": "dc99b2d89044388ec434cecb51e58ea2",
+      "commit": "9de0d64860b66424605495b9bd9cf4668bea6907358b94ee587592b3cb104819"
     },
     {
       "payload": {
         "step": 18,
-        "state": "grid=7x7;self=[6, 4];barriers=[[6, 5], [6, 6]]",
+        "state": "grid=7x7;self=[6, 0];barriers=[[6, 6]]",
         "position": [
           6,
-          4
+          0
         ],
-        "move": "BARRIER:E",
+        "move": "MOVE:W",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "Working past dumbo now, and the walls are going up.",
+        "hint": "Already by battery, and still moving.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "seal (6, 5): thief room 47.0->46.0, anchors=2, p(occupied)=0.11, own room 47"
+          "move_rationale": "room=47/49 gap=6 exits=2"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.411,
-        "claims_capture": true
+        "opponent_trust": 0.381,
+        "claims_capture": false
       },
-      "nonce": "746be651c95e8fffa0a02c941e0ed95f",
-      "commit": "c74bc50520882576c7d87a0ea585d200c5ad552da818f18a01a0453c356ed13d"
+      "nonce": "d9fe248cc6aea1fa9bc7480fe4088aed",
+      "commit": "f1c86ca75b5f0412d450c2c35ebed5bb4d335b935999e8d0db5ad89a3c68e818"
     },
     {
       "payload": {
         "step": 19,
-        "state": "grid=7x7;self=[6, 4];barriers=[[6, 3], [6, 5], [6, 6]]",
+        "state": "grid=7x7;self=[5, 0];barriers=[[6, 5], [6, 6]]",
         "position": [
-          6,
-          4
+          5,
+          0
         ],
-        "move": "BARRIER:W",
+        "move": "MOVE:N",
         "intent": "truth",
         "verdict": "truth",
-        "hint": "I am closing past soho; the doors are shutting.",
+        "hint": "You will not find me anywhere near tribeca.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "credibility spent; telling the truth to rebuild it",
           "bluff_classification": "truth",
-          "move_rationale": "seal (6, 3): thief room 46.0->45.0, anchors=1, p(occupied)=0.11, own room 46"
+          "move_rationale": "room=47/49 gap=-1 exits=3"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.43,
-        "claims_capture": true
+        "opponent_trust": 0.384,
+        "claims_capture": false
       },
-      "nonce": "9ca3edd35e8104c74e72d79e0e4c1408",
-      "commit": "2c0411b1d0ad9673d997ae6d6ef97616a62abd9272da605a65df2ede1ea7d5a6"
+      "nonce": "9a3d6898278d7e3c9ff23ad64e8560bc",
+      "commit": "17ca9cf9c396bbd1f5c8b8951afa734b7ee01574304295652aa0b2d395fbb516"
+    },
+    {
+      "payload": {
+        "step": 20,
+        "state": "grid=7x7;self=[4, 0];barriers=[[6, 3], [6, 5], [6, 6]]",
+        "position": [
+          4,
+          0
+        ],
+        "move": "MOVE:N",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near chelsea.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=46/49 gap=-1 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.373,
+        "claims_capture": false
+      },
+      "nonce": "5bc1d7eba0db0ff280dcf3f1aa287196",
+      "commit": "719bcd777b008a08ecd72ce386a72c21aaa04c84150c9de8685e88c27dba9f7a"
     }
   ],
   "mutual_agreement": {
     "opponent_group_id": "rival-01",
-    "sha256": "38e3fc1b4ea50556b69d5b81b21f2f71134a4964bf287748fa8f4c1d784bbca6",
+    "sha256": "bcf5c13689f7d4637c431ae8475d877863dfd66c515538d5be607db6696e5585",
     "confirmed": true
   }
 }

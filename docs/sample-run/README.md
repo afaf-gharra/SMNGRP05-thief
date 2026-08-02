@@ -1,7 +1,9 @@
 # A real match, in four files
 
 These are the actual artifacts from a two-process match played over real MCP
-HTTP transport on 2026-07-29 — not hand-written examples. `uoh-ag12` is this
+HTTP transport — not hand-written examples. They were produced by *this* repository's
+code, so the commit id sealed at step zero is a commit in this repository's own
+history and can be checked out directly. `uoh-ag12` is this
 team; `rival-01` is a second instance of the agent standing in for an opponent.
 
 | File | What it is |

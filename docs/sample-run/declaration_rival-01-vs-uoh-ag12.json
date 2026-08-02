@@ -12,40 +12,14 @@
     "result": "result_rival-01-vs-uoh-ag12.json"
   },
   "timezone": "Asia/Jerusalem",
-  "game_started_at": "2026-08-02T20:40:06.973638+00:00",
-  "game_ended_at": "2026-08-02T20:40:23.987778+00:00",
+  "game_started_at": "2026-08-02T20:41:48.743352+00:00",
+  "game_ended_at": "2026-08-02T20:41:55.336077+00:00",
   "num_sub_games": 2,
   "max_tokens_per_game": 200000,
   "groups": {
     "group_1": {
       "group_id": "rival-01",
       "group_name": "RIVAL-01",
-      "members": [
-        "208123232",
-        "212018899"
-      ],
-      "repos": {
-        "cop": "https://github.com/afaf-gharra/uoh-ag12-police",
-        "thief": "https://github.com/afaf-gharra/uoh-ag12-thief"
-      },
-      "mcp_servers": {
-        "cop": "http://127.0.0.1:8801/mcp",
-        "thief": "http://127.0.0.1:8801/mcp"
-      },
-      "llm_model": "template-zero-token",
-      "hardware_spec": {
-        "cpu_type": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
-        "cpu_freq_mhz": null,
-        "cpu_cores": 12,
-        "ram_gb": null,
-        "gpu_model": "NVIDIA GeForce RTX 3070",
-        "vram_gb": 8.0
-      },
-      "signature": "890c6b732398c6f307ceb43ac6bb05cb6ba2fa838bfdc2a65fc24b958c8df472"
-    },
-    "group_2": {
-      "group_id": "uoh-ag12",
-      "group_name": "UOH-AG12",
       "members": [
         "208123232",
         "212018899"
@@ -67,8 +41,34 @@
         "gpu_model": "NVIDIA GeForce RTX 3070",
         "vram_gb": 8.0
       },
-      "signature": "91b7a8a1650bd2f42bcc6595ae1c716a40c208d76422775d9a2a8b46b2ff43d6"
+      "signature": "1fedef660d455ff083dfee750b40aa54a7c14bc294032be4afd5c2550adf8291"
+    },
+    "group_2": {
+      "group_id": "uoh-ag12",
+      "group_name": "UOH-AG12",
+      "members": [
+        "208123232",
+        "212018899"
+      ],
+      "repos": {
+        "cop": "https://github.com/afaf-gharra/uoh-ag12-police",
+        "thief": "https://github.com/afaf-gharra/uoh-ag12-thief"
+      },
+      "mcp_servers": {
+        "cop": "http://127.0.0.1:8801/mcp",
+        "thief": "http://127.0.0.1:8801/mcp"
+      },
+      "llm_model": "template-zero-token",
+      "hardware_spec": {
+        "cpu_type": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "cpu_freq_mhz": null,
+        "cpu_cores": 12,
+        "ram_gb": null,
+        "gpu_model": "NVIDIA GeForce RTX 3070",
+        "vram_gb": 8.0
+      },
+      "signature": "052cd9ea8553ef1346ff7dbe72d3c46bb4645f9d94a6a47e536e9c6761ee7e33"
     }
   },
-  "declaration_sha256": "8254409ecb080d2e144e3dce6b935dc1f7f2e047e223995dd17335e1573016bf"
+  "declaration_sha256": "a4ec4b1f3d449352d108cf2327c4d540780cf11a4fb491bd23d84406e53e10a1"
 }

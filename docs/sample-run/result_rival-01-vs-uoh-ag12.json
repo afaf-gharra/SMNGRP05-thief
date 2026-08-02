@@ -21,16 +21,16 @@
     {
       "sub_game_number": 1,
       "roles": {
-        "uoh-ag12": "police",
-        "rival-01": "thief"
+        "uoh-ag12": "thief",
+        "rival-01": "police"
       },
-      "started_at": "2026-08-02T20:40:06.973638+00:00",
-      "ended_at": "2026-08-02T20:40:09.183638+00:00",
+      "started_at": "2026-08-02T20:41:48.743352+00:00",
+      "ended_at": "2026-08-02T20:41:51.473352+00:00",
       "result": "survival",
-      "winner_group": "rival-01",
+      "winner_group": "uoh-ag12",
       "tie": false,
       "github_commit": {
-        "uoh-ag12": "96b40868e7fef9b171ef574f5e7d7fb1a29e9999",
+        "uoh-ag12": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
         "rival-01": "declared-in-their-own-report"
       },
       "tokens": {
@@ -38,8 +38,8 @@
         "rival-01": null
       },
       "score": {
-        "uoh-ag12": 5,
-        "rival-01": 10
+        "uoh-ag12": 10,
+        "rival-01": 5
       },
       "log_files": {
         "uoh-ag12": "uoh-ag12/log_rival-01-vs-uoh-ag12_g01.json",
@@ -53,16 +53,16 @@
     {
       "sub_game_number": 2,
       "roles": {
-        "uoh-ag12": "thief",
-        "rival-01": "police"
+        "uoh-ag12": "police",
+        "rival-01": "thief"
       },
-      "started_at": "2026-08-02T20:40:09.467778+00:00",
-      "ended_at": "2026-08-02T20:40:23.987778+00:00",
+      "started_at": "2026-08-02T20:41:52.736077+00:00",
+      "ended_at": "2026-08-02T20:41:55.336077+00:00",
       "result": "survival",
-      "winner_group": "uoh-ag12",
+      "winner_group": "rival-01",
       "tie": false,
       "github_commit": {
-        "uoh-ag12": "96b40868e7fef9b171ef574f5e7d7fb1a29e9999",
+        "uoh-ag12": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
         "rival-01": "declared-in-their-own-report"
       },
       "tokens": {
@@ -70,8 +70,8 @@
         "rival-01": null
       },
       "score": {
-        "uoh-ag12": 10,
-        "rival-01": 5
+        "uoh-ag12": 5,
+        "rival-01": 10
       },
       "log_files": {
         "uoh-ag12": "uoh-ag12/log_rival-01-vs-uoh-ag12_g02.json",
@@ -101,7 +101,7 @@
     }
   },
   "mutual_agreement": {
-    "sha256": "ab057e92f7250705e764f60ddcc5563ffbc512baa5c51bfe652ca73fa0cbd859",
+    "sha256": "053169d788e4b577dc3846bd3d6104acb66dce89f07faf549f657810beca92c3",
     "confirmed": true
   }
 }
