@@ -99,7 +99,7 @@ class CapturingApp(LivePeerApp):
 
 def capture_live() -> Path:
     """Play a real match with the officer's window open, grabbing it mid-chase."""
-    cop = prepare("cop", "uoh-ag12", "police")
+    cop = prepare("cop", "SMNGRP05", "police")
     thief = prepare("thief", "rival-01", "thief")
     left, right = LoopbackTransport.pair()
 
@@ -113,7 +113,7 @@ def capture_live() -> Path:
     app.run()
     if not app.captured:
         raise RuntimeError("the match ended before the live window could be captured")
-    return WORK / "cop" / "logs" / "uoh-ag12"
+    return WORK / "cop" / "logs" / "SMNGRP05"
 
 
 def capture_replay(logs_dir: Path) -> None:

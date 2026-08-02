@@ -1,9 +1,9 @@
 # Distributed Cops-and-Robbers over a Peer-to-Peer Network — **Thief agent**
 
-**Group `uoh-ag12`** · University of Haifa, Department of Computer Science · *Orchestration of AI Agents*, 2026
+**Group `SMNGRP05`** · University of Haifa, Department of Computer Science · *Orchestration of AI Agents*, 2026
 
 > **Companion repository (mandatory cross-link):** the police agent lives at
-> **https://github.com/afaf-gharra/uoh-ag12-police**
+> **https://github.com/afaf-gharra/SMNGRP05-police**
 >
 > The two repositories ship the same engine on purpose. Roles **alternate every
 > sub-game** (book ch.9), so each peer must be able to play *both* sides; what
@@ -210,7 +210,7 @@ appeal, no partial credit: the verdict is arithmetic, not judgement.
 
 ## 6. Companion repository
 
-**Police agent → https://github.com/afaf-gharra/uoh-ag12-police**
+**Police agent → https://github.com/afaf-gharra/SMNGRP05-police**
 
 Both links are also carried in the four JSON artifacts sent to the lecturer, so
 each report names all four repositories of both teams (rule 49).
@@ -258,11 +258,11 @@ uv run python -m p2p_chase doctor --role thief
 Audit a saved log, with a window or without:
 
 ```bash
-uv run python -m p2p_chase replay --log logs/uoh-ag12/log_<game_id>_g01.json
+uv run python -m p2p_chase replay --log logs/SMNGRP05/log_<game_id>_g01.json
 ```
 
 ```bash
-uv run python -m p2p_chase verify --log logs/uoh-ag12/log_<game_id>_g01.json
+uv run python -m p2p_chase verify --log logs/SMNGRP05/log_<game_id>_g01.json
 ```
 
 `verify` exits non-zero on a tampered log, so it drops straight into CI.

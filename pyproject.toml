@@ -5,7 +5,7 @@ description = "Distributed cops-and-robbers over a peer-to-peer network: two aut
 readme = "README.md"
 requires-python = ">=3.13"
 license = { file = "LICENSE" }
-authors = [{ name = "Group uoh-ag12, University of Haifa, CS 2026" }]
+authors = [{ name = "Group SMNGRP05, University of Haifa, CS 2026" }]
 keywords = ["multi-agent", "mcp", "dec-pomdp", "stigmergy", "commit-reveal"]
 dependencies = [
     "fastmcp>=2.10",

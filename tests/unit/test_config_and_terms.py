@@ -25,7 +25,7 @@ def patch_shared(config_dir, **sections):
 
 
 def test_dotted_lookup_reads_the_private_file(config):
-    assert config.get("game.group_id") == "uoh-ag12"
+    assert config.get("game.group_id") == "SMNGRP05"
     assert config.get("network.my_port") == 8802
 
 

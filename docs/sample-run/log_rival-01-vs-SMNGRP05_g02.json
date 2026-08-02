@@ -1,18 +1,18 @@
 {
   "_schema": "Per-sub-game match log, consumed by the Replay Viewer for cryptographic audit. Each step is committed as SHA-256(state || move || intent || nonce) and revealed only at the final audit (book ch.5 commit-reveal, ch.7 replay). Static team metadata is not repeated here — it lives in the declaration and is joined by game_uid. Step 0 is the signed step-zero record carrying the hardware declaration and the exact commit hash that played. The prompt_discussion block records the natural-language exchange and the reasoning behind each hint, and is covered by the same hash as everything else.",
   "schema_version": "1.1",
-  "game_id": "rival-01-vs-uoh-ag12",
+  "game_id": "rival-01-vs-SMNGRP05",
   "game_uid": "bd97b1a4-a5e8-61ff-cad9-151cd0bd6a94",
   "links": {
     "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
-    "declaration": "declaration_rival-01-vs-uoh-ag12.json",
-    "config": "config_rival-01-vs-uoh-ag12_g<NN>.json",
-    "log": "log_rival-01-vs-uoh-ag12_g<NN>.json",
-    "result": "result_rival-01-vs-uoh-ag12.json"
+    "declaration": "declaration_rival-01-vs-SMNGRP05.json",
+    "config": "config_rival-01-vs-SMNGRP05_g<NN>.json",
+    "log": "log_rival-01-vs-SMNGRP05_g<NN>.json",
+    "result": "result_rival-01-vs-SMNGRP05.json"
   },
   "summary": {
     "sub_game_number": 2,
-    "group_id": "uoh-ag12",
+    "group_id": "SMNGRP05",
     "role": "police",
     "opponent_group_id": "rival-01",
     "result": "survival",
@@ -185,8 +185,8 @@
           "branch": "main",
           "tag": "v1.0-submission"
         },
-        "group_id": "uoh-ag12",
-        "group_name": "UOH-AG12",
+        "group_id": "SMNGRP05",
+        "group_name": "SMNGRP05",
         "sub_game_number": 2,
         "scent_model": {
           "falloff": "linear",

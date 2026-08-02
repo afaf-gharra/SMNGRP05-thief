@@ -24,7 +24,7 @@ from p2p_chase.report.naming import (
 )
 
 IDENTITY = {
-    "group_id": "uoh-ag12", "group_name": "UOH-AG12", "members": ["a", "b"],
+    "group_id": "SMNGRP05", "group_name": "SMNGRP05", "members": ["a", "b"],
     "repos": {"cop": "https://example.test/cop", "thief": "https://example.test/thief"},
     "mcp_servers": {"cop": "http://a/mcp", "thief": "http://b/mcp"},
     "llm_model": "template-zero-token",
@@ -41,7 +41,7 @@ def sealed(step: int, **extra) -> dict:
 
 def summary(**overrides) -> dict:
     base = {
-        "sub_game_number": 1, "role": "police", "group_id": "uoh-ag12",
+        "sub_game_number": 1, "role": "police", "group_id": "SMNGRP05",
         "opponent_group_id": "rival-01", "result": "capture", "winner": "police",
         "steps": 12, "started_at": "2026-08-01T10:00:00+00:00", "duration_seconds": 30.0,
         "tokens_total": 0, "barriers_used": 3, "phase_trail": ["WAITING_FOR_OPPONENT"],

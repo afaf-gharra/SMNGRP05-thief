@@ -2,7 +2,7 @@
   "_schema": "The agreed configuration for one sub-game. Every value traces to the binding parameter table in Appendix F. Both teams must hold byte-identical values, lock them cryptographically via config_sha256, give the file a name unique to the match, and attach it to the GitHub repository. Status recap: 'minimum' may only be raised by mutual agreement, 'permanent' must not change at all, 'negotiation' may take any agreed value.",
   "schema_version": "1.1",
   "agreed_between": [
-    "uoh-ag12",
+    "SMNGRP05",
     "opponent-group"
   ],
   "board_and_agents": {
@@ -65,16 +65,16 @@
     "max_retries": 3,
     "queue_depth": 100
   },
-  "game_id": "rival-01-vs-uoh-ag12",
+  "game_id": "rival-01-vs-SMNGRP05",
   "game_uid": "bd97b1a4-a5e8-61ff-cad9-151cd0bd6a94",
   "sub_game_number": 2,
   "links": {
     "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
-    "declaration": "declaration_rival-01-vs-uoh-ag12.json",
-    "config": "config_rival-01-vs-uoh-ag12_g<NN>.json",
-    "log": "log_rival-01-vs-uoh-ag12_g<NN>.json",
-    "result": "result_rival-01-vs-uoh-ag12.json"
+    "declaration": "declaration_rival-01-vs-SMNGRP05.json",
+    "config": "config_rival-01-vs-SMNGRP05_g<NN>.json",
+    "log": "log_rival-01-vs-SMNGRP05_g<NN>.json",
+    "result": "result_rival-01-vs-SMNGRP05.json"
   },
-  "config_name": "config_rival-01-vs-uoh-ag12_g02.json",
+  "config_name": "config_rival-01-vs-SMNGRP05_g02.json",
   "config_sha256": "3cae0f6d5e22660585c2fa7d06969ad9918e274dfeb1bce5b6b6c0c304db0b0e"
 }

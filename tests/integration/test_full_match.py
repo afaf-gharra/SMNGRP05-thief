@@ -72,7 +72,7 @@ def short_terms() -> dict:
 @pytest.fixture(scope="module")
 def played(tmp_path_factory, short_terms) -> dict:
     tmp_path = tmp_path_factory.mktemp("match")
-    cop = peer_config(tmp_path, "cop", "uoh-ag12", **short_terms)
+    cop = peer_config(tmp_path, "cop", "SMNGRP05", **short_terms)
     thief = peer_config(tmp_path, "thief", "rival-01", **short_terms)
     series = run_series(cop, thief)
     results = {
@@ -148,7 +148,7 @@ def test_the_two_reports_agree_exactly(played):
 @pytest.mark.slow
 def test_each_peer_writes_all_four_artifacts(played):
     game_id = played["cop"].game_id
-    for group in ("uoh-ag12", "rival-01"):
+    for group in ("SMNGRP05", "rival-01"):
         directory = played["tmp"] / "logs" / group
         assert (directory / f"declaration_{game_id}.json").is_file()
         assert (directory / f"result_{game_id}.json").is_file()
@@ -181,7 +181,7 @@ def test_no_position_is_ever_sent_in_the_clear(played):
 @pytest.mark.slow
 def test_the_emitted_result_is_valid_json_on_disk(played):
     game_id = played["cop"].game_id
-    path = played["tmp"] / "logs" / "uoh-ag12" / f"result_{game_id}.json"
+    path = played["tmp"] / "logs" / "SMNGRP05" / f"result_{game_id}.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     assert data["report_type"] == "final_game_result"
     assert len(data["sub_games"]) == 2

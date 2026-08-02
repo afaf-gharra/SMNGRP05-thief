@@ -3,7 +3,7 @@
 These are the actual artifacts from a two-process match played over real MCP
 HTTP transport — not hand-written examples. They were produced by *this* repository's
 code, so the commit id sealed at step zero is a commit in this repository's own
-history and can be checked out directly. `uoh-ag12` is this
+history and can be checked out directly. `SMNGRP05` is this
 team; `rival-01` is a second instance of the agent standing in for an opponent.
 
 | File | What it is |
@@ -21,5 +21,5 @@ to count for either team.
 Verify the commit chain yourself:
 
 ```bash
-uv run python -m p2p_chase verify --log docs/sample-run/log_rival-01-vs-uoh-ag12_g01.json
+uv run python -m p2p_chase verify --log docs/sample-run/log_rival-01-vs-SMNGRP05_g01.json
 ```

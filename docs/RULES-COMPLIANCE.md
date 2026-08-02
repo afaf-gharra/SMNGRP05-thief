@@ -69,9 +69,9 @@ implements it and, where the behaviour is testable, the test that proves it.
 | 40 | Credentials and secrets are git-ignored | `credentials.json`, `token.json`, `.env`, `*.pem`, `*.key` | `.gitignore`; `.env-example` |
 | 41 | Tag the submission with a documented Git tag | Annotated `v1.0-submission` | `git show v1.0-submission` |
 | 42 | A comprehensive academic report in the repository | `README.md` §1–6 plus `docs/` | this repository |
-| 43 | Fill the Moodle form, save as PDF, move no field | `uoh-ag12-ex12.pdf` | submitted separately |
+| 43 | Fill the Moodle form, save as PDF, move no field | `SMNGRP05-ex12.pdf` | submitted separately |
 | 44 | Each group member submits in Moodle separately | administrative | — |
-| 45 | A unique eight-character group code | `uoh-ag12`, used in every artifact and filename | `config/*/game.toml` |
+| 45 | A unique eight-character group code | `SMNGRP05`, used in every artifact and filename | `config/*/game.toml` |
 
 ## 6. Completions found when cross-checking the book
 

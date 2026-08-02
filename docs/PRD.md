@@ -1,6 +1,6 @@
 # Product Requirements — `p2p-chase`
 
-**Group `uoh-ag12`** · version 1.00 · target: the 2026 course league
+**Group `SMNGRP05`** · version 1.00 · target: the 2026 course league
 
 ## 1. Problem and context
 

@@ -38,7 +38,7 @@ def sdk(tmp_path) -> ChaseSdk:
 
 def test_preflight_reports_what_a_match_would_use(sdk):
     report = sdk.preflight()
-    assert report["group_id"] == "uoh-ag12"
+    assert report["group_id"] == "SMNGRP05"
     assert report["agreed_terms"]["board_size"] == 7
     assert report["hint_provider"] == "template"
     assert report["scent_model"]["worked_example"]["after_1_turn"] == pytest.approx(0.81)
@@ -90,7 +90,7 @@ def test_load_log_round_trips(sdk, tmp_path):
 def test_play_series_runs_a_match_and_writes_artifacts(tmp_path):
     """The whole product through its one public door, with email suppressed."""
     configs = {}
-    for name, group in (("cop", "uoh-ag12"), ("thief", "rival-01")):
+    for name, group in (("cop", "SMNGRP05"), ("thief", "rival-01")):
         directory = tmp_path / name
         shutil.copytree(REPO_ROOT / "config" / "police", directory)
         shared = json.loads((directory / "game.json").read_text(encoding="utf-8"))
