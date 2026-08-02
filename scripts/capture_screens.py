@@ -27,7 +27,6 @@ sys.path.insert(0, str(ROOT / "tests"))
 from conftest import LoopbackTransport  # noqa: E402
 from PIL import ImageGrab  # noqa: E402
 
-from p2p_chase.constants import Role  # noqa: E402
 from p2p_chase.gui.live_app import LivePeerApp  # noqa: E402
 from p2p_chase.gui.replay_app import ReplayApp  # noqa: E402
 from p2p_chase.sdk import ChaseSdk  # noqa: E402
