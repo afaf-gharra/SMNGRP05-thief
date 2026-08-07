@@ -52,7 +52,16 @@ Each side sends the other its public MCP URL, ending in `/mcp`.
 ngrok http 8801
 ```
 
-Copy the `https://….ngrok-free.app` address it prints.
+Copy the `https://….ngrok-free.app` address it prints. It is **different every
+time ngrok restarts**, so start the tunnel *before* sending the opponent a URL,
+not after.
+
+> **Check the agent version first — `ngrok version` must be ≥ 3.20.0.**
+> ngrok's service refuses older agents outright (`ERR_NGROK_121`), and the
+> winget package ships a version far below the minimum. `ngrok update` fixes it.
+> A `version: "3"` config file additionally needs agent ≥ 3.5, or every command
+> dies with `unknown version '3'`. Both failures look like a broken tunnel on
+> match day; neither has anything to do with your network.
 
 **2. Put their URL in your private config** — `config/thief/game.toml`:
 
@@ -123,6 +132,8 @@ design, so nothing else preserves it.
 |---|---|---|
 | `Agreed terms differ… Mismatched keys: [...]` | Their `game.json` differs | Compare that key; usually `num_games` or `map_area` |
 | `Opponent MCP server unreachable` | Tunnel down, wrong URL, or they have not started | Check their URL ends in `/mcp`; both sides must be running |
+| `ERR_NGROK_121` / `agent version … is too old` | ngrok agent below 3.20.0 | `ngrok update` |
+| ngrok: `unknown version '3'` | Config newer than the agent | `ngrok update` |
 | `Port 8801 already in use` | A previous peer is still alive | `Get-NetTCPConnection -LocalPort 8801 -State Listen` then `Stop-Process -Id <PID>` |
 | Match ends `timeout` | Opponent crashed or went silent | Scores 0-0. Replay it — a technical loss helps nobody |
 | `"sent": false` in the email block | Gmail auth expired or offline | Artifacts are still on disk; re-send rather than replay the match |
