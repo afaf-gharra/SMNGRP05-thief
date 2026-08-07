@@ -111,6 +111,12 @@ team scores** (rule 35).
 with yours. Identical means the reports agree. Different means something is
 wrong — do not submit both, work out why first.
 
+> This check is only meaningful against a *different* group code. The signed
+> document keys `roles` and `score` by `group_id`, so in a local self-test —
+> both peers running as `SMNGRP05` — the two dicts collapse to one entry each
+> and the hashes differ for a completely benign reason. Do not read that as a
+> fault.
+
 **3. Verify your own log:**
 
 ```bash
