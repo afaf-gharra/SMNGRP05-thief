@@ -19,9 +19,15 @@ from p2p_chase.domain.board import Board
 from p2p_chase.strategy.talk import landmarks as geo
 from p2p_chase.strategy.talk.bluff import BluffChoice, BluffPlanner, urgency_of
 
+# Every frame here asserts presence, never absence. A negating frame such as
+# "you will not find me anywhere near {place}" reads as a *denial* of the sector
+# it is handed, so when the planner supplies the sector we actually want to
+# suggest, the sentence says the opposite of what was intended -- and when it was
+# handed our true sector under an honest intent flag, it put a plainly false
+# statement into a signed record labelled truthful. Keep the claim and the flag
+# pointing the same way.
 _THIEF_FRAMES = (
     "Slipping {prep} {place} while you waste time.",
-    "You will not find me anywhere near {place}.",
     "Already {prep} {place}, and still moving.",
     "Catch your breath — I am {prep} {place}.",
     "Every alley {prep} {place} knows me better than you do.",

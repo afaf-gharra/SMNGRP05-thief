@@ -12,14 +12,22 @@ So this planner treats credibility as a resource with a balance:
   against the scent we are visibly leaving. That is a defensible estimate of what
   the opponent now believes about our honesty, computed from information we
   genuinely have.
-* When that estimate is low, we tell the truth — cheap, since a true hint about
-  a cell the opponent could smell anyway gives away little — and the balance
-  recovers.
-* When the balance is healthy *and* the moment matters (the endgame, or a turn
-  where the opponent is close), we spend it on one decisive lie.
-* When a lie would be blatantly contradicted by our own fresh trail, we say
-  something spatially empty instead. A vague sentence is not a wasted turn: it
-  costs nothing and keeps the balance intact.
+* When the moment matters — the endgame, or a turn where the opponent is close —
+  it names a decoy sector.
+* Otherwise it says something spatially empty. A vague sentence is not a wasted
+  turn: it costs nothing and narrows nothing.
+
+**We never name our own sector, however cheap it looks.** The original design
+banked credibility by telling the truth, on the reasoning that a true hint about
+a cell the opponent could smell anyway gives little away. Both halves of that are
+wrong. The estimator sat below its rebuild threshold for a whole match and told
+the truth eleven turns running, so we narrated our position every turn to an
+opponent that was hunting us — and against an opponent that *cannot* read the
+scent, a named sector is far sharper than anything the field would have told it.
+
+Silence is the only unexploitable choice here. A truthful claim can be believed
+and used; a claim from a known liar can be inverted and used; a sentence with no
+spatial content leaks nothing either way.
 """
 
 from dataclasses import dataclass
@@ -28,11 +36,6 @@ from p2p_chase.constants import Cell, Intent
 from p2p_chase.domain.board import Board
 from p2p_chase.domain.hint_parser import parse_hint
 from p2p_chase.domain.trust import TrustEstimator
-
-#: Below this self-estimated credibility, stop bluffing and rebuild trust.
-REBUILD_BELOW = 0.45
-#: Above this, we can afford a lie without becoming predictable.
-SPEND_ABOVE = 0.55
 
 
 @dataclass
@@ -77,20 +80,15 @@ class BluffPlanner:
         deceiving on — high in the endgame, high when the opponent is close.
         """
         credibility = self.credibility
-        if credibility < REBUILD_BELOW:
-            return BluffChoice(
-                Intent.TRUTH.value, true_sector, credibility,
-                "credibility spent; telling the truth to rebuild it",
-            )
         appetite = self._lie_rate * (0.5 + urgency)
-        if credibility >= SPEND_ABOVE and self._roll() < appetite:
+        if self._roll() < appetite:
             return BluffChoice(
                 Intent.LIE.value, decoy_sector, credibility,
-                f"spending credibility {credibility:.2f} on a decoy (urgency {urgency:.2f})",
+                f"naming a decoy sector (urgency {urgency:.2f})",
             )
         return BluffChoice(
-            Intent.TRUTH.value, true_sector, credibility,
-            "banking credibility with a true hint",
+            Intent.TRUTH.value, "", credibility,
+            "saying nothing that narrows the board",
         )
 
     def observe_own_hint(self, step: int, hint: str, own_scent: dict[Cell, float]) -> float:
