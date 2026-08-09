@@ -119,7 +119,16 @@ def concede(runtime, claim_response: dict | None) -> None:
 
 
 def send_final(runtime, claim_response: dict | None) -> None:
-    """The mandatory acknowledgement when a capture claim lands on us."""
+    """The mandatory acknowledgement when a capture claim lands on us.
+
+    The admission is a *turn*, not an annotation on the last one, so it advances
+    the step counter exactly as :func:`concede` does. Without the hold this
+    message would carry the step number we already sent, and an opponent that
+    had consumed that step sees the same (role, step) arrive twice — reading it
+    as a duplicated retry and refusing it, so the capture is never acknowledged
+    and an already-decided sub-game dies of a timeout instead.
+    """
+    runtime.state.apply_move(MoveType.HOLD, None)
     decision = Decision(
         MoveType.HOLD, None, hint=FINAL_CAUGHT_HINT, intent=Intent.TRUTH.value,
         rationale="capture claim verified against local truth; answering honestly",
