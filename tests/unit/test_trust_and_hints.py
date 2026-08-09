@@ -26,7 +26,9 @@ def test_a_hint_with_no_spatial_content_claims_nothing(board):
 
 
 def test_a_bearing_claims_the_matching_half(board):
-    claim = parse_hint("slipping north through the alleys", board)
+    # "north of the alleys" places the speaker; "slipping north" would only
+    # say which way they were walking, which is a different claim entirely.
+    claim = parse_hint("holed up north of the alleys", board)
     assert claim
     assert (0, 3) in claim.cells
     assert (6, 3) not in claim.cells
@@ -59,7 +61,7 @@ def test_the_prior_is_agnostic():
 
 def test_trust_rises_when_words_match_the_trail(board):
     trust = TrustEstimator()
-    claim = parse_hint("moving north", board)
+    claim = parse_hint("holed up north", board)
     scent = {(0, 3): 0.9, (1, 3): 0.6}
     for step in range(6):
         trust.score(step, claim, scent)
@@ -69,7 +71,7 @@ def test_trust_rises_when_words_match_the_trail(board):
 def test_trust_collapses_when_the_trail_contradicts_the_words(board):
     """The book's worked example: they say north, the scent says south-east."""
     trust = TrustEstimator()
-    claim = parse_hint("moving north", board)
+    claim = parse_hint("holed up north", board)
     scent = {(6, 6): 0.81, (5, 6): 0.63, (6, 5): 0.63}
     for step in range(6):
         trust.score(step, claim, scent)

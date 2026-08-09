@@ -104,7 +104,13 @@ class TurnHandler:
         }
         verdict = self.trust.score(message.step, claim, evidence)
         if claim:
-            self.belief.observe_region(claim.cells, self.trust.trust)
+            # "I am not near the park" points *away* from the park. The parser
+            # already detects the denial; applying the region regardless pushed
+            # mass into the one place the speaker had just ruled out. Inverting
+            # the trust reflects the claim's direction: a credible denial drains
+            # the named cells exactly as a credible assertion would fill them.
+            trust = 1.0 - self.trust.trust if claim.negated else self.trust.trust
+            self.belief.observe_region(claim.cells, trust)
         return {
             "step": verdict.step,
             "consistent": verdict.consistent,

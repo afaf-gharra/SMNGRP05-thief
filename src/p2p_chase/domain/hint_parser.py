@@ -37,6 +37,28 @@ _EDGE_WORDS = frozenset({"edge", "border", "outskirts", "perimeter", "rim", "wal
 _CORNER_WORDS = frozenset({"corner", "cornered", "angle"})
 _NEGATIONS = frozenset({"not", "never", "no", "nowhere", "far", "away", "opposite"})
 
+#: Verbs of travel. A bearing *immediately* after one of these names a direction
+#: of travel, not a part of the board, and the two mean entirely different things.
+#:
+#: An opponent whose hints read "I moved east" was telling us which way it had
+#: stepped. We read every one as "I am somewhere in the eastern third", so an
+#: officer starting in the north-west corner and stepping to (0,1) had us
+#: shifting belief to the far side of the board — on its own honest report, every
+#: turn, for a whole match.
+#:
+#: The preposition is what separates the two senses. "Moved east" is a heading;
+#: "slipping past east" or "every alley around east" places the speaker somewhere.
+#: So only a bare bearing directly following the verb is discarded, which leaves
+#: ordinary location talk — including our own frames — parsed as before.
+_TRAVEL_VERBS = frozenset(
+    {
+        "moved", "moving", "move", "went", "going", "go", "heading", "headed",
+        "walked", "walking", "ran", "running", "stepped", "stepping", "turned",
+        "turning", "slipping", "slipped", "cutting", "cut", "drove", "driving",
+        "came", "coming", "left", "leaving", "travelled", "traveled",
+    }
+)
+
 _WORD = re.compile(r"[a-z]+")
 
 
@@ -70,8 +92,11 @@ def parse_hint(text: str, board: Board, landmarks: dict[str, Cell] | None = None
     if not words:
         return SpatialClaim()
     claim = SpatialClaim(negated=any(word in _NEGATIONS for word in words))
+    previous = ""
 
     for word in words:
+        heading = previous in _TRAVEL_VERBS
+        previous = word
         if landmarks and word in landmarks:
             claim.cells |= _disc(board, landmarks[word], radius=1)
             claim.informative = True
@@ -84,7 +109,7 @@ def parse_hint(text: str, board: Board, landmarks: dict[str, Cell] | None = None
         elif word in _EDGE_WORDS:
             claim.cells |= _edge(board)
             claim.informative = True
-        elif word in _BEARINGS:
+        elif word in _BEARINGS and not heading:
             claim.bearings.append(_BEARINGS[word])
 
     for bearing in claim.bearings:
