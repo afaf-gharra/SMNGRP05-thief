@@ -17,8 +17,13 @@ CODE_VERSION: Final[str] = "1.00"
 SUPPORTED_CONFIG_VERSIONS: Final[frozenset[str]] = frozenset({"1.00"})
 
 #: Shared, signed game.json schema versions this build accepts. 1.3 is the
-#: schema the course reference emits, so a stock opponent's file loads cleanly.
-SUPPORTED_SHARED_SCHEMAS: Final[frozenset[str]] = frozenset({"1.2", "1.3"})
+#: schema the course reference emits, so a stock opponent's file loads cleanly;
+#: 1.2 is the book's own listing and 1.00 is how some teams label the same
+#: structure. The field is deliberately permissive because it is *not* one of
+#: the signed terms: two peers can disagree about the label and still agree on
+#: every value that decides the game. Refusing a file over its version string
+#: would forfeit a match on a cosmetic difference.
+SUPPORTED_SHARED_SCHEMAS: Final[frozenset[str]] = frozenset({"1.00", "1.2", "1.3"})
 
 #: Version stamped on declaration / config / log / result artifacts.
 SCHEMA_VERSION: Final[str] = "1.1"
