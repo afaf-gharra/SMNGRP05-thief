@@ -43,6 +43,18 @@ def commit_hash(repo: str | None = None, short: bool = False) -> str:
 
 
 @lru_cache(maxsize=4)
+def commit_sha(repo: str | None = None) -> str:
+    """The bare 40-character commit hash, with no ``-dirty`` suffix.
+
+    The handshake identity needs a hash an opponent can hand straight to
+    ``git show``; a suffixed one fails a strict 40-hex check. Dirtiness is not
+    lost — :func:`commit_hash` still reports it, and the sealed step-zero record
+    carries that form, so provenance survives while the identity stays parseable.
+    """
+    return commit_hash(repo).removesuffix("-dirty")
+
+
+@lru_cache(maxsize=4)
 def describe(repo: str | None = None) -> dict:
     """Commit, branch and nearest tag — the provenance block for the report."""
     cwd = Path(repo) if repo else None

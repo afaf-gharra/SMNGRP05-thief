@@ -10,6 +10,25 @@ rule: it blocks both sides and must be announced truthfully (mandatory rules
 from p2p_chase.constants import Cell, Direction, MoveType, Role
 from p2p_chase.domain.board import Board
 
+#: The token a stationary turn takes on the wire. The agreed ``move_set`` is the
+#: authority on what may appear in a sealed ``move`` field, and it names exactly
+#: ``N/S/E/W/STAY`` — so an internal action name like ``BARRIER`` or ``HOLD``
+#: must never travel there. A stricter opponent replays the sealed moves against
+#: the signed move set and refuses to counter-sign anything outside it.
+STATIONARY = "STAY"
+
+
+def wire_move(move_type: MoveType, direction: Direction | None) -> str:
+    """The agreed-move-set token for an action, as it must appear when sealed.
+
+    Placing a barrier costs the officer its movement, so it seals as ``STAY``;
+    where the wall went is carried by ``barrier_placed``, not smuggled into the
+    move field.
+    """
+    if move_type is MoveType.MOVE and direction is not None:
+        return direction.value
+    return STATIONARY
+
 
 class OwnGameState:
     """One peer's private truth plus its per-step move log."""
@@ -85,6 +104,7 @@ class OwnGameState:
                 "step": self.step_number,
                 "position": list(self.position),
                 "move": f"{move_type.value}:{direction.value if direction else '-'}",
+                "wire_move": wire_move(move_type, direction),
                 "unique_cells": self.unique_cells,
                 "barrier": list(placed) if placed else None,
             }

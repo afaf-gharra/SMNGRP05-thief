@@ -15,6 +15,7 @@ revealed only at the final audit:
 from datetime import UTC, datetime
 
 from p2p_chase.domain.crypto import CommitReveal
+from p2p_chase.domain.own_state import STATIONARY
 from p2p_chase.domain.protocol import TurnMessage
 from p2p_chase.shared import gitinfo
 from p2p_chase.shared.sysinfo import collect_spec
@@ -61,6 +62,7 @@ def identity_from_config(config) -> dict:
         "repos": config.get("game.repos", {}),
         "mcp_servers": config.get("game.mcp_servers", {}),
         "llm_model": config.get("llm.model", "") or "template-zero-token",
+        "git_commit_hash": gitinfo.commit_sha(),
         "spec": collect_spec(),
     }
 
@@ -76,11 +78,18 @@ def board_state_string(state) -> str:
 
 def sealed_step_record(state, decision, usage: dict, tokens_total: int, extra: dict) -> dict:
     """One turn's truth, sealed under a fresh nonce."""
+    last = state.log[-1] if state.log else {}
     payload = {
         "step": state.step_number,
+        "role": state.role.value,
         "state": board_state_string(state),
         "position": list(state.position),
-        "move": state.log[-1]["move"] if state.log else "-",
+        # The agreed move_set is the authority on this field: N/S/E/W/STAY and
+        # nothing else. The richer internal action name stays in `action`, which
+        # no opponent is asked to interpret.
+        "move": last.get("wire_move", STATIONARY),
+        "action": last.get("move", "-"),
+        "barrier_placed": last.get("barrier"),
         "intent": decision.intent,
         "verdict": decision.intent,  # wire-compatible alias for reference peers
         "hint": decision.hint,
