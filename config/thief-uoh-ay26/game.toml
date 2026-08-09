@@ -42,7 +42,10 @@ police_class = "p2p_chase.strategy.police_brain:ArchitectPolice"
 thief_class  = "p2p_chase.strategy.thief_brain:OpenSpaceThief"
 
 [strategy.police]
-capture_confidence = 0.18   # belief mass on one adjacent cell before we claim a capture
+capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a capture.
+#                             Raised from 0.18 after a live loss: at that bar the officer
+#                             claimed ten times in one sub-game, caught nothing, announced
+#                             its own cell each time, and oscillated chasing the belief peak.
 wall_threshold     = 3.0    # structural value a wall must clear before we give up a turn to build (tuned: docs/RESEARCH-REPORT.md)
 barrier_reserve    = 3      # walls held back for the endgame squeeze
 anchor_bonus       = 1.2    # per side already touching a wall or the board edge

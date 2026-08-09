@@ -112,18 +112,32 @@ def _evaluate(
     )
 
 
-def _anchors(board: Board, cell: Cell, barriers: set[Cell]) -> int:
-    """How many sides of this cell already abut a wall or the board edge.
+#: What one side of board edge is worth relative to one side of real wall.
+#: Not zero — a fence does have to start somewhere, and the rim is where a
+#: segment can be closed off cheaply — but nowhere near equal, see below.
+_EDGE_ANCHOR = 0.25
 
-    This is what turns scattered blocks into a fence. A cell with two anchors
-    continues a line; a cell with none starts an island the thief walks around.
+
+def _anchors(board: Board, cell: Cell, barriers: set[Cell]) -> float:
+    """How strongly this cell continues an existing structure.
+
+    Walls and board edges are *not* interchangeable here, though both stop
+    movement. Joining a wall extends something we built for a purpose; abutting
+    the rim extends a boundary that was always there and constrains the thief no
+    more than before. Counting them equally makes every perimeter cell look like
+    a two-anchor bargain, which is exactly how this officer once spent five
+    barriers fencing the bottom row while the thief ran free in the middle: the
+    thief's room fell by one cell per wall and the pursuit distance *rose*.
     """
-    count = 0
+    walls = 0
+    edges = 0
     for direction in board.moves:
         neighbour = board.step(cell, direction)
-        if neighbour is None or neighbour in barriers:
-            count += 1
-    return count
+        if neighbour is None:
+            edges += 1
+        elif neighbour in barriers:
+            walls += 1
+    return walls + _EDGE_ANCHOR * edges
 
 
 def should_spend(
@@ -140,14 +154,16 @@ def should_spend(
     if barriers_left <= 0 or not plan.viable:
         return False
 
-    closing_in = expected_distance <= 2.0
-    if closing_in:
-        # Within striking distance, only a wall that is effectively a capture
-        # or a genuine corridor cut is worth stopping for.
-        return plan.value >= threshold * 3.0
+    # A wall can only be placed beside us, so it constrains the thief only when
+    # the thief is near enough that our neighbourhood is also its neighbourhood.
+    # This is the reverse of the rule that lost us three sub-games: that version
+    # refused to build while close and built while far, so the officer spent five
+    # barriers fencing an empty edge and let the pursuit distance double.
+    if expected_distance > board_size * 0.6:
+        return False
 
     urgency = 1.0 - min(1.0, max(0, steps_remaining) / max(1, total_steps))
-    bar = threshold * (1.6 - 0.8 * urgency)
+    bar = threshold * (1.4 - 0.7 * urgency)
     if barriers_left <= reserve and urgency < 0.6:
         bar *= 2.0  # the reserve is for the endgame; early raids on it must pay
     return plan.value >= bar

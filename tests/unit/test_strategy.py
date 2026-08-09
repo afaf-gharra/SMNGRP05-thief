@@ -152,13 +152,19 @@ def test_walls_are_not_spent_once_the_quota_is_gone(board):
     ) is False
 
 
-def test_closing_in_raises_the_bar_for_stopping_to_build(board):
-    """Within striking distance a turn spent building is a turn not spent closing."""
+def test_a_wall_is_only_worth_a_turn_when_it_can_reach_the_thief(board):
+    """Barriers go beside the officer, so a distant thief cannot be walled at all.
+
+    This assertion is deliberately the reverse of what it used to be. The earlier
+    rule built while the thief was far and refused while it was close, and in a
+    live series that produced five barriers fencing an empty board edge while the
+    pursuit distance doubled and the thief escaped.
+    """
     plan = plan_barrier(board, (3, 3), set(), [((3, 5), 1.0)])
     common = {"barriers_left": 10, "steps_remaining": 10, "total_steps": 35,
               "board_size": 7, "reserve": 3, "threshold": 0.5}
-    assert should_spend(plan=plan, expected_distance=6.0, **common) is True
-    assert should_spend(plan=plan, expected_distance=1.0, **common) is False
+    assert should_spend(plan=plan, expected_distance=1.0, **common) is True
+    assert should_spend(plan=plan, expected_distance=6.0, **common) is False
 
 
 # ------------------------------------------------------------------- brains
@@ -208,10 +214,15 @@ def test_the_officer_stays_silent_when_it_is_only_guessing(board):
     assert claims is False
 
 
-def test_the_officer_extends_an_existing_wall_when_the_thief_is_far(board):
-    """Anchored cells continue a fence; isolated ones are islands to walk around."""
+def test_the_officer_closes_the_gap_between_two_walls_in_front_of_the_thief(board):
+    """Anchored cells continue a fence; isolated ones are islands to walk around.
+
+    The thief sits beyond the gap, so sealing it is worth a turn. Previously this
+    case was written with the thief in the far corner, which asserted the very
+    behaviour that lost us three sub-games.
+    """
     brain = ArchitectPolice(rng=random.Random(1), tuning={"wall_threshold": 1.0})
-    ctx = context(Role.POLICE, (3, 3), barriers=[(2, 2), (2, 4)], threat=(6, 6),
+    ctx = context(Role.POLICE, (3, 3), barriers=[(2, 2), (2, 4)], threat=(1, 3),
                   steps_remaining=5)
     move_type, _direction, target, _why, _claims = brain._decide_move(ctx)
     assert move_type is MoveType.BARRIER
