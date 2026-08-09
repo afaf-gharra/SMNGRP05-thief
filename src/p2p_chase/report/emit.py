@@ -12,6 +12,7 @@ and the aggregate. Wall-clock timestamps and per-peer token counts legitimately
 differ between the two machines and are therefore excluded.
 """
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -28,7 +29,6 @@ from p2p_chase.report.naming import (
     ended_at,
     log_filename,
     result_filename,
-    signature,
 )
 
 DEFAULT_TOKEN_CEILING = 200_000
@@ -132,8 +132,21 @@ def _token_totals(sub_games: list[dict], group_ids: list[str]) -> dict:
 
 
 def mutual_signature(game_id: str, aggregate: dict, sub_games: list[dict]) -> str:
-    """Hash only the facts both peers must agree on, so both compute it identically."""
-    return signature({
+    """Hash only the facts both peers must agree on, so both compute it identically.
+
+    Deliberately **not** :func:`p2p_chase.domain.crypto.canonical_json`. Commits
+    are sealed with compact separators; this settlement signature uses Python's
+    default *spaced* ones, which is the form the course reference's own report
+    writer emits and the form the league has settled on. The two forms hash the
+    same document to different digests, so the distinction is load-bearing: get
+    it wrong and two honest teams' reports can never agree, no matter how
+    perfectly the match itself was played.
+
+    The scope is the symmetric outcome only. Anything per-side — timestamps,
+    token counts, commit hashes — would make the two hashes differ by
+    construction, which is precisely what this signature exists to disprove.
+    """
+    return _settlement_digest({
         "game_id": game_id,
         "aggregate": aggregate,
         "sub_games": [
@@ -147,3 +160,9 @@ def mutual_signature(game_id: str, aggregate: dict, sub_games: list[dict]) -> st
             for row in sub_games
         ],
     })
+
+
+def _settlement_digest(document: dict) -> str:
+    """SHA-256 over the settlement form: sorted keys, spaced separators, UTF-8."""
+    blob = json.dumps(document, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()

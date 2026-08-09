@@ -62,6 +62,7 @@ class PeerRuntime:
         self.started_at = now_iso()
         self._started = time.monotonic()
         self._result: tuple[str, str] | None = None
+        self._seen_commits: set[str] = set()
 
     # ------------------------------------------------------------------ hooks
 
@@ -127,11 +128,32 @@ class PeerRuntime:
     def _await_turn(self, deadline, poll: float) -> dict | None:
         while not deadline.expired:
             message = self.transport.poll_turn(min(poll, max(0.05, deadline.remaining)))
-            if message is not None:
+            if message is not None and not self._is_duplicate(message):
                 return message
             if self.watchdog is not None:
                 self.watchdog.beat()
         return None
+
+    def _is_duplicate(self, message: dict) -> bool:
+        """Has this exact turn already been applied?
+
+        An at-least-once opponent re-pushes while it waits, so the same turn can
+        arrive several times; applying it twice would diffuse the belief and decay
+        the scent field an extra time, quietly corrupting state with nobody at
+        fault. We key on ``commit`` because it is the one field a retry cannot
+        vary — the digest is fixed the moment the sender seals its move.
+
+        A duplicate is dropped without touching the deadline: the opponent has
+        not taken a new turn, so its clock must keep running.
+        """
+        commit = message.get("commit")
+        if not commit:
+            return False
+        if commit in self._seen_commits:
+            self.emit({"type": "duplicate_dropped", "commit": commit})
+            return True
+        self._seen_commits.add(commit)
+        return False
 
     def _consume(self, incoming: dict) -> None:
         if self.phases.state is Phase.AWAITING_REVEAL:
