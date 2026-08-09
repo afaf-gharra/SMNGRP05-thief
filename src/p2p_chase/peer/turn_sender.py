@@ -76,6 +76,13 @@ def send(runtime, decision: Decision, claim_response, capture_claim, win_claim) 
         extra={
             "opponent_trust": round(runtime.trust.trust, 3),
             "claims_capture": bool(capture_claim),
+            # Both halves of the capture exchange are sealed, not just announced.
+            # A claim binds the accuser to the cell it named; the answer binds us
+            # to the admission. Sealing only one side lets the unsealed half be
+            # retold after the result is known, which is the one thing the audit
+            # exists to prevent.
+            "capture_claim": list(capture_claim) if capture_claim else None,
+            "claim_response": claim_response,
         },
     )
     runtime.records.append(record)
