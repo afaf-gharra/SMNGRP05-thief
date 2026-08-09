@@ -41,13 +41,15 @@ class IncomingOutcome:
 class TurnHandler:
     """Applies opponent messages to belief, scent, barriers and trust."""
 
-    def __init__(self, state, belief, opponent_scent, rules, trust, landmarks=None):
+    def __init__(self, state, belief, opponent_scent, rules, trust, landmarks=None,
+                 tracker=None):
         self.state = state
         self.belief = belief
         self.opponent_scent = opponent_scent
         self.rules = rules
         self.trust = trust
         self.landmarks = landmarks or {}
+        self.tracker = tracker
         self.history: list[dict] = []
 
     def process(self, message: TurnMessage) -> IncomingOutcome:
@@ -57,7 +59,7 @@ class TurnHandler:
             self.state.note_barrier(tuple(message.barrier_placed))
 
         self.belief.predict(self.state.barriers, stay_allowed=self.state.can_stay)
-        self.belief.observe_smell(message.smell_grid)
+        self._observe_scent(message.smell_grid)
         self.opponent_scent.absorb(message.smell_grid)
         self.opponent_scent.decay_all()
 
@@ -66,6 +68,32 @@ class TurnHandler:
         self._rule_out_impossible()
         self._read_claims(message, outcome)
         return outcome
+
+    def _observe_scent(self, grid: dict) -> None:
+        """Fold in the scent field, as sharply as its integrity allows.
+
+        The field's peak is the opponent's current cell whenever the agreed
+        pheromone model is being followed, so while the readings stay consistent
+        with the signed start, one step per turn and the public wall set, we take
+        that shape at close to face value. The moment a field contradicts that
+        geometry we stop trusting the shape and fall back to the gentle weighting,
+        which cannot be steered by a doctored peak.
+        """
+        if self.tracker is None:
+            self.belief.observe_smell(grid)
+            return
+        decoded = self.tracker.update(grid, self.state.barriers)
+        if decoded.trusted and decoded.cell is not None:
+            self.belief.observe_scent_peak(grid)
+        else:
+            self.belief.observe_smell(grid)
+
+    @property
+    def opponent_cell(self) -> tuple | None:
+        """Where the scent says the opponent is, or ``None`` if we cannot trust it."""
+        if self.tracker is None or not self.tracker.trusted:
+            return None
+        return self.tracker.cell
 
     def _weigh_words(self, message: TurnMessage) -> dict | None:
         """Score the hint against their own scent, then let it move the belief."""

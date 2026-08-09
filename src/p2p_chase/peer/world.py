@@ -20,6 +20,7 @@ from p2p_chase.domain.rules import GameRules
 from p2p_chase.domain.smell import SmellField
 from p2p_chase.domain.trust import TrustEstimator
 from p2p_chase.peer.turn_handler import TurnHandler
+from p2p_chase.strategy.decode import ScentTracker
 from p2p_chase.strategy.factory import resolve_brain
 from p2p_chase.strategy.talk import landmarks as geo
 from p2p_chase.strategy.talk.factory import resolve_talker
@@ -58,7 +59,14 @@ def build_world(role: Role, config) -> World:
     barriers_max = int(config.get("rules.barriers_max", 0))
     state.set_quota(barriers_max)
 
+    # The opponent's opening cell is an agreed, signed term, so the very first
+    # belief is a certainty rather than the uniform shrug we used to start from.
+    # Beginning ignorant threw away the one moment in the game when we know
+    # exactly where the other agent is, and left the filter with nothing to
+    # anchor its first prediction to.
+    opponent_start = tuple(config.require(f"positions.{'cop' if role is Role.THIEF else 'thief'}_start"))
     belief = BeliefGrid(state.board, config.get("belief.smell_trust_weight", 4.0))
+    belief.collapse_to(opponent_start)
     opponent_scent = _scent_field(config, size)
     trust = TrustEstimator(
         floor=config.get("belief.hint_trust_floor", 0.05),
@@ -71,6 +79,7 @@ def build_world(role: Role, config) -> World:
     handler = TurnHandler(
         state, belief, opponent_scent, rules, trust,
         landmarks=geo.landmark_index(state.board, config.get("play.setting", "") or ""),
+        tracker=ScentTracker(state.board, expected_start=opponent_start),
     )
     # One RNG seeded from the private config drives both the movement tie-breaks
     # and the banter, so a whole sub-game replays identically from its seed.

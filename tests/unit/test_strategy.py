@@ -197,9 +197,27 @@ def test_a_sealed_in_thief_concedes_rather_than_stalling(board):
     assert claims is False
 
 
-def test_the_officer_claims_a_capture_when_confident(board):
+def test_the_officer_seals_the_thief_rather_than_stepping_onto_it(board):
+    """A seal cannot be answered; a step can.
+
+    Stepping onto the thief's square is a claim it gets to move away from on its
+    own turn. Sealing that square ends the sub-game immediately under rule 46,
+    and the thief has already spent its move. Both cost us the turn, so when we
+    are certain enough to claim at all we should always take the seal.
+    """
     brain = ArchitectPolice(rng=random.Random(1))
     ctx = context(Role.POLICE, (3, 3), threat=(3, 4))
+    move_type, _direction, target, _why, claims = brain._decide_move(ctx)
+    assert move_type is MoveType.BARRIER
+    assert target == (3, 4)
+    assert claims is True
+
+
+def test_the_officer_steps_onto_the_thief_when_its_barriers_are_spent(board):
+    """With no wall left the claim is still worth making, just the weaker way."""
+    brain = ArchitectPolice(rng=random.Random(1))
+    ctx = context(Role.POLICE, (3, 3), threat=(3, 4))
+    ctx.state.my_barriers = 14
     move_type, _direction, target, _why, claims = brain._decide_move(ctx)
     assert move_type is MoveType.MOVE
     assert target == (3, 4)

@@ -40,6 +40,14 @@ class ArchitectPolice(BrainBase):
         moves = state.board.legal_moves(state.position, state.barriers)
         belief_cells = context.belief.top_cells(_BELIEF_CELLS)
 
+        seal = self._adjacent_seal(moves, context)
+        if seal is not None:
+            direction, cell = seal
+            return (
+                MoveType.BARRIER, direction, cell,
+                f"seal {cell}: the thief is standing there and cannot move first", True,
+            )
+
         strike = self._capture_shot(moves, context)
         if strike is not None:
             direction, target = strike
@@ -67,6 +75,32 @@ class ArchitectPolice(BrainBase):
             MoveType.MOVE, direction, target,
             self._explain(context, target, belief_cells), False,
         )
+
+    def _adjacent_seal(
+        self, moves: list[tuple[Direction, Cell]], context: TurnContext
+    ) -> tuple[Direction, Cell] | None:
+        """Wall the cell the thief is standing on, when we are sure it is standing there.
+
+        This is the one capture the thief cannot answer. Stepping onto its square
+        is a claim it gets to move away from next turn; sealing the square is a
+        capture by rule 46 the moment the wall goes up, and the thief has already
+        spent its move. It costs a barrier and a turn, which is nothing against
+        ending the sub-game.
+
+        It was previously unreachable. ``_capture_shot`` only ever considered
+        *stepping*, and the seal could only be found through the barrier planner,
+        whose spend rule declines to build whenever the thief is far away — and so
+        also declined to notice it was standing next to us.
+        """
+        if context.state.my_barriers >= context.barriers_max:
+            return None
+        target = context.belief.most_likely()
+        if context.belief.probability(target) < self._tune("seal_confidence", 0.5):
+            return None
+        for direction, cell in moves:
+            if cell == target:
+                return direction, cell
+        return None
 
     def _capture_shot(
         self, moves: list[tuple[Direction, Cell]], context: TurnContext
@@ -130,6 +164,13 @@ class ArchitectPolice(BrainBase):
         pressure = reachability.expected_distance(distances, belief_cells, far)
         containment = reachability.expected_region_size(board, belief_cells, barriers | {cell})
         coverage = context.belief.mass_within(cell, 1)
+        # How much room the thief has left once we are standing here. Distance
+        # alone is a chase an informed evader wins forever on an open board: it
+        # simply keeps two cells between us and we oscillate until the clock runs
+        # out. Squeezing is the officer's actual job -- take away the places it can
+        # be in a few moves, drive it onto the rim where the board itself becomes
+        # the far wall, and only then is there anything worth sealing.
+        squeeze = self._thief_room(board, barriers | {cell}, belief_cells)
         # Sitting still while the clock runs out is a loss for us, so mild bias
         # toward the centre of mass keeps the officer engaged on quiet turns.
         centrality = 1.0 - board.distance(cell, context.belief.most_likely()) / (2 * board.size)
@@ -137,9 +178,26 @@ class ArchitectPolice(BrainBase):
         return (
             -self._tune("pressure_weight", 1.0) * (pressure / max(1, board.size))
             - self._tune("containment_weight", 0.5) * (containment / board.cells)
+            - self._tune("squeeze_weight", 1.4) * squeeze
             + self._tune("coverage_weight", 1.2) * coverage
             + self._tune("centrality_weight", 0.2) * centrality
         )
+
+    @staticmethod
+    def _thief_room(board, obstacles, belief_cells: list[tuple[Cell, float]]) -> float:
+        """Belief-weighted local freedom left to the thief, in [0, 1].
+
+        Deliberately the same measure the thief maximises for itself, so the two
+        agents are playing tug-of-war over one number instead of optimising past
+        each other.
+        """
+        total = weight = 0.0
+        for cell, probability in belief_cells:
+            if probability <= 0.0 or cell in obstacles:
+                continue
+            total += probability * reachability.mobility(board, cell, obstacles)
+            weight += probability
+        return total / weight if weight else 1.0
 
     def _explain(
         self, context: TurnContext, cell: Cell, belief_cells: list[tuple[Cell, float]]

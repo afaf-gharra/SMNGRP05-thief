@@ -46,10 +46,37 @@ class OpenSpaceThief(BrainBase):
         return MoveType.MOVE, direction, target, self._explain(context, target), False
 
     def _pick_move(self, moves: list[tuple[Direction, Cell]], context: TurnContext):
+        moves = self._safe_moves(moves, context) or moves
         scored = [(self._score(target, context), direction, target) for direction, target in moves]
         scored.sort(key=lambda item: (-item[0], item[2]))  # deterministic tie-break
         _, direction, target = scored[0]
         return direction, target
+
+    def _safe_moves(self, moves: list[tuple[Direction, Cell]], context: TurnContext):
+        """Drop moves that finish within reach of the officer, when we know where it is.
+
+        Standing adjacent to the officer is not a cost to be weighed against room
+        and distance — it is a loss. On its turn the officer either steps onto us or
+        seals our cell, and rule 46 counts the seal as a capture, so there is no
+        move we can make in reply. Weighing it as a penalty is what let a large
+        mobility term outvote it and walk us into contact.
+
+        The veto only applies while the belief is sharp enough to be a sighting
+        rather than a suspicion. Vetoing on a vague prior would forbid half the
+        board on no evidence; the scent filter earns this by naming the cell
+        outright, and when it cannot, every move stays on the table.
+        """
+        threat = context.belief.most_likely()
+        if context.belief.probability(threat) < self._tune("veto_confidence", 0.5):
+            return None
+        board = context.state.board
+        barriers = context.state.barriers
+        reach = reachability.distance_map(board, threat, barriers)
+        return [
+            (direction, target)
+            for direction, target in moves
+            if reach.get(target, board.cells) >= 2
+        ]
 
     def _score(self, cell: Cell, context: TurnContext) -> float:
         """Value of standing on ``cell`` after this move. Higher is safer."""
