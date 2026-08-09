@@ -11,7 +11,9 @@ version = "1.00"
 [game]
 group_id   = "SMNGRP05"
 group_name = "SMNGRP05"
-members    = ["208123232", "212018899"]  # Afaf Gharra, Reem Awawdy
+members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
+# declaration is exchanged with opponents and archived in their repos, and the
+# lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
