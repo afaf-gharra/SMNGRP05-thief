@@ -56,7 +56,13 @@ centrality_weight  = 0.2    # mild pull toward the centre of mass on quiet turns
 
 [strategy.thief]
 region_weight    = 1.0      # weight on "how much room do I still have"
-distance_weight  = 0.6      # weight on "how far from the believed officer"
+mobility_weight  = 3.0      # weight on "how many cells can I reach in three moves"
+#                           A corner reports full region size and two exits, so
+#                           without this term nothing sees the trap closing.
+distance_weight  = 0.35     # weight on "how far from the believed officer".
+#                           Lowered from 0.6: raw distance is what walks a thief
+#                           into the far corner, which is exactly how uoh-ay26
+#                           took all three of our thief sub-games at step 12.
 novelty_weight   = 0.15     # mild preference for unvisited cells
 deadend_penalty  = 0.8      # a cell with one exit is one barrier from losing
 contact_penalty  = 1.5      # never volunteer to stand next to the officer

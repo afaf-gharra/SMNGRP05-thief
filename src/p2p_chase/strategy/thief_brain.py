@@ -25,6 +25,10 @@ from p2p_chase.strategy.base import BrainBase, TurnContext
 #: How far ahead the officer is assumed to project when we judge a cell's safety.
 _THREAT_HORIZON = 2
 
+#: How far ahead we measure our own escape room. Three moves is the shortest
+#: window in which a pursuer can turn "few ways out" into "none".
+_ESCAPE_HORIZON = 3
+
 
 class OpenSpaceThief(BrainBase):
     """Evasion by region maximisation under a Bayesian threat model."""
@@ -62,6 +66,12 @@ class OpenSpaceThief(BrainBase):
         separation = distances.get(threat, board.cells)
         separation_ratio = min(1.0, separation / max(1, board.size))
 
+        # Local freedom. Region size cannot see a corner — it reports 48/49 there
+        # just as it does in the middle — so without this the thief trades room it
+        # cannot measure for distance it can, and reaches the far corner with an
+        # excellent score and nowhere to go.
+        room_nearby = reachability.mobility(board, cell, obstacles, _ESCAPE_HORIZON)
+
         novelty = 0.0 if cell in state.visited else 1.0
         ways_out = reachability.exits(board, cell, state.barriers)
         # A dead end is not merely cramped, it is terminal: one barrier ends the game.
@@ -72,7 +82,8 @@ class OpenSpaceThief(BrainBase):
 
         return (
             self._tune("region_weight", 1.0) * room_ratio
-            + self._tune("distance_weight", 0.6) * separation_ratio
+            + self._tune("mobility_weight", 1.1) * room_nearby
+            + self._tune("distance_weight", 0.35) * separation_ratio
             + self._tune("novelty_weight", 0.15) * novelty
             - self._tune("deadend_penalty", 0.8) * deadend_penalty
             - self._tune("contact_penalty", 1.5) * contact

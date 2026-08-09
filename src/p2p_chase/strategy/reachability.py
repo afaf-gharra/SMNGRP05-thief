@@ -97,6 +97,24 @@ def exits(board: Board, cell: Cell, barriers: Iterable[Cell] | None = None) -> i
     return len(board.neighbors(cell, barriers))
 
 
+def mobility(
+    board: Board, cell: Cell, barriers: Iterable[Cell] | None = None, horizon: int = 3
+) -> float:
+    """How much room ``cell`` has *nearby*, as a fraction of the best a cell could have.
+
+    Region size answers "is there anywhere left to go", which on an open board is
+    the same 48/49 everywhere and therefore decides nothing. This answers the
+    question that actually kills a thief: "how many places can I be in three
+    moves?" A centre cell reaches roughly 25; a corner reaches 10 while still
+    reporting full region size and two exits, so neither of the other terms sees
+    the trap closing.
+    """
+    reachable = distance_map(board, cell, barriers)
+    near = sum(1 for dist in reachable.values() if 0 < dist <= horizon)
+    ceiling = 2 * horizon * (horizon + 1)  # the open-plane diamond around a cell
+    return min(1.0, near / ceiling) if ceiling else 0.0
+
+
 def is_cut_vertex(board: Board, cell: Cell, barriers: Iterable[Cell] | None = None) -> bool:
     """Would sealing ``cell`` split its surroundings into disconnected pieces?
 
