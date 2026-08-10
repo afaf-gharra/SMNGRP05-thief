@@ -82,6 +82,31 @@ def board() -> Board:
 
 
 @pytest.fixture
+def sdk(tmp_path):
+    """The SDK facade over a throwaway copy of the shipped police config."""
+    from p2p_chase.sdk import ChaseSdk
+
+    directory = tmp_path / "config"
+    shutil.copytree(REPO_ROOT / "config" / "police", directory)
+    return ChaseSdk(directory, workdir=tmp_path)
+
+
+def sealed_log(tmp_path: Path, tamper: bool = False) -> Path:
+    """A three-step commit-reveal log, optionally with one record rewritten."""
+    from p2p_chase.domain.crypto import CommitReveal
+
+    records = []
+    for step in (1, 2, 3):
+        payload = {"step": step, "position": [step, step], "move": "N"}
+        records.append({"payload": payload, **CommitReveal.seal(payload)})
+    if tamper:
+        records[1]["payload"]["position"] = [9, 9]
+    path = tmp_path / "log.json"
+    path.write_text(json.dumps({"game_id": "g", "records": records}), encoding="utf-8")
+    return path
+
+
+@pytest.fixture
 def config_dir(tmp_path: Path) -> Path:
     """A private copy of the police config, so a test may edit it freely."""
     target = tmp_path / "config"
