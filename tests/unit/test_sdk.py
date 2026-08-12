@@ -19,7 +19,7 @@ def test_preflight_reports_what_a_match_would_use(sdk):
     assert report["group_id"] == "SMNGRP05"
     assert report["agreed_terms"]["board_size"] == 7
     assert report["hint_provider"] == "template"
-    assert report["scent_model"]["worked_example"]["after_1_turn"] == pytest.approx(0.81)
+    assert report["scent_model"]["worked_example"]["after_1_turn"] == pytest.approx(0.80)
 
 
 def test_preflight_refuses_an_incomplete_agreement(sdk):

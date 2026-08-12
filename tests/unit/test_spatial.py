@@ -138,3 +138,17 @@ def test_a_wall_is_only_worth_a_turn_when_it_can_reach_the_thief(board):
     assert should_spend(plan=plan, expected_distance=1.0, **common) is True
     assert should_spend(plan=plan, expected_distance=6.0, **common) is False
 
+
+
+def test_a_wall_that_enlarges_the_thiefs_region_is_never_built(board):
+    """No bonus may buy a wall that helps the thief.
+
+    Sealing a cut vertex on the wrong side of ourselves does precisely that: our
+    own body was blocking the corridor, the wall takes over that job, and then we
+    walk away leaving more room than we found. Seen live -- one seal took the
+    thief's expected region from 18.8 to 26.5 and the pursuit distance from 1.1
+    to 10.6, bought by a cut bonus that outweighed a negative containment term.
+    """
+    wall = {(3, col) for col in range(7) if col != 3}
+    plan = plan_barrier(board, (3, 3), wall, [((6, 6), 1.0)], cut_bonus=1000.0)
+    assert plan is None or plan.cells_removed >= 0

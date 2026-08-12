@@ -70,14 +70,33 @@ def decode_position(
         return Decoded(None, False, f"peak {cell} is inside a barrier")
 
     if previous is None:
-        if expected_start is not None and cell != expected_start:
-            return Decoded(None, False, f"first peak {cell} is not the signed start {expected_start}")
+        # The opponent moves and *then* deposits, so the first field we ever see
+        # peaks on the cell it moved to -- one step from the signed start, not on
+        # it. Demanding equality here rejected the opening field of every
+        # sub-game and latched distrust before a single turn had been played,
+        # silently disabling the tracker for the whole match.
+        if expected_start is not None and not _within_one_step(
+            board, cell, expected_start, barriers
+        ):
+            return Decoded(
+                None, False,
+                f"first peak {cell} is not reachable in one step from the "
+                f"signed start {expected_start}",
+            )
         return Decoded(cell, True)
 
-    if cell != previous and cell not in board.neighbors(previous, barriers):
+    if not _within_one_step(board, cell, previous, barriers):
         return Decoded(None, False, f"peak jumped {previous} -> {cell} in one turn")
 
     return Decoded(cell, True)
+
+
+def _within_one_step(board: Board, cell: Cell, origin: Cell, barriers: set[Cell]) -> bool:
+    """Could someone standing on ``origin`` be on ``cell`` after one move?
+
+    Staying put counts: ``STAY`` is in the agreed move set.
+    """
+    return cell == origin or cell in board.neighbors(origin, barriers)
 
 
 class ScentTracker:

@@ -29,6 +29,22 @@ GAUSSIAN = "gaussian"
 #: exp(-GAUSSIAN_K * d^2) reproduces the book's figure to two decimal places.
 GAUSSIAN_K = 0.375
 
+#: How a trail fades. The book writes the decay multiplicatively --
+#: ``tau(t+1) = max(0, (1 - rho) * tau(t) + delta_tau)`` -- so a 0.9 deposit sits
+#: at 0.81 a turn later. The reference implementation subtracts instead, leaving
+#: 0.80, and every team we have met plays that form under the name
+#: ``subtractive_chebyshev_v1``.
+#:
+#: Both are here because the difference is real and neither is a mistake. It is
+#: also *not* one of the fourteen signed terms, so two peers can agree every hash
+#: and still fade their fields differently -- which is the worst shape a
+#: disagreement can take: the match plays out cleanly and the audits then
+#: disagree with nothing to point at. Whichever is chosen must therefore be
+#: declared in writing to the opponent, which is why it is a named mode rather
+#: than a constant someone has to read the source to discover.
+MULTIPLICATIVE = "multiplicative"
+SUBTRACTIVE = "subtractive"
+
 
 class SmellField:
     """Scent intensities over the whole board as known to one peer."""
@@ -40,13 +56,20 @@ class SmellField:
         decay: float,
         min_center: float = 0.0,
         falloff: str = LINEAR,
+        decay_mode: str = SUBTRACTIVE,
     ) -> None:
         self._board_size = board_size
         self._grid_size = grid_size
         self._decay = decay
         self._min_center = min_center
         self._falloff = falloff
+        self._decay_mode = decay_mode
+        self._subtractive = decay_mode == SUBTRACTIVE
         self._values: dict[Cell, float] = {}
+
+    @property
+    def decay_mode(self) -> str:
+        return self._decay_mode
 
     def emission(self, center: Cell, intensity: float) -> dict[Cell, float]:
         """The ``grid_size x grid_size`` window this peer would lay around ``center``.
@@ -96,10 +119,20 @@ class SmellField:
                 self._values[cell] = max(self._values.get(cell, 0.0), float(value))
 
     def decay_all(self) -> None:
-        """One full turn elapsed: every intensity fades by ``(1 - rho)``."""
+        """One full turn elapsed: every intensity fades by the agreed rule.
+
+        Subtractive fading reaches zero in a fixed number of turns, which is what
+        the league plays and what keeps a trail from lingering. Multiplicative
+        fading only approaches zero, so the cutoff below is what actually retires
+        a cell — without it a trail would linger at ever smaller values forever,
+        and a belief that reads absolute intensity would keep smelling a corridor
+        the opponent left forty turns ago.
+        """
         retained = 1.0 - self._decay
         for cell in list(self._values):
-            faded = round(max(0.0, self._values[cell] * retained), 4)
+            value = self._values[cell]
+            faded = value - self._decay if self._subtractive else value * retained
+            faded = round(max(0.0, faded), 4)
             if faded <= 0.0005:
                 del self._values[cell]  # drop dead cells so snapshots stay small
             else:

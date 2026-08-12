@@ -94,7 +94,19 @@ def _evaluate(
     distances = reachability.distance_map(board, position, after)
     reachable_mass = sum(p for target, p in belief_cells if target in distances or target == cell)
     own_region = reachability.region_size(board, position, after)
-    viable = reachable_mass > 0.5 and own_region >= own_region_floor * board.cells
+    # A wall that *enlarges* the thief's expected region is worse than no wall,
+    # and no bonus should be able to buy it. Sealing a cut vertex on the wrong
+    # side of ourselves does exactly that: our own body had been blocking the
+    # corridor, the wall replaces us there, and we walk away leaving more room
+    # than we found. Observed live -- one seal took the thief's expected region
+    # from 18.8 to 26.5 and the pursuit distance from 1.1 to 10.6, bought by a
+    # cut bonus large enough to outweigh a negative containment term.
+    helps_us = removed >= 0.0
+    viable = (
+        helps_us
+        and reachable_mass > 0.5
+        and own_region >= own_region_floor * board.cells
+    )
 
     return BarrierPlan(
         direction=direction,

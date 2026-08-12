@@ -62,6 +62,9 @@ def expected_region_size(
     the cells sharing a component share an answer.
     """
     blocked = set(barriers) if barriers else set()
+    if not any(probability > 0.0 for _cell, probability in belief_cells):
+        return float(board.cells)  # we know nothing, so assume the worst
+
     cache: dict[Cell, int] = {}
     total = 0.0
     weight = 0.0
@@ -75,7 +78,12 @@ def expected_region_size(
                 cache[member] = size
         total += probability * cache[cell]
         weight += probability
-    return total / weight if weight else float(board.cells)
+    # Every cell the thief might be on is walled: it has no room left at all.
+    # Falling back to the whole board here would be exactly backwards, and it
+    # made the single most valuable wall in the game -- the one sealing the cell
+    # the thief is standing on, which rule 46 counts as a capture -- look as
+    # though it *enlarged* the thief's region.
+    return total / weight if weight else 0.0
 
 
 def expected_distance(

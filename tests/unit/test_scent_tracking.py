@@ -98,7 +98,17 @@ def test_a_peak_inside_a_wall_is_refused(board):
     assert decoded.trusted is False
 
 
-def test_a_first_peak_away_from_the_signed_start_is_refused(board):
+def test_a_first_peak_one_step_from_the_signed_start_is_accepted(board):
+    """The opponent moves before it deposits, so the opening field is never on
+    the start cell. Rejecting it here latched distrust before the first turn."""
+    for opening in ((0, 0), (0, 1), (1, 0)):
+        decoded = decode_position({f"{opening[0]},{opening[1]}": 0.9}, board, set(),
+                                  None, expected_start=(0, 0))
+        assert decoded.trusted is True, opening
+        assert decoded.cell == opening
+
+
+def test_a_first_peak_far_from_the_signed_start_is_refused(board):
     decoded = decode_position({"5,5": 0.9}, board, set(), None, expected_start=(0, 0))
     assert decoded.trusted is False
 

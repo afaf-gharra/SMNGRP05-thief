@@ -136,8 +136,9 @@ def test_the_scent_model_ships_a_worked_numeric_example(config):
     """Rule 23: the model *and a concrete number* must be exchanged and locked."""
     model = describe_scent_model(config)
     assert model["peak_intensity"] == 0.9
-    assert model["worked_example"]["after_1_turn"] == pytest.approx(0.81)
-    assert model["worked_example"]["after_7_turns"] == pytest.approx(0.4305, abs=1e-3)
+    assert model["decay_mode"] == "subtractive"
+    assert model["worked_example"]["after_1_turn"] == pytest.approx(0.80)
+    assert model["worked_example"]["after_7_turns"] == pytest.approx(0.20, abs=1e-3)
 
 
 # ------------------------------------------------------------------- overlay

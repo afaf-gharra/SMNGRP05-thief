@@ -113,4 +113,5 @@ def _scent_field(config, size: int) -> SmellField:
         decay=config.require("smell.decay_per_step"),
         min_center=config.get("smell.min_center_intensity", 0.0),
         falloff=config.get("smell.falloff", "linear"),
+        decay_mode=config.get("smell.decay_mode", "subtractive"),
     )

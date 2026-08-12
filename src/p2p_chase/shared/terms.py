@@ -95,15 +95,26 @@ def describe_scent_model(config: ConfigManager) -> dict:
     """
     peak = config.get("smell.emit_intensity")
     decay = config.get("smell.decay_per_step")
+    subtractive = config.get("smell.decay_mode", "subtractive") == "subtractive"
+
+    def after(turns: int) -> float:
+        if subtractive:
+            return round(max(0.0, peak - decay * turns), 4)
+        return round(peak * (1 - decay) ** turns, 4)
+
     return {
         "falloff": config.get("smell.falloff", "linear"),
         "grid_size": config.get("smell.grid_size"),
         "peak_intensity": peak,
         "decay_per_step": decay,
-        "decay_formula": "tau(t+1) = max(0, (1 - rho) * tau(t) + delta_tau)",
+        "decay_mode": "subtractive" if subtractive else "multiplicative",
+        "decay_formula": (
+            "tau(t+1) = max(0, tau(t) - rho) + delta_tau" if subtractive
+            else "tau(t+1) = max(0, (1 - rho) * tau(t) + delta_tau)"
+        ),
         "worked_example": {
             "deposit": peak,
-            "after_1_turn": round(peak * (1 - decay), 4),
-            "after_7_turns": round(peak * (1 - decay) ** 7, 4),
+            "after_1_turn": after(1),
+            "after_7_turns": after(7),
         },
     }

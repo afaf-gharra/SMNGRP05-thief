@@ -2,7 +2,13 @@
 
 import pytest
 
-from p2p_chase.domain.smell import GAUSSIAN, LINEAR, SmellField, parse_cell
+from p2p_chase.domain.smell import (
+    GAUSSIAN,
+    LINEAR,
+    MULTIPLICATIVE,
+    SmellField,
+    parse_cell,
+)
 
 
 def field(**kwargs):
@@ -39,9 +45,24 @@ def test_emission_is_clipped_at_the_board_edge():
     assert all(r >= 0 and c >= 0 for r, c in window)
 
 
-def test_decay_is_multiplicative_as_the_book_specifies():
-    """tau(t+1) = (1 - rho) * tau(t): a trail fades, it is not subtracted away."""
+def test_decay_subtracts_by_default_because_that_is_what_the_league_plays():
+    """tau(t+1) = tau(t) - rho, the reference's `subtractive_chebyshev_v1`."""
     smell = field()
+    smell.deposit((3, 3), 0.9)
+    smell.decay_all()
+    assert smell.intensity_at((3, 3)) == pytest.approx(0.80, abs=1e-4)
+    smell.decay_all()
+    assert smell.intensity_at((3, 3)) == pytest.approx(0.70, abs=1e-4)
+
+
+def test_the_books_multiplicative_law_is_still_available():
+    """tau(t+1) = (1 - rho) * tau(t): kept, because the book writes it this way.
+
+    The two forms differ by one hundredth after a single turn, which is exactly
+    the kind of gap that plays a clean match and then fails an audit. Neither is
+    wrong; the mode simply has to be agreed and declared, so both live here.
+    """
+    smell = field(decay_mode=MULTIPLICATIVE)
     smell.deposit((3, 3), 0.9)
     smell.decay_all()
     assert smell.intensity_at((3, 3)) == pytest.approx(0.81, abs=1e-4)
@@ -49,8 +70,17 @@ def test_decay_is_multiplicative_as_the_book_specifies():
     assert smell.intensity_at((3, 3)) == pytest.approx(0.729, abs=1e-4)
 
 
-def test_a_single_deposit_stays_readable_for_about_seven_turns():
+def test_a_subtractive_trail_reaches_zero_in_a_fixed_number_of_turns():
+    """Unlike the multiplicative law it terminates, so dead scent cannot linger."""
     smell = field()
+    smell.deposit((3, 3), 0.9)
+    for _ in range(9):
+        smell.decay_all()
+    assert smell.intensity_at((3, 3)) == 0.0
+
+
+def test_a_single_deposit_stays_readable_for_about_seven_turns():
+    smell = field(decay_mode=MULTIPLICATIVE)
     smell.deposit((3, 3), 0.9)
     for _ in range(7):
         smell.decay_all()
