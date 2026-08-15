@@ -106,3 +106,43 @@ def test_the_thief_speaks_without_naming_itself(board):
         choice = talker.planner.choose(true_sector, geo.opposite(true_sector), 0.5, step)
         leaked += bool(own_words & _words(talker._compose(Role.THIEF, choice)))
     assert leaked == 0
+
+
+def test_no_hint_we_can_emit_contains_a_non_ascii_character():
+    """A hint is sealed, so one stray character can read as tampering.
+
+    The payload is hashed over canonical JSON with ``ensure_ascii=False``. An
+    opponent using Python's default ``ensure_ascii=True`` renders the same
+    character as an escape and computes a different digest for that step -- an
+    honest turn indistinguishable from a forged one, and rule 35 voids the game
+    for both teams. We cannot force other implementations to serialise our way;
+    we can decline to give them the chance to differ.
+
+    Two frames once carried an em-dash and it reached three to eight sealed
+    payloads per sub-game against a real opponent.
+    """
+    from p2p_chase.strategy.talk.templates import (
+        _POLICE_FRAMES,
+        _PREPOSITIONS,
+        _THIEF_FRAMES,
+        _VAGUE,
+    )
+
+    for sentence in (*_THIEF_FRAMES, *_POLICE_FRAMES, *_VAGUE, *_PREPOSITIONS):
+        offending = [character for character in sentence if ord(character) > 127]
+        assert not offending, f"non-ASCII {offending} in {sentence!r}"
+
+
+def test_a_composed_hint_survives_a_strict_ascii_serializer(board):
+    """End to end: whatever we assemble must hash identically either way."""
+    import json
+    import random
+
+    from p2p_chase.strategy.talk.templates import TemplateTalker
+
+    talker = TemplateTalker(board, "New York", max_words=15, rng=random.Random(5))
+    for sector in ("north-west", "south-east", "centre", ""):
+        for _ in range(20):
+            choice = talker.planner.choose(sector, geo.opposite(sector) if sector else "", 0.5, 1)
+            hint = talker._compose(Role.THIEF, choice)
+            assert json.dumps(hint, ensure_ascii=False) == json.dumps(hint)

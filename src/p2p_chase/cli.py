@@ -40,6 +40,8 @@ def build_parser() -> argparse.ArgumentParser:
                       help="this peer's natural role; roles alternate across sub-games")
     peer.add_argument("--config", default=None, help="config directory (default: config/<role>)")
     peer.add_argument("--no-gui", action="store_true", help="headless: console only")
+    peer.add_argument("--quiet", action="store_true",
+                      help="headless: print only the final summary, not every turn")
     peer.add_argument("--no-email", action="store_true", help="write artifacts but do not send")
 
     replay = sub.add_parser("replay", help="replay a saved log with cryptographic verification")
@@ -56,10 +58,36 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _progress(event: dict) -> None:
+    """Print the turns as they happen, so a headless match is watchable.
+
+    Only the events that mark progress: the repainting view events fire after
+    every state change and would bury them.
+    """
+    kind = event.get("type")
+    if kind == "sub_game_start":
+        print(f"--- sub-game {event['sub_game_number']}: we play {event['role']} ---",
+              flush=True)
+    elif kind == "negotiated":
+        print(f"    terms agreed, game {event.get('game_id')}", flush=True)
+    elif kind == "moved":
+        print(f"    step {event.get('step')}  {event.get('role')}", flush=True)
+    elif kind == "incoming":
+        message = event.get("message") or {}
+        claim = message.get("capture_claim")
+        if claim:
+            print(f"    <- they claim a capture on {claim}", flush=True)
+    elif kind == "duplicate_dropped":
+        print("    <- duplicate turn dropped", flush=True)
+
+
 def run_peer(args) -> int:
     sdk = ChaseSdk(args.config or default_config(args.role))
     if args.no_gui:
-        outcome = sdk.play_series(args.role, send_email=not args.no_email)
+        listener = None if args.quiet else _progress
+        outcome = sdk.play_series(
+            args.role, listener=listener, send_email=not args.no_email
+        )
     else:  # pragma: no cover - Tkinter
         from p2p_chase.gui.live_app import LivePeerApp
 

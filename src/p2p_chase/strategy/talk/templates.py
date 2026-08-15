@@ -26,10 +26,19 @@ from p2p_chase.strategy.talk.bluff import BluffChoice, BluffPlanner, urgency_of
 # handed our true sector under an honest intent flag, it put a plainly false
 # statement into a signed record labelled truthful. Keep the claim and the flag
 # pointing the same way.
+#
+# Every frame is also plain ASCII, deliberately. The hint travels inside the
+# sealed payload, so an opponent that serialises with Python's default
+# ``ensure_ascii=True`` renders one em-dash as ``—`` and computes a different
+# digest for that step -- an honest turn that reads as tampering at the audit,
+# where rule 35 voids the game for both teams. We cannot make other teams
+# serialise correctly, but we can decline to hand them the opportunity. Two of
+# these frames carried an em-dash and it reached three to eight sealed payloads
+# per sub-game.
 _THIEF_FRAMES = (
     "Slipping {prep} {place} while you waste time.",
     "Already {prep} {place}, and still moving.",
-    "Catch your breath — I am {prep} {place}.",
+    "Catch your breath, I am {prep} {place}.",
     "Every alley {prep} {place} knows me better than you do.",
 )
 _POLICE_FRAMES = (
@@ -37,7 +46,7 @@ _POLICE_FRAMES = (
     "My people are {prep} {place}. Nowhere left to run.",
     "Working {prep} {place} now, and the walls are going up.",
     "I have {place} covered. Try me.",
-    "Sweeping {prep} {place} — you left more of a trail than you think.",
+    "Sweeping {prep} {place}, you left more of a trail than you think.",
 )
 _PREPOSITIONS = ("around", "through", "past", "near", "by")
 _VAGUE = (

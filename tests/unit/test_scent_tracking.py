@@ -136,3 +136,31 @@ def test_a_silent_opponent_is_not_treated_as_a_cheat(board):
     result = tracker.update({}, set())
     assert result.trusted is True
     assert result.cell is None
+
+
+# --------------------------------------------------------------- wire shape
+
+
+def test_the_audit_reveal_carries_exactly_three_keys():
+    """The reference peer builds this with ``cls(**data)`` and raises on extras.
+
+    An unknown key is not ignored there -- it kills the opponent's process at the
+    audit, after a complete and otherwise valid match. This guard exists because
+    a well-meant ``commit_scheme`` field, added to explain our hashing to a peer
+    whose auditor disagreed with ours, did exactly that against the course
+    reference. Anything we want to tell an opponent about our construction goes
+    in the report or in writing, never on the wire.
+    """
+    from dataclasses import fields
+
+    from p2p_chase.domain.protocol import AuditPayload
+
+    assert {f.name for f in fields(AuditPayload)} == {"sender", "records", "result_claim"}
+
+
+def test_a_strict_peer_can_rebuild_our_audit_reveal():
+    """Simulates the reference's ``cls(**data)`` over what we actually send."""
+    from p2p_chase.domain.protocol import AuditPayload
+
+    sent = AuditPayload(sender="thief", records=[], result_claim="survival").to_dict()
+    AuditPayload(**sent)  # must not raise

@@ -19,7 +19,7 @@ payload already arrived.
 import logging
 
 from p2p_chase.constants import Outcome
-from p2p_chase.domain.crypto import audit_records
+from p2p_chase.domain.crypto import COMMIT_SCHEME, audit_records
 from p2p_chase.domain.protocol import AuditPayload
 
 logger = logging.getLogger(__name__)
@@ -50,7 +50,7 @@ def exchange_audit(runtime) -> dict:
 
     opponent = audit_records(reply.get("records", []))
     agreed_result = reply.get("result_claim")
-    return {
+    verdict = {
         "passed": self_check["passed"] and opponent["passed"],
         "self_check": self_check,
         "opponent": opponent,
@@ -58,7 +58,23 @@ def exchange_audit(runtime) -> dict:
         "opponent_result_claim": agreed_result,
         "results_agree": agreed_result == result,
         "tampered_by": _blame(self_check, opponent, runtime.role.value),
+        # Recorded in our own artifacts only, never sent: the reveal message is a
+        # fixed three-key shape and a strict peer raises on anything else.
+        "commit_scheme": COMMIT_SCHEME,
     }
+    # Every step failing while both sides agree on the outcome is not what forgery
+    # looks like -- forgery alters some steps and changes who won. It is what two
+    # different digests of the same honest log look like. Say so in the record so
+    # the conversation starts from the two constructions rather than an accusation.
+    if not opponent["passed"] and opponent["verified_steps"] == 0 and agreed_result == result:
+        verdict["likely_scheme_mismatch"] = True
+        logger.warning(
+            "Every one of the opponent's %d steps failed to verify, yet we agree on "
+            "the result. That pattern is a commit-construction disagreement rather "
+            "than tampering. Ours is: %s",
+            opponent["total_steps"], COMMIT_SCHEME,
+        )
+    return verdict
 
 
 def _blame(self_check: dict, opponent: dict, own_role: str) -> str | None:

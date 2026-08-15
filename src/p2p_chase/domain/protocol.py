@@ -89,6 +89,12 @@ class ControlMessage:
 class AuditPayload:
     """End-of-match reveal: the full sealed history plus every nonce."""
 
+    # These three fields and no others. The reference implementation builds this
+    # with ``cls(**data)``, so an extra key does not get ignored -- it raises
+    # TypeError and takes the opponent's process down at the audit, after a
+    # complete and otherwise valid match. Adding a field here to explain
+    # ourselves to a peer is therefore the one place where being helpful breaks
+    # the game; say it in the report and in writing instead.
     sender: str
     records: list                        # [{"payload": {...}, "nonce": str, "commit": str}]
     result_claim: str                    # "capture" | "survival" | "timeout"

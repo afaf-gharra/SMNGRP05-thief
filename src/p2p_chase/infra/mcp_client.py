@@ -37,15 +37,60 @@ class McpTransport:
         self._retry = float(retry_interval)
         self._audit_timeout = float(audit_timeout)
         self._control_timeout = float(control_timeout)
+        self._loop = None
+        self._client = None
 
     def _call(self, tool: str, argument: dict) -> None:
-        from fastmcp import Client  # noqa: PLC0415
+        """Send one tool call over the session we already hold.
 
-        async def invoke() -> None:
-            async with Client(self.url) as client:
-                await client.call_tool(tool, {_ARG_NAME.get(tool, "message"): argument})
+        Opening a fresh MCP session for every call is the obvious implementation
+        and it is what we shipped first. It costs four HTTP round trips per turn
+        instead of one -- initialise, list tools, call, terminate -- and against a
+        real opponent that reached 87 to 124 connections a minute, which is enough
+        to make a free tunnel start refusing *new* connections while established
+        ones keep working. Their client then failed at sub-game boundaries, where
+        it had to open one, and reported us as unreachable while our own logs
+        showed no error at all.
 
-        asyncio.run(invoke())
+        One session per sub-game is all the protocol asks for.
+        """
+        client = self._session()
+        try:
+            self._run(
+                client.call_tool(tool, {_ARG_NAME.get(tool, "message"): argument})
+            )
+        except Exception:
+            # A broken session is not a broken opponent: drop it so the retry
+            # opens a clean one rather than reusing something already dead.
+            self.close_session()
+            raise
+
+    def _session(self):
+        """The open client, opening one if this is the first call of a sub-game."""
+        if self._client is None:
+            from fastmcp import Client  # noqa: PLC0415
+
+            client = Client(self.url)
+            self._run(client.__aenter__())
+            self._client = client
+        return self._client
+
+    def close_session(self) -> None:
+        """End the current MCP session, if any. Safe to call when none is open."""
+        client, self._client = self._client, None
+        if client is not None:
+            with contextlib.suppress(Exception):
+                self._run(client.__aexit__(None, None, None))
+
+    def _run(self, coroutine):
+        """Drive a coroutine on our own long-lived loop.
+
+        The loop has to outlive the call: ``asyncio.run`` closes the loop it
+        creates, which would take the session down with it and defeat the point.
+        """
+        if self._loop is None:
+            self._loop = asyncio.new_event_loop()
+        return self._loop.run_until_complete(coroutine)
 
     def _call_with_retry(self, tool: str, argument: dict, timeout: float | None = None) -> None:
         deadline = time.monotonic() + (
@@ -68,6 +113,10 @@ class McpTransport:
     # ------------------------------------------------------------- handshake
 
     def exchange_agreement(self, signed: dict) -> dict | None:
+        # A sub-game is its own session on both sides: the opponent tears its
+        # server down between them, so carrying ours across the boundary would
+        # reuse a connection they have already closed.
+        self.close_session()
         self._call_with_retry("negotiate", signed)
         try:
             return self._inboxes.agreements.get(timeout=self._connect_timeout)

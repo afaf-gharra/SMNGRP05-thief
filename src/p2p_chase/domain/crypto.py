@@ -23,6 +23,15 @@ from typing import Any
 from p2p_chase.constants import NONCE_BYTES
 from p2p_chase.exceptions import CryptoError
 
+#: How we build every commit, stated in one line so an opponent whose auditor
+#: disagrees can compare methods instead of guessing. Sent alongside the reveal.
+#: This exact construction is what the course reference implementation verifies
+#: against, and what the league's published interop spec pins.
+COMMIT_SCHEME = (
+    'sha256(json.dumps(payload, sort_keys=True, ensure_ascii=False, '
+    'separators=(",",":")) + "|" + nonce)'
+)
+
 
 def canonical_json(payload: Any) -> str:
     """Deterministic JSON: sorted keys, compact separators, no ASCII escaping."""
