@@ -22,7 +22,7 @@ mcp_servers = { cop = "https://unnecessary-isaac-purpose-firms.trycloudflare.com
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "https://mission-conf-circular-mechanism.trycloudflare.com/mcp"  # saedshki (GRP00001), they open on police
+opponent_url           = "https://channels-prominent-jul-civil.trycloudflare.com/mcp"  # saedshki COUNTED
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
 connect_timeout_seconds = 60
