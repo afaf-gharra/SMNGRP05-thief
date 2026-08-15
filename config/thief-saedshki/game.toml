@@ -1,0 +1,106 @@
+# PRIVATE, LOCAL configuration for THIS peer only.
+#
+# Nothing the opponent must agree on lives here. Every shared term — board size,
+# start cells, movement set, barrier quota, scoring, pheromone model, map area,
+# hint length — lives ONLY in the signed `game.json` beside this file, which both
+# peers hold byte-identically and verify by SHA-256 before the first move.
+#
+# Book: Appendix B (JSON = shared and signed; TOML = private and local).
+version = "1.00"
+
+[game]
+group_id   = "SMNGRP05"
+group_name = "SMNGRP05"
+members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
+# declaration is exchanged with opponents and archived in their repos, and the
+# lecturer already holds the ID numbers from the submission form.
+repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
+# Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
+# Until you open a tunnel these stay on loopback, which is fine for local testing.
+mcp_servers = { cop = "https://unnecessary-isaac-purpose-firms.trycloudflare.com/mcp", thief = "https://unnecessary-isaac-purpose-firms.trycloudflare.com/mcp" }
+
+[network]
+host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
+my_port                = 8801                          # MY MCP server port
+opponent_url           = "https://mission-conf-circular-mechanism.trycloudflare.com/mcp"  # saedshki (GRP00001), they open on police
+turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
+poll_interval_seconds  = 0.5
+connect_timeout_seconds = 60
+retry_interval_seconds = 1.0
+audit_send_timeout_seconds = 10
+watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
+
+[belief]
+smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass
+hint_trust_initial = 0.5    # prior P(opponent's hint is truthful)
+hint_trust_floor   = 0.05   # never fully trust or fully dismiss a talker
+hint_trust_ceiling = 0.95
+
+[strategy]
+# The graded seam. Point either key at a BrainBase subclass "package.module:Class".
+police_class = "p2p_chase.strategy.police_brain:ArchitectPolice"
+thief_class  = "p2p_chase.strategy.thief_brain:OpenSpaceThief"
+
+[strategy.police]
+capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a capture.
+#                             Raised from 0.18 after a live loss: at that bar the officer
+#                             claimed ten times in one sub-game, caught nothing, announced
+#                             its own cell each time, and oscillated chasing the belief peak.
+wall_threshold     = 3.0    # structural value a wall must clear before we give up a turn to build (tuned: docs/RESEARCH-REPORT.md)
+barrier_reserve    = 3      # walls held back for the endgame squeeze
+anchor_bonus       = 1.2    # per side already touching a wall or the board edge
+cut_bonus          = 6.0    # sealing a cut vertex severs a corridor outright
+occupancy_bonus    = 12.0   # sealing a cell the thief is standing on IS a capture
+own_region_floor   = 0.25   # never wall ourselves into less than this share of the board
+pressure_weight    = 1.0    # weight on expected walking distance to the thief
+containment_weight = 0.5    # weight on shrinking the thief's reachable region
+coverage_weight    = 1.2    # weight on belief mass within one step of us
+centrality_weight  = 0.2    # mild pull toward the centre of mass on quiet turns
+
+[strategy.thief]
+region_weight    = 1.0      # weight on "how much room do I still have"
+mobility_weight  = 3.0      # weight on "how many cells can I reach in three moves"
+#                           A corner reports full region size and two exits, so
+#                           without this term nothing sees the trap closing.
+distance_weight  = 0.35     # weight on "how far from the believed officer".
+#                           Lowered from 0.6: raw distance is what walks a thief
+#                           into the far corner, which is exactly how uoh-ay26
+#                           took all three of our thief sub-games at step 12.
+novelty_weight   = 0.15     # mild preference for unvisited cells
+deadend_penalty  = 0.8      # a cell with one exit is one barrier from losing
+contact_penalty  = 1.5      # never volunteer to stand next to the officer
+exposure_weight  = 0.4      # weight on belief mass within two steps
+
+[trash_talk]
+# HOW the natural-language hint is written. The MOVE is ALWAYS pure Python and is
+# never delegated to a model (book ch.6, mandatory rule 25).
+provider      = "template"   # template (0 tokens, default) | claude_api | ollama | claude_cli
+model         = "claude-haiku-4-5-20251001"
+every_n_steps = 1
+lie_rate      = 0.45         # target fraction of hints that are deliberate misdirection
+
+[llm]
+model                  = "template-zero-token"
+step_deadline_seconds  = 20   # hard cap on hint generation; miss => template fallback
+timeout_seconds        = 60
+
+[email]
+enabled   = true
+recipient = "lovely.lololagain@gmail.com, afafgharra000@gmail.com"
+# WARM-UP against saedshki (GRP00001): the report goes to them, as agreed, and
+# copies us so we keep our own record. NOT the lecturer -- a practice match
+# mailed to the lecturer is a false declaration under rules 37-38. For a
+# counted series this must be changed by hand to
+# rmisegal+uoh26finalgame@gmail.com, before the match starts, never mid-run.
+sender    = "me"
+
+[play]
+seed               = 19470529
+step_speed_seconds = 0.35
+
+[gui]
+cell_px = 56
+
+[paths]
+logs_dir  = "logs"
+state_dir = "state"
