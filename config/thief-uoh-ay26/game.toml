@@ -32,7 +32,13 @@ opponent_url           = "https://cop.uohay26game.com/mcp"  # fallback; see oppo
 opponent_urls = { cop = "https://cop.uohay26game.com/mcp", thief = "https://theif.uohay26game.com/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
-connect_timeout_seconds = 60
+connect_timeout_seconds = 1800  # W010: their cop was still 502 well after kickoff,
+# and both restarts of ours only reset a five-minute clock without changing that.
+# Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
+# technical loss and forcing yet another coordinated restart. Private, local, not
+# a signed term. The per-turn budget stays at 180s, so a peer that connects and
+# then dies is still caught quickly -- this only buys patience before the series
+# has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
 audit_send_timeout_seconds = 10
 watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
