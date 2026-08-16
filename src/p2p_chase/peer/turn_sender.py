@@ -54,19 +54,32 @@ def take_turn(runtime, claim_response: dict | None) -> None:
 
 
 def _capture_claim(runtime, decision: Decision):
-    """The cell we are accusing, or ``None`` if we are saying nothing.
+    """The cell the officer declares after acting — every turn, without exception.
 
-    Only the officer may claim, and only when the brain deliberately chose to.
-    Claiming reveals our exact cell, so it is a move in its own right rather
-    than a formality attached to every step.
+    This used to be gated on ``decision.claims_capture``, on the reasoning that
+    naming our square gives our position away and should therefore be a
+    deliberate act. That gate was a straight loss. The scent field we send in
+    the *same message* peaks on the cell we occupy, so an opponent who decodes
+    it already knows exactly where we are — which is precisely how uoh-ay26 beat
+    us 30–90. The gate leaked nothing extra and cost us captures.
+
+    Cost us how: an unclaimed step onto the thief is not a capture anywhere.
+    Our own handler only ever sets ``i_am_caught`` from an incoming claim, the
+    course reference claims on every move, and uoh-ay26 state the rule outright
+    — coordinate equality is never converted into a capture retroactively at
+    the audit. So an officer that walks onto the thief while under-confident
+    simply fails to win a sub-game it had already won.
+
+    Barrier turns keep naming the wall rather than our feet: sealing the thief
+    in *is* the capture under rule 46, and the reference peer's thief answers
+    only what arrives in ``capture_claim``. Peers that also check the separately
+    published ``barrier_placed`` reach the same verdict by the other route.
     """
-    if runtime.role is not Role.POLICE or not decision.claims_capture:
+    if runtime.role is not Role.POLICE:
         return None
     if decision.move_type is MoveType.BARRIER:
-        return runtime.state.last_barrier()
-    if decision.move_type is MoveType.MOVE:
-        return runtime.state.position
-    return None
+        return runtime.state.last_barrier() or runtime.state.position
+    return runtime.state.position
 
 
 def send(runtime, decision: Decision, claim_response, capture_claim, win_claim) -> None:
@@ -75,7 +88,11 @@ def send(runtime, decision: Decision, claim_response, capture_claim, win_claim) 
         runtime.state, decision, runtime.usage(), runtime.tokens_total,
         extra={
             "opponent_trust": round(runtime.trust.trust, 3),
-            "claims_capture": bool(capture_claim),
+            # The brain's *intent*, not the wire field. The officer now names its
+            # square every turn, so ``bool(capture_claim)`` is always true for
+            # police and would record nothing; this keeps the log able to say
+            # which of those declarations was a considered accusation.
+            "claims_capture": bool(decision.claims_capture),
             # Both halves of the capture exchange are sealed, not just announced.
             # A claim binds the accuser to the cell it named; the answer binds us
             # to the admission. Sealing only one side lets the unsealed half be

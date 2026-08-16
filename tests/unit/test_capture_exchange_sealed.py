@@ -6,7 +6,7 @@ result is known — and the audit, which exists precisely to stop that, has noth
 to check against.
 """
 
-from p2p_chase.constants import Intent, MoveType, Role
+from p2p_chase.constants import Direction, Intent, MoveType, Role
 from p2p_chase.peer import turn_sender
 from p2p_chase.peer.world import build_world
 from p2p_chase.strategy.base import Decision
@@ -80,7 +80,8 @@ def test_the_officers_claim_is_sealed_with_the_cell_it_named(config):
 
     turn_sender.send(
         runtime,
-        Decision(MoveType.HOLD, None, hint="found you", intent=Intent.TRUTH.value),
+        Decision(MoveType.HOLD, None, hint="found you", intent=Intent.TRUTH.value,
+                 claims_capture=True),
         None, (6, 5), None,
     )
 
@@ -88,6 +89,75 @@ def test_the_officers_claim_is_sealed_with_the_cell_it_named(config):
     assert payload["capture_claim"] == [6, 5]
     assert payload["claims_capture"] is True
     assert runtime.transport.sent[-1]["capture_claim"] == [6, 5]
+
+
+# ------------------------------------------------- the officer names every square
+
+
+def test_the_officer_names_its_cell_even_when_it_is_not_accusing(config):
+    """An unclaimed step onto the thief is not a capture anywhere.
+
+    Our own handler sets ``i_am_caught`` only from an incoming claim, the course
+    reference claims on every move, and uoh-ay26 publish the rule explicitly:
+    coordinate equality is never converted into a capture at the audit. Gating
+    the claim on confidence therefore threw away sub-games we had already won.
+    """
+    runtime = _Runtime(config, Role.POLICE)
+    runtime.state.apply_move(MoveType.MOVE, Direction.E)
+
+    quiet = Decision(MoveType.MOVE, Direction.E, hint="walking", intent=Intent.TRUTH.value)
+    assert quiet.claims_capture is False
+
+    assert turn_sender._capture_claim(runtime, quiet) == runtime.state.position
+
+
+def test_a_holding_officer_still_names_its_cell(config):
+    """STAY is an action, and the thief may have stepped onto us during it."""
+    runtime = _Runtime(config, Role.POLICE)
+    runtime.state.apply_move(MoveType.HOLD, None)
+
+    decision = Decision(MoveType.HOLD, None, hint="waiting", intent=Intent.TRUTH.value)
+    assert turn_sender._capture_claim(runtime, decision) == runtime.state.position
+
+
+def test_a_barrier_turn_names_the_wall_not_our_feet(config):
+    """Sealing the thief in is the capture (rule 46), and the reference peer's
+    thief answers only what arrives in ``capture_claim``."""
+    runtime = _Runtime(config, Role.POLICE)
+    runtime.state.apply_move(MoveType.BARRIER, Direction.E, 14)
+
+    decision = Decision(MoveType.BARRIER, Direction.E, hint="walling", intent=Intent.TRUTH.value)
+    claim = turn_sender._capture_claim(runtime, decision)
+
+    assert claim == runtime.state.last_barrier()
+    assert claim != runtime.state.position
+
+
+def test_the_thief_never_claims(config):
+    """Only the officer may accuse; a claiming thief is a protocol violation."""
+    runtime = _Runtime(config, Role.THIEF)
+    runtime.state.apply_move(MoveType.MOVE, Direction.E)
+
+    decision = Decision(MoveType.MOVE, Direction.E, hint="running", intent=Intent.TRUTH.value,
+                        claims_capture=True)
+    assert turn_sender._capture_claim(runtime, decision) is None
+
+
+def test_the_sealed_log_still_distinguishes_a_considered_accusation(config):
+    """``claims_capture`` records the brain's intent, not the wire field, which
+    is now always set for police and would otherwise record nothing."""
+    runtime = _Runtime(config, Role.POLICE)
+    runtime.state.apply_move(MoveType.HOLD, None)
+
+    turn_sender.send(
+        runtime,
+        Decision(MoveType.HOLD, None, hint="routine", intent=Intent.TRUTH.value),
+        None, runtime.state.position, None,
+    )
+
+    payload = _sealed_payload(runtime)
+    assert payload["capture_claim"] == list(runtime.state.position)
+    assert payload["claims_capture"] is False
 
 
 def test_a_quiet_turn_seals_both_fields_as_null(config):
