@@ -22,7 +22,14 @@ mcp_servers = { cop = "https://7edc-147-236-163-154.ngrok-free.app/mcp", thief =
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "https://cop.uohay26game.com/mcp"  # uoh-ay26, they launch police
+opponent_url           = "https://cop.uohay26game.com/mcp"  # fallback; see opponent_urls
+# uoh-ay26's cop and thief are two separate programs in two separate repos, each
+# on its own hostname. Roles alternate every sub-game, so the address we dial has
+# to alternate with them: their cop answers on the odd sub-games (we are thief),
+# their thief on the even ones. A single opponent_url would spend half the series
+# negotiating with whichever of their peers is not playing. The misspelling in
+# "theif" is theirs and is the real deployed hostname -- do not correct it.
+opponent_urls = { cop = "https://cop.uohay26game.com/mcp", thief = "https://theif.uohay26game.com/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
 connect_timeout_seconds = 60

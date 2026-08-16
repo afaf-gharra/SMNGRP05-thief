@@ -88,6 +88,7 @@ class Orchestrator:
 
         for index in range(1, total + 1):
             role = role_for(natural_role, index)
+            self._dial_role_for(role)
             self.listener({"type": "sub_game_start", "sub_game_number": index, "role": role.value})
             runtime = PeerRuntime(
                 role=role, config=self.config, transport=self.transport,
@@ -101,6 +102,20 @@ class Orchestrator:
             game_id, game_uid = runtime.game_id or game_id, runtime.game_uid or game_uid
 
         return SeriesResult(summaries, self.own_identity, peer_identity, game_id, game_uid)
+
+    def _dial_role_for(self, own_role: Role) -> None:
+        """Aim the transport at whichever of the opponent's servers is playing.
+
+        Teams whose cop and thief are separate programs publish an endpoint per
+        role, and roles alternate every sub-game, so the address we dial has to
+        alternate with them. Optional on the transport: the in-memory doubles the
+        test suite plays whole series through have no notion of a URL.
+        """
+        aim = getattr(self.transport, "target_role", None)
+        if aim is None:
+            return
+        opponent = Role.THIEF if own_role is Role.POLICE else Role.POLICE
+        aim(opponent.value)
 
     def _play_one(self, runtime: PeerRuntime, index: int) -> dict:
         """Play one sub-game, converting a protocol failure into a scored result.

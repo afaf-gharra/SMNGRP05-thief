@@ -23,6 +23,10 @@ logger = logging.getLogger(__name__)
 
 _ARG_NAME = {"submit_audit": "payload"}  # every other tool takes `message`
 
+#: Wire role -> the key teams use when publishing their two endpoints. The league
+#: declaration says "cop"; our own Role enum says "police".
+_ENDPOINT_KEY = {"police": "cop"}
+
 
 class McpTransport:
     """Push to the opponent's tools, pull from our own inboxes."""
@@ -30,8 +34,17 @@ class McpTransport:
     def __init__(
         self, opponent_url: str, inboxes: PeerInboxes, connect_timeout: float = 60.0,
         retry_interval: float = 1.0, audit_timeout: float = 10.0, control_timeout: float = 2.0,
+        opponent_urls: dict | None = None,
     ) -> None:
         self.url = opponent_url
+        # Some teams serve each role from its own hostname, because their cop and
+        # their thief are two separate programs in two separate repositories --
+        # uoh-ay26 publish exactly that. Roles alternate every sub-game, so a
+        # single fixed URL would spend half the series talking to whichever of
+        # their peers is *not* playing. Keyed "cop"/"thief" to match the league
+        # declaration; absent or partial mappings fall back to ``opponent_url``,
+        # which is all an opponent running one dual-role process ever needs.
+        self._urls = dict(opponent_urls or {})
         self._inboxes = inboxes
         self._connect_timeout = float(connect_timeout)
         self._retry = float(retry_interval)
@@ -74,6 +87,19 @@ class McpTransport:
             self._run(client.__aenter__())
             self._client = client
         return self._client
+
+    def target_role(self, opponent_role: str) -> None:
+        """Point subsequent calls at the opponent's server for ``opponent_role``.
+
+        Called at each sub-game boundary. Switching hosts must drop the session:
+        it belongs to the old host, and carrying it over would send our opening
+        negotiation down a connection to a peer that is not playing this one.
+        """
+        url = self._urls.get(_ENDPOINT_KEY.get(opponent_role, opponent_role))
+        if not url or url == self.url:
+            return
+        self.close_session()
+        self.url = url
 
     def close_session(self) -> None:
         """End the current MCP session, if any. Safe to call when none is open."""
