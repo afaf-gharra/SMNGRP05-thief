@@ -18,6 +18,11 @@ group_name = "SMNGRP05"
 # not confirmed -- the derivation exists so that neither side names the match
 # alone, and this only stands in when both sides have settled the name.
 series_id  = "SMNGRP05-vs-uoh-ay26-W011"
+# Agreed with uoh-ay26 for W011. It happens to equal what our own derivation
+# produces, but it is pinned here rather than left implicit because their uid is
+# not a function of the match name -- they reported one value for both W010 and
+# W011 -- so the two sides only land on one uid if the string itself is agreed.
+series_uid = "63376864-62cf-5bce-54a5-86e9fdc3735b"
 members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
