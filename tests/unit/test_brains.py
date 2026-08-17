@@ -144,8 +144,17 @@ def test_a_bad_selector_is_reported_precisely(selector, message):
 
 
 def test_the_configured_brains_are_ours(config):
+    """The shipped thief is the one whose safety is proved, not merely scored.
+
+    ``SafeThief`` extends ``OpenSpaceThief`` rather than replacing it: the
+    positional score is still what chooses between options, but only after the
+    pursuit solver has ruled out the ones that lose.
+    """
+    from p2p_chase.strategy.safe_thief import SafeThief
+
     assert resolve_brain_cls(config, Role.POLICE) is ArchitectPolice
-    assert resolve_brain_cls(config, Role.THIEF) is OpenSpaceThief
+    assert resolve_brain_cls(config, Role.THIEF) is SafeThief
+    assert issubclass(SafeThief, OpenSpaceThief)
 
 
 def test_an_unset_selector_falls_back_to_the_shipped_brain(config):

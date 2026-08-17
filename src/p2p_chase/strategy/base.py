@@ -45,6 +45,38 @@ class TurnContext:
     tuning: dict = field(default_factory=dict)
 
 
+def candidate_moves(context: TurnContext) -> list[tuple[Direction | None, Cell]]:
+    """Every action a brain may take this turn — standing still included.
+
+    ``board.legal_moves`` answers a question about geometry: where can a piece
+    step. That is not the question a brain asks, which is what may I *do*. STAY
+    is in the signed move set and the state machine has always accepted it
+    (:attr:`OwnGameState.can_stay`), but nothing ever offered it to a brain, so
+    both of ours were obliged to move every single turn.
+
+    That is not a missing nicety, it is how we nearly lost. When both sides move
+    every turn the parity of the distance between them never changes, and our
+    thief spent 16 to 20 steps a sub-game at diagonal adjacency, alive only
+    because that parity put a shared cell out of reach. One STAY by the opponent
+    flips it and those adjacencies become capture chances. Standing still is
+    also the only reply left when every neighbour is covered.
+
+    A ``None`` direction means STAY; :func:`action_for` turns it into a move type.
+    """
+    state = context.state
+    moves: list[tuple[Direction | None, Cell]] = list(
+        state.board.legal_moves(state.position, state.barriers)
+    )
+    if state.can_stay:
+        moves.append((None, state.position))
+    return moves
+
+
+def action_for(direction: Direction | None) -> MoveType:
+    """``MOVE`` for a real step, ``HOLD`` for the deliberate STAY."""
+    return MoveType.MOVE if direction is not None else MoveType.HOLD
+
+
 @dataclass
 class Decision:
     """What the brain chose, and the paper trail behind it."""
@@ -94,7 +126,12 @@ class BrainBase:
             prompt_text=prompt,
             reasoning=reasoning,
             response_seconds=round(time.perf_counter() - started, 3),
-            fallback=move_type is MoveType.HOLD and direction is None,
+            # A deliberate STAY is also HOLD with no direction, so the absence of
+            # a direction cannot distinguish a choice from a failure. The missing
+            # *target* can: every brain that meant to stand still names the cell
+            # it is standing on, and only the "no legal move remains" paths leave
+            # it empty.
+            fallback=move_type is MoveType.HOLD and target is None,
             claims_capture=claims,
         )
 

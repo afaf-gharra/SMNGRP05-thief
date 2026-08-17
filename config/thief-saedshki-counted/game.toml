@@ -39,7 +39,7 @@ hint_trust_ceiling = 0.95
 [strategy]
 # The graded seam. Point either key at a BrainBase subclass "package.module:Class".
 police_class = "p2p_chase.strategy.police_brain:ArchitectPolice"
-thief_class  = "p2p_chase.strategy.thief_brain:OpenSpaceThief"
+thief_class  = "p2p_chase.strategy.safe_thief:SafeThief"
 
 [strategy.police]
 capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a capture.
