@@ -119,15 +119,53 @@ def test_a_step_onto_an_adjacent_cell_is_accepted(board):
     assert decoded.cell == (3, 4)
 
 
-def test_distrust_latches_for_the_rest_of_the_sub_game(board):
-    """A field that has already contradicted geometry does not get a second chance."""
+def test_a_single_contradiction_is_refused_without_blinding_us(board):
+    """One bad reading is a dialect, not a forgery.
+
+    The scent model is explicitly outside the signed terms — peers differ on
+    decay shape and on whether they deposit before or after moving — so latching
+    permanently on the first disagreement threw away the only sensor that names
+    the opponent's cell, for the rest of the sub-game, on one sample.
+    """
     tracker = ScentTracker(board, expected_start=(0, 0))
     assert tracker.update({"0,0": 0.9}, set()).trusted is True
 
+    # Refused for this turn: the caller falls back to the blunt update.
     assert tracker.update({"6,6": 0.9}, set()).trusted is False
-    # A perfectly plausible field afterwards must still be refused.
-    assert tracker.update({"0,1": 0.9}, set()).trusted is False
+    assert tracker.trusted is True
+
+    # A plausible field afterwards is believed again, measured from the last
+    # cell we actually accepted rather than the one we refused.
+    recovered = tracker.update({"0,1": 0.9}, set())
+    assert recovered.trusted is True
+    assert recovered.cell == (0, 1)
+
+
+def test_repeated_contradictions_do_latch(board):
+    """Persistent disagreement is a different thing, and it is still stickily
+    disbelieved rather than re-litigated every turn."""
+    tracker = ScentTracker(board, expected_start=(0, 0))
+    tracker.update({"0,0": 0.9}, set())
+
+    assert tracker.update({"6,6": 0.9}, set()).trusted is False
+    assert tracker.update({"5,1": 0.9}, set()).trusted is False
+    assert tracker.trusted is False
     assert tracker.failure
+
+
+def test_a_field_that_starts_behaving_earns_trust_back(board):
+    """Re-acquiring costs nothing: every reading is re-validated anyway."""
+    tracker = ScentTracker(board, expected_start=(0, 0))
+    tracker.update({"0,0": 0.9}, set())
+    tracker.update({"6,6": 0.9}, set())
+    tracker.update({"5,1": 0.9}, set())
+    assert tracker.trusted is False
+
+    tracker.update({"0,1": 0.9}, set())          # first clean reading
+    regained = tracker.update({"0,2": 0.9}, set())  # second clears the latch
+
+    assert tracker.trusted is True
+    assert regained.trusted is True
 
 
 def test_a_silent_opponent_is_not_treated_as_a_cheat(board):

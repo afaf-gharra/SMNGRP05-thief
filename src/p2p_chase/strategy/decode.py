@@ -99,12 +99,32 @@ def _within_one_step(board: Board, cell: Cell, origin: Cell, barriers: set[Cell]
     return cell == origin or cell in board.neighbors(origin, barriers)
 
 
-class ScentTracker:
-    """Follows the opponent across a sub-game, latching distrust once broken.
+#: Consecutive contradictions before we stop believing the field at all. One is
+#: not enough: a single reading can disagree with the geometry because the peer
+#: orders its deposit and its move differently, or lost a message, and none of
+#: that means the field is fabricated.
+_STRIKES_TO_LATCH = 2
 
-    Distrust is deliberately sticky. A peer whose field has already contradicted
-    the geometry once has shown the field is not being produced by the agreed
-    model, and nothing later in the same sub-game makes that less true.
+#: Clean readings needed to trust a field again. Re-acquiring costs nothing if we
+#: are wrong -- the decode is re-validated against geometry every turn anyway.
+_STRIKES_TO_CLEAR = 2
+
+
+class ScentTracker:
+    """Follows the opponent across a sub-game, distrusting a field that lies.
+
+    Distrust used to latch permanently on the *first* contradiction, and that was
+    too brittle to be safe. The scent model is explicitly not one of the signed
+    terms — peers legitimately differ on decay shape and on whether they deposit
+    before or after moving — so one disagreement is far likelier to be a dialect
+    than a forgery. Once latched, the belief could never sharpen again for the
+    rest of the sub-game, which quietly disabled the only sensor that names the
+    opponent's cell outright, in precisely the matches where we needed it.
+
+    So contradictions have to repeat before they count, and a field that starts
+    behaving is believed again. What does *not* soften is the check itself: every
+    reading is still validated against the board, and a peak inside a wall or a
+    step the opponent could not have made is still refused on the spot.
     """
 
     def __init__(self, board: Board, expected_start: Cell | None = None) -> None:
@@ -113,17 +133,39 @@ class ScentTracker:
         self.cell: Cell | None = None
         self.trusted = True
         self.failure: str = ""
+        self.strikes = 0
+        self.clean = 0
 
     def update(self, cells: dict[str, float], barriers: set[Cell]) -> Decoded:
-        if not self.trusted:
-            return Decoded(None, False, self.failure)
         result = decode_position(
             cells, self._board, barriers, self.cell, self._expected_start
         )
         if not result.trusted:
-            self.trusted = False
-            self.failure = result.reason
-            return result
+            return self._contradiction(result)
+
         if result.cell is not None:
             self.cell = result.cell
+        self._credit()
+        # A field we do not currently believe is still followed silently, so that
+        # when it has earned trust back the next decode has somewhere to start.
+        return result if self.trusted else Decoded(None, False, self.failure)
+
+    def _contradiction(self, result: Decoded) -> Decoded:
+        self.strikes += 1
+        self.clean = 0
+        self.failure = result.reason
+        if self.strikes >= _STRIKES_TO_LATCH:
+            self.trusted = False
+        # The tracked cell is not advanced: we have no idea where they are, and
+        # guessing would corrupt the one-step check on every later reading.
         return result
+
+    def _credit(self) -> None:
+        if self.trusted:
+            self.strikes = 0
+            return
+        self.clean += 1
+        if self.clean >= _STRIKES_TO_CLEAR:
+            self.trusted = True
+            self.strikes = 0
+            self.failure = ""

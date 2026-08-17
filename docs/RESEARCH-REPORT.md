@@ -33,23 +33,48 @@ so it is the fair yardstick. It is never selected for league play.
 
 60 matches per cell.
 
-| Officer | Thief | Capture | Mean steps | Mean walls | Officer pts/sub-game | Thief pts/sub-game |
+> **Correction (17 Aug).** Every figure originally published in this section was
+> measured on a harness that did not play the same game as the live peer. The
+> arena fed the belief filter the blunt `observe_smell` weighting instead of the
+> sharpened peak decode the peer actually runs, and it revealed the officer's
+> cell to the thief only when `claims_capture` was set, whereas the live officer
+> declares its square every turn. Both errors flattered the officer. The
+> headline claim — 32 % capture against our own thief — did not survive contact:
+> the live result against uoh-ay26 was **0 captures in 3 sub-games**. The table
+> below is a re-measurement after `scripts/arena.py` was corrected to mirror
+> `peer/turn_handler`, and it reproduces the live result.
+
+60 matches per cell, corrected harness.
+
+| Officer | Thief | Capture | Mean steps | Mean walls | Officer pts | Thief pts |
 |---|---|---|---|---|---|---|
-| **`ArchitectPolice`** | reference | **57 %** | 23.2 | 6.2 | **13.5** | 7.9 |
-| **`ArchitectPolice`** | **`OpenSpaceThief`** | 32 % | 26.8 | 9.1 | 9.8 | 8.4 |
-| reference | reference | 13 % | 32.5 | 4.4 | 7.0 | 9.4 |
-| reference | **`OpenSpaceThief`** | **5 %** | 34.3 | 4.6 | 5.8 | **9.8** |
+| **`ArchitectPolice`** | baseline `GreedyThief` | **28 %** | 32.1 | 1.8 | 9.2 | 8.6 |
+| **`ArchitectPolice`** | `OpenSpaceThief` (old) | **0 %** | 35.0 | 1.8 | 5.0 | 10.0 |
+| **`ArchitectPolice`** | **`SafeThief`** | **0 %** | 35.0 | 0.0 | 5.0 | **10.0** |
+| baseline `GreedyPolice` | baseline `GreedyThief` | 5 % | 34.6 | 4.8 | 5.8 | 9.8 |
+| baseline `GreedyPolice` | **`SafeThief`** | **0.7 %** | 34.9 | 4.9 | 5.2 | **9.9** |
 
-**Reading it.** Against the same reference thief, our officer captures 57 % where
-a reference officer manages 13 % — **4.4× better**, and 9 turns faster. Against
-the same reference officer, our thief survives 95 % where a reference thief
-survives 87 %. Both roles improve, which matters because roles alternate: a
-series is won by being better at *both*.
+**Reading it honestly.** Our officer beats the baseline officer against the same
+weak thief (28 % against 5 %), and is a clear underdog against any competent
+evader — 0 % against both of ours. That is the true shape of the game and it
+matches theory: with equal speed and STAY available on an open board, capture
+cannot be forced, which is why the book pays survival 10 and capture 20.
 
-The 32 % cell is the honest one: against our own strongest evader the officer is
-a clear underdog. On a 7×7 board with equal speed, 35 turns and only 14 walls,
-that is the correct shape of the game — evasion is genuinely favoured, which is
-also why the book pays survival 10 and capture 20.
+The thief numbers understate the change, because both thieves survive everything
+our own officer can do. The improvement is visible only where it matters — in
+positions a good pursuer can reach. Sweeping 4000 random boards finds **53**
+where `OpenSpaceThief` is captured immediately and `SafeThief` survives
+indefinitely, all of them diagonal contact where every *step* is covered and only
+standing still is safe. `OpenSpaceThief` was never offered standing still.
+
+**The residual, stated plainly.** `SafeThief` is captured in roughly 1 sub-game
+in 300 by a wall-building officer. The solver does not search future barriers —
+that would put the wall set in the state and make the space exponential — so a
+patient officer can move-then-build to pinch a corner the thief entered while it
+still read as safe. One ply of barrier lookahead is applied and closes the
+one-move version; searching the second ply was measured and changed no outcome,
+because by then the position was already decided. This is a genuine limit, not a
+rounding error.
 
 ## 3. The parameter that mattered
 
@@ -67,6 +92,13 @@ moved it from **nothing to everything**.
 | 3.4 | 20 % | 64 % | 4.0 |
 
 \* fixed-opening run, before sampled starts — included to show the artefact.
+
+> **Correction (17 Aug).** This sweep was run on the same uncorrected harness as
+> the table in §2, so the absolute percentages here are not trustworthy either.
+> The *finding* — that `wall_threshold` dominates the officer's other weights —
+> was reproduced qualitatively after the fix and is why the officer still ships
+> at 3.0, but these specific numbers should be read as a record of what was
+> measured, not as a claim about the game.
 
 **Why the first version failed.** At threshold 2.5 the officer built **zero**
 walls in 30 matches. On an open board sealing one cell removes exactly one cell

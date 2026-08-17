@@ -60,14 +60,14 @@ class SafeThief(OpenSpaceThief):
 
     def _pick_move(self, moves, context: TurnContext):
         threats = self._threats(context)
-        table = pursuit.solve(
-            context.state.board,
-            context.state.barriers,
-            self._horizon(context),
-            stay_allowed=context.state.can_stay,
-        )
+        self._solved = {}
+        table = self._table(context, frozenset(context.state.barriers))
         ranked = [
-            (self._safety(table, option[1], threats), self._score(option[1], context), option)
+            (
+                self._safety(table, option[1], threats, context),
+                self._score(option[1], context),
+                option,
+            )
             for option in moves
         ]
         safest = max(item[0] for item in ranked)
@@ -78,13 +78,13 @@ class SafeThief(OpenSpaceThief):
         finalists = [item[2] for item in contenders if item[1] == best_score]
         return self._rng.choice(finalists) if len(finalists) > 1 else finalists[0]
 
-    def _safety(self, table, target: Cell, threats: list[Cell]) -> tuple[int, int, int]:
+    def _safety(self, table, target: Cell, threats, context) -> tuple[int, int, int]:
         """How safe this destination is, worst case first.
 
         Three numbers, compared in order:
 
-        1. the plies guaranteed against *every* plausible officer — the only one
-           that is a guarantee, and the one that decides whenever it can;
+        1. the plies guaranteed against *every* plausible officer, allowing for
+           the wall it may build — the only one that is a guarantee;
         2. how many of those officers the move survives at all;
         3. their total, which separates "briefly safe" from "immediately lost".
 
@@ -93,10 +93,75 @@ class SafeThief(OpenSpaceThief):
         everywhere; falling straight through to a positional score there once
         made standing still look attractive while it was the one certain loss.
         """
-        plies = [table.plies_after_move(target, officer) for officer in threats]
+        plies = [self._against(table, target, officer, context) for officer in threats]
         if not plies:
             return table.depth, 0, 0
         return min(plies), sum(1 for p in plies if p > 0), sum(plies)
+
+    def _against(self, table, target: Cell, officer: Cell, context) -> int:
+        """Plies survived against one officer, including the wall it might build.
+
+        The solver deliberately does not search future barriers — that would put
+        the wall set in the state and make the space exponential — so on its own
+        it answers a question about a board that stops changing. It does not.
+        A live sub-game found the gap exactly: our thief sat in the corner (6,6)
+        with twelve plies of proven safety, the officer spent one barrier, and
+        safety fell to one and then to zero. Proven safe, then captured.
+
+        So the officer is allowed its cheapest reply here: a wall on any cell it
+        could reach. Sealing the cell we are standing on is a capture outright
+        under rule 46, which is why that case returns zero without solving — and
+        why the old "never finish adjacent to the officer" veto falls out of this
+        as a consequence rather than having to be asserted separately.
+        """
+        board, barriers = context.state.board, context.state.barriers
+        base = table.plies_after_move(target, officer)
+        walls_left = max(0, context.barriers_max - len(barriers))
+        if not walls_left or not base:
+            return base
+        if target == officer or target in board.neighbors(officer, barriers):
+            return 0
+        worst = base
+        for wall in self._buildable(board, officer, barriers):
+            built = self._table(context, frozenset(barriers | {wall}))
+            worst = min(worst, built.plies_after_move(target, officer))
+        return worst
+
+    @staticmethod
+    def _buildable(board, officer: Cell, barriers) -> set:
+        """The cells the officer could wall this turn.
+
+        This is one ply of barrier lookahead and it is knowingly not enough. A
+        determined officer's real threat is move-then-build: in one measured
+        sub-game our thief sat in the corner (6,6) reading twelve plies of safety
+        even after allowing for every wall the officer could raise from where it
+        stood, and the officer then stepped sideways and walled (5,6) from there,
+        turning the corner into a one-exit cell. Twelve, one, zero.
+
+        Searching that second ply was tried and is not worth it: it costs about
+        twenty solves a turn instead of four and, measured over 300 sub-games,
+        changed no outcome at all — the pinch it was meant to catch was already
+        decided several moves earlier, by the choice to be in the corner. What
+        actually prevents it is refusing cramped ground in the first place, which
+        is what ``mobility_weight`` in the inherited score is for, and why the
+        live configuration raises it to 3.0.
+
+        So the residual is real and worth stating plainly: against an officer
+        that spends walls to pinch a corner, this thief is not provably safe. In
+        the fixed arena that is roughly one sub-game in three hundred.
+        """
+        return set(board.neighbors(officer, barriers))
+
+    def _table(self, context, barriers: frozenset):
+        """Solve for a barrier set, once per turn however often it is asked for."""
+        if barriers not in self._solved:
+            self._solved[barriers] = pursuit.solve(
+                context.state.board,
+                barriers,
+                self._horizon(context),
+                stay_allowed=context.state.can_stay,
+            )
+        return self._solved[barriers]
 
     def _threats(self, context: TurnContext) -> list[Cell]:
         """Everywhere the officer plausibly is, not merely where it most likely is.

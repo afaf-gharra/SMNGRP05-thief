@@ -31,12 +31,14 @@ from p2p_chase.domain.smell import SmellField  # noqa: E402
 from p2p_chase.domain.trust import TrustEstimator  # noqa: E402
 from p2p_chase.strategy.base import TurnContext  # noqa: E402
 from p2p_chase.strategy.baselines import GreedyPolice, GreedyThief  # noqa: E402
+from p2p_chase.strategy.decode import ScentTracker  # noqa: E402
 from p2p_chase.strategy.police_brain import ArchitectPolice  # noqa: E402
+from p2p_chase.strategy.safe_thief import SafeThief  # noqa: E402
 from p2p_chase.strategy.thief_brain import OpenSpaceThief  # noqa: E402
 
 BRAINS = {
     "architect": ArchitectPolice, "greedy": GreedyPolice,
-    "openspace": OpenSpaceThief, "greedythief": GreedyThief,
+    "openspace": OpenSpaceThief, "greedythief": GreedyThief, "safe": SafeThief,
 }
 
 TERMS = {
@@ -77,6 +79,9 @@ class Side:
         self.state = OwnGameState(role, start, TERMS["board_size"], ["N", "S", "E", "W", "STAY"])
         self.state.set_quota(TERMS["barriers_max"])
         self.belief = BeliefGrid(self.state.board, smell_trust=4.0)
+        # Set once both starts are known; the live peer seeds it from the signed
+        # opponent start in the same way.
+        self.tracker: ScentTracker | None = None
         self.scent_in = self._field()
         self.scent_out = self._field()
         self.trust = TrustEstimator()
@@ -98,6 +103,10 @@ def play(cop_cls, thief_cls, seed: int, cop_tune=None, thief_tune=None) -> dict:
     thief_start, cop_start = sample_starts(seed)
     cop = Side(Role.POLICE, cop_cls, seed, cop_tune, cop_start)
     thief = Side(Role.THIEF, thief_cls, seed + 7919, thief_tune, thief_start)
+    cop.tracker = ScentTracker(cop.state.board, expected_start=thief_start)
+    thief.tracker = ScentTracker(thief.state.board, expected_start=cop_start)
+    cop.belief.collapse_to(thief_start)
+    thief.belief.collapse_to(cop_start)
     rules = GameRules(TERMS["survival_threshold"])
 
     for turn in range(TERMS["survival_threshold"] * 2):
@@ -116,10 +125,13 @@ def play(cop_cls, thief_cls, seed: int, cop_tune=None, thief_tune=None) -> dict:
             if mover.role is Role.POLICE and tuple(wall) == tuple(thief.state.position):
                 return _done(Outcome.CAPTURE.value, cop, thief, "sealed on the thief")
 
-        if (
-            mover.role is Role.POLICE
-            and decision.claims_capture
-            and tuple(cop.state.position) == tuple(thief.state.position)
+        # No `claims_capture` gate: the live officer names its post-action cell
+        # on every turn, so standing on the thief always registers. Gating this
+        # on the brain's confidence measured a different game from the one the
+        # peer plays, and undercounted the officer here while the same gate
+        # was silently discarding real captures on the wire.
+        if mover.role is Role.POLICE and tuple(cop.state.position) == tuple(
+            thief.state.position
         ):
             return _done(Outcome.CAPTURE.value, cop, thief, "stepped onto the thief")
 
@@ -130,16 +142,38 @@ def play(cop_cls, thief_cls, seed: int, cop_tune=None, thief_tune=None) -> dict:
 
 
 def _exchange(mover: Side, other: Side, decision) -> None:
-    """Deposit the mover's scent and let the other side observe it."""
+    """Deposit the mover's scent and let the other side observe it.
+
+    This has to mirror ``peer/turn_handler`` or every number the arena prints is
+    about a game nobody plays. It previously diverged in two ways, both of which
+    flattered the officer:
+
+    * it used the blunt ``observe_smell`` weighting instead of the sharpened peak
+      decode the live peer runs, so the benchmarked belief was far vaguer than
+      the real one;
+    * it handed the thief the officer's cell only when ``claims_capture`` was
+      set, whereas the live officer names its own square on *every* turn, so the
+      benchmarked thief was evading half blind.
+
+    The documented 32% capture rate against ``OpenSpaceThief`` came out of that
+    and did not survive contact: the live result against a real opponent was 0
+    captures in 3 sub-games.
+    """
     mover.scent_out.deposit(mover.state.position, TERMS["emit"])
     mover.scent_out.decay_all()
     grid = mover.scent_out.snapshot()
     other.belief.predict(other.state.barriers, stay_allowed=True)
-    other.belief.observe_smell(grid)
+    decoded = other.tracker.update(grid, other.state.barriers)
+    if decoded.trusted and decoded.cell is not None:
+        other.belief.observe_scent_peak(grid)
+    else:
+        other.belief.observe_smell(grid)
     other.scent_in.absorb(grid)
     other.scent_in.decay_all()
     other.belief.exclude_all({other.state.position, *other.state.barriers})
-    if mover.role is Role.POLICE and decision.claims_capture:
+    # The officer declares its post-action cell every turn under the league
+    # convention, so the thief always holds an exact fix on it.
+    if mover.role is Role.POLICE:
         other.belief.collapse_to(mover.state.position)
 
 
@@ -154,7 +188,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Benchmark cop/thief strategies head to head")
     parser.add_argument("--matches", type=int, default=40)
     parser.add_argument("--cop", default="architect", choices=["architect", "greedy"])
-    parser.add_argument("--thief", default="openspace", choices=["openspace", "greedythief"])
+    parser.add_argument(
+        "--thief", default="safe", choices=["safe", "openspace", "greedythief"]
+    )
     parser.add_argument("--json", action="store_true", help="emit machine-readable results")
     parser.add_argument("--cop-tune", default="{}", help="JSON overrides for the officer's weights")
     parser.add_argument("--thief-tune", default="{}", help="JSON overrides for the thief's weights")
