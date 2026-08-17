@@ -62,3 +62,27 @@ def test_no_label_keeps_the_derived_name():
     for empty in (None, ""):
         game_id, _ = derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26", empty)
         assert game_id == "SMNGRP05-vs-uoh-ay26"
+
+
+def test_an_agreed_uid_is_used_verbatim():
+    """Deriving the uid only works if both peers derive it the same way.
+
+    They do not. uoh-ay26 report one uid for two differently-named series against
+    us, so theirs cannot depend on the match name while ours does. Until the
+    league settles a single derivation, agreeing the string is the only reliable
+    way to make two reports describe one match.
+    """
+    uid = "6d78d603-8930-4738-a68f-d5f79eec5ee1"
+    assert derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26", "W011", uid)[1] == uid
+
+
+def test_an_agreed_uid_does_not_disturb_the_name():
+    game_id, _ = derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26", None, "fixed-uid")
+    assert game_id == "SMNGRP05-vs-uoh-ay26"
+
+
+def test_without_an_agreed_uid_nothing_changes():
+    for empty in (None, ""):
+        assert derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26", None, empty) == derive_game_ids(
+            TERMS, "SMNGRP05", "uoh-ay26"
+        )

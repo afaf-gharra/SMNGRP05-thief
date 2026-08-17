@@ -33,9 +33,11 @@ def negotiate(runtime) -> dict:
         terms,
         runtime.own_identity.get("group_id", "unknown-group"),
         runtime.peer_identity.get("group_id", "unknown-opponent"),
-        # Only ever a label both peers have agreed in writing. Left unset, the
-        # name is derived from the two group codes as before.
+        # Only ever values both peers have agreed in writing. Left unset, the
+        # name is derived from the two group codes and the uid from the terms,
+        # exactly as before.
         runtime.config.get("game.series_id") or None,
+        runtime.config.get("game.series_uid") or None,
     )
     runtime._started = time.monotonic()  # the clock starts at agreement, not at import
     return terms
