@@ -24,7 +24,7 @@ series_id  = "SMNGRP05-vs-imreeyal"
 # W011 -- so the two sides only land on one uid if the string itself is agreed.
 series_uid = "b9e8c36d-0c11-72a6-2a4c-88451a5e5ad6"  # theirs, reproduced by us
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 1  # vs GRP00001 (saedshki)  # names, not ID numbers: the
+counted_games_played = 1  # completed counted series: vs GRP00001 (saedshki)
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
@@ -35,14 +35,11 @@ mcp_servers = { cop = "https://7edc-147-236-163-154.ngrok-free.app/mcp", thief =
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "https://cop.uohay26game.com/mcp"  # fallback; see opponent_urls
-# uoh-ay26's cop and thief are two separate programs in two separate repos, each
-# on its own hostname. Roles alternate every sub-game, so the address we dial has
-# to alternate with them: their cop answers on the odd sub-games (we are thief),
-# their thief on the even ones. A single opponent_url would spend half the series
-# negotiating with whichever of their peers is not playing. The misspelling in
-# "theif" is theirs and is the real deployed hostname -- do not correct it.
-opponent_urls = { cop = "https://cop.uohay26game.com/mcp", thief = "https://theif.uohay26game.com/mcp" }
+opponent_url           = "https://cop.imreeyal.com/mcp"  # fallback; see opponent_urls
+# imreeyal publish two hostnames that both terminate on ONE process, so either
+# would serve either role. Mapped per role anyway: it costs nothing and it is
+# the shape that survives an opponent who later splits the two.
+opponent_urls = { cop = "https://cop.imreeyal.com/mcp", thief = "https://thief.imreeyal.com/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
 connect_timeout_seconds = 300
@@ -117,7 +114,7 @@ recipient = "imreeyal.copthief@gmail.com, imree.c@gmail.com, afafgharra000@gmail
 # FRIENDLY: imreeyal gate their counted series on our report LANDING in their
 # inbox, auto-fired at settlement -- our own Sent copy does not count as
 # evidence, and they are right that it does not. Ourselves kept on the line so
-# we hold a copy too. Flip to the lecturer ALONE before the counted series.   # FRIENDLY: report to ourselves, NOT the
+# we hold a copy too. Flip to the lecturer ALONE before the counted series.
 # lecturer. A warm-up emailed to the lecturer would be a false declaration under
 # rules 37-38. Set this back to rmisegal+uoh26finalgame@gmail.com for the COUNTED
 # series, by hand, before the match starts — never mid-run.
@@ -127,7 +124,9 @@ sender    = "me"
 # One-sub-game friendly whose purpose IS the consensus exchange: uoh-ay26
 # implement series_consensus and we now do too, and neither side has ever seen
 # the other's envelope on the wire.
-series_consensus = false   # imreeyal do not exchange it; do not send them the key
+series_consensus = false   # imreeyal do not exchange it
+counted       = false   # FRIENDLY. Set true ONLY for the counted series.
+first_meeting = true    # no counted series with imreeyal yet   # imreeyal do not exchange it; do not send them the key
 # Declared physics, from imreeyal's published table. Both sides declaring the
 # same model is what kills the undeclared-differing-physics class.
 scent_model_sha256 = "81ebee59640e80eae8ca9ee5f86abd26e7edf5cdbb27d15925cb6ee45ca6ddf4"
