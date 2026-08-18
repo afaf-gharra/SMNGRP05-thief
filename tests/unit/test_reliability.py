@@ -111,7 +111,7 @@ def test_a_broken_transport_becomes_a_scored_technical_loss(sdk):
     """A crash must not lose the series: 0-0 is a result, silence is not."""
 
     class DeadTransport:
-        def exchange_agreement(self, _signed):
+        def exchange_agreement(self, _signed, expect_sub_game=None):
             raise TransportError("opponent never came online")
 
         def drain_inboxes(self):

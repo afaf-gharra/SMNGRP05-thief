@@ -62,6 +62,11 @@ def identity_from_config(config) -> dict:
         "repos": config.get("game.repos", {}),
         "mcp_servers": config.get("game.mcp_servers", {}),
         "llm_model": config.get("llm.model", "") or "template-zero-token",
+        # Counted series we have completed, under exactly this key. Opponents
+        # read it into their own filing's league fields, and a differently
+        # spelled key reads as zero -- understating our count in *their* report,
+        # which rule 38 makes our problem as much as theirs.
+        "counted_games_played": int(config.get("game.counted_games_played", 0) or 0),
         "git_commit_hash": gitinfo.commit_sha(),
         "spec": collect_spec(),
     }

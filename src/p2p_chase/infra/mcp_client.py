@@ -34,7 +34,7 @@ class McpTransport:
     def __init__(
         self, opponent_url: str, inboxes: PeerInboxes, connect_timeout: float = 60.0,
         retry_interval: float = 1.0, audit_timeout: float = 10.0, control_timeout: float = 2.0,
-        opponent_urls: dict | None = None,
+        opponent_urls: dict | None = None, call_timeout: float = 10.0,
     ) -> None:
         self.url = opponent_url
         # Some teams serve each role from its own hostname, because their cop and
@@ -50,6 +50,11 @@ class McpTransport:
         self._retry = float(retry_interval)
         self._audit_timeout = float(audit_timeout)
         self._control_timeout = float(control_timeout)
+        # Cap on a single outbound call, which must stay strictly under the
+        # signed response deadline. The MCP SDK's own default is 30s, so with a
+        # 30s signed deadline one delivered-but-unanswered push plus a retry can
+        # breach the deadline while every individual call still looks healthy.
+        self._call_timeout = float(call_timeout)
         self._loop = None
         self._client = None
 
@@ -70,7 +75,10 @@ class McpTransport:
         client = self._session()
         try:
             self._run(
-                client.call_tool(tool, {_ARG_NAME.get(tool, "message"): argument})
+                asyncio.wait_for(
+                    client.call_tool(tool, {_ARG_NAME.get(tool, "message"): argument}),
+                    timeout=self._call_timeout,
+                )
             )
         except Exception:
             # A broken session is not a broken opponent: drop it so the retry
@@ -138,16 +146,60 @@ class McpTransport:
 
     # ------------------------------------------------------------- handshake
 
-    def exchange_agreement(self, signed: dict) -> dict | None:
-        # A sub-game is its own session on both sides: the opponent tears its
-        # server down between them, so carrying ours across the boundary would
-        # reuse a connection they have already closed.
+    def exchange_agreement(self, signed: dict, expect_sub_game: int | None = None) -> dict | None:
+        """Swap signed agreements for one sub-game, ignoring stale repeats.
+
+        A sub-game is its own session on both sides: the opponent tears its
+        server down between them, so carrying ours across the boundary would
+        reuse a connection they have already closed.
+
+        Greetings also need filtering, which they did not get before. Peers in
+        this league are at-least-once senders and re-push the handshake until
+        the game starts, so the inbox can hold a duplicate of this sub-game's
+        greeting *and* a leftover from the last one. Taking the first thing off
+        the queue therefore risked opening sub-game N+1 against the agreement
+        from sub-game N -- a mismatch that surfaces minutes later as a timeout,
+        with nothing in the logs pointing at the cause.
+
+        A greeting carrying an older ``sub_game_number`` is dropped; an exact
+        repeat, identified by its signature, is dropped; anything without a
+        sub-game number is accepted as before, because omission has never been
+        a refusal in this protocol.
+        """
         self.close_session()
         self._call_with_retry("negotiate", signed)
-        try:
-            return self._inboxes.agreements.get(timeout=self._connect_timeout)
-        except queue.Empty as exc:
-            raise TransportError("The opponent never sent its signed agreement") from exc
+        deadline = time.monotonic() + self._connect_timeout
+        seen: set[str] = set()
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TransportError("The opponent never sent its signed agreement")
+            try:
+                message = self._inboxes.agreements.get(timeout=remaining)
+            except queue.Empty as exc:
+                raise TransportError("The opponent never sent its signed agreement") from exc
+            if self._is_stale_greeting(message, expect_sub_game, seen):
+                continue
+            return message
+
+    @staticmethod
+    def _is_stale_greeting(message, expect_sub_game: int | None, seen: set[str]) -> bool:
+        if not isinstance(message, dict):
+            return True
+        signature = str(message.get("signature", ""))
+        if signature and signature in seen:
+            logger.info("Dropping a duplicate greeting (same signature).")
+            return True
+        if signature:
+            seen.add(signature)
+        theirs = message.get("sub_game_number")
+        if expect_sub_game is not None and isinstance(theirs, int) and theirs < expect_sub_game:
+            logger.info(
+                "Dropping a greeting for sub-game %d while opening sub-game %d.",
+                theirs, expect_sub_game,
+            )
+            return True
+        return False
 
     # ------------------------------------------------------------------ play
 

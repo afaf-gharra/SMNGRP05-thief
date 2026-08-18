@@ -156,7 +156,14 @@ class SmellField:
 
     def snapshot(self) -> dict[str, float]:
         """Serialisable ``{'r,c': intensity}`` copy for the wire, the log and the GUI."""
-        return {f"{r},{c}": v for (r, c), v in sorted(self._values.items()) if v > 0.0}
+        # Three decimals is what the league transmits. Float noise in the tail
+        # would otherwise differ between two implementations of the same model
+        # and make an identical field look like two different ones.
+        return {
+            f"{r},{c}": round(v, 3)
+            for (r, c), v in sorted(self._values.items())
+            if round(v, 3) > 0.0
+        }
 
 
 def parse_cell(key: str) -> Cell | None:

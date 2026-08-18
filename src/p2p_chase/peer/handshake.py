@@ -21,9 +21,27 @@ def negotiate(runtime) -> dict:
     """Run the agreement exchange for one sub-game; returns the agreed terms."""
     validate_agreement(runtime.config)
     terms = terms_from_config(runtime.config)
-    negotiation = Negotiation(terms, identity=runtime.own_identity)
+    negotiation = Negotiation(
+        terms,
+        identity=runtime.own_identity,
+        # Declared guard fields. Every one is optional and no peer is ever
+        # refused for omitting them, but declared-and-equal is what kills the
+        # undeclared-differing-physics class: two peers play a clean match on
+        # different models and only find out when the audits disagree. The uid
+        # and the model digests come from config because they are values the two
+        # sides settle in writing, not things either side may invent alone.
+        context={
+            "sub_game_number": runtime.sub_game_number,
+            "role": runtime.role.value,
+            "game_uid": runtime.config.get("game.series_uid") or None,
+            "scent_model_sha256": runtime.config.get("league.scent_model_sha256") or None,
+            "info_mode_sha256": runtime.config.get("league.info_mode_sha256") or None,
+        },
+    )
 
-    reply = runtime.transport.exchange_agreement(negotiation.signed())
+    reply = runtime.transport.exchange_agreement(
+        negotiation.signed(), expect_sub_game=runtime.sub_game_number
+    )
     if reply is None:
         raise AgreementError("The opponent never sent its signed agreement")
     negotiation.verify_peer(reply)

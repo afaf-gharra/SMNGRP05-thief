@@ -149,6 +149,7 @@ class ChaseSdk:
             retry_interval=cfg.get("network.retry_interval_seconds", 1.0),
             audit_timeout=cfg.get("network.audit_send_timeout_seconds", 10),
             opponent_urls=cfg.get("network.opponent_urls", {}),
+            call_timeout=cfg.get("network.call_timeout_seconds", 10),
         )
 
     def _report(self, result: dict) -> dict:

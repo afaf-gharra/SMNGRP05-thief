@@ -40,7 +40,7 @@ class LoopbackTransport:
         left.peer, right.peer = right, left
         return left, right
 
-    def exchange_agreement(self, signed: dict) -> dict:
+    def exchange_agreement(self, signed: dict, expect_sub_game: int | None = None) -> dict:
         self.peer.agreements.put(signed)
         return self.agreements.get(timeout=10)
 

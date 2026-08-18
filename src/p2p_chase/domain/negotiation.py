@@ -21,9 +21,16 @@ from p2p_chase.exceptions import AgreementError, CryptoError
 class Negotiation:
     """One peer's side of the agreement exchange."""
 
-    def __init__(self, terms: dict, identity: dict | None = None) -> None:
+    def __init__(self, terms: dict, identity: dict | None = None, context: dict | None = None) -> None:
         self.terms = terms
         self.identity = identity or {}
+        # Declared guard fields: which sub-game this greeting belongs to, which
+        # role we are taking, the uid we derived, and the physics we intend to
+        # play. None of them is required by the protocol and a peer that omits
+        # them is never refused -- but declared-and-equal is what kills the
+        # undeclared-differing-physics class, where two peers play a clean match
+        # on different models and only discover it when the audits disagree.
+        self.context = {k: v for k, v in (context or {}).items() if v is not None}
         self._nonce = secrets.token_hex(16)
         self.peer_identity: dict = {}
 
@@ -34,6 +41,7 @@ class Negotiation:
             "nonce": self._nonce,
             "signature": CommitReveal.commit_of(self.terms, self._nonce),
             "identity": self.identity,
+            **self.context,
         }
 
     def verify_peer(self, message: dict) -> None:
