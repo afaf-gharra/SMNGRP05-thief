@@ -23,6 +23,7 @@ from p2p_chase.report.artifacts import (
     build_declaration,
     build_log,
     build_result,
+    league_fields,
 )
 from p2p_chase.report.naming import (
     config_filename,
@@ -84,6 +85,16 @@ def emit_series(config, logs_dir: str | Path, series) -> dict:
         sub_games=sub_games, aggregate=aggregate,
         mutual_sha256=mutual_signature(game_id, aggregate, sub_games),
         token_totals=_token_totals(sub_games, [own_id, opponent_id]),
+        league=league_fields(
+            sorted([own_id, opponent_id]),
+            {
+                own_id: config.get("game.counted_games_played", 0) or 0,
+                opponent_id: opponent.get("counted_games_played", 0) or 0,
+            },
+            aggregate.get("winner_group"),
+            counted=bool(config.get("league.counted", False)),
+            first_meeting=bool(config.get("league.first_meeting", True)),
+        ),
     )
     # The end-of-series agreement, alongside (not instead of) the settlement
     # signature above. They cover the same facts with different separators and

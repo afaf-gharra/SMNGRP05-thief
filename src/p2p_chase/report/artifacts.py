@@ -102,9 +102,40 @@ def build_log(*, summary: dict, game_id: str, game_uid: str) -> dict:
     }
 
 
+def league_fields(
+    group_ids: list[str], counts: dict, winner: str | None, *, counted: bool, first_meeting: bool
+) -> dict:
+    """The three league fields the course template requires in ``final_result``.
+
+    Omitting them is not minimalism, it is an incomplete filing, and each one has
+    a trap:
+
+    ``games_played_including_this`` counts **completed counted series only**, so a
+    friendly never increments it. The "including this" is true on counted day and
+    false every other day.
+
+    ``first_meeting_between_groups`` is about counted history with this opponent,
+    not about whether we have ever spoken.
+
+    ``diversity_reward_applied`` is **derived, never claimed**: counted AND first
+    meeting AND this group won. Both teams' filings therefore mark the *winner*
+    true, whichever side that is. Marking it all-false out of modesty makes the
+    two filings visibly disagree on a ten-point line, which is exactly the
+    contradiction rule 35 scores as nobody winning.
+    """
+    played = {group: int(counts.get(group, 0)) + (1 if counted else 0) for group in group_ids}
+    return {
+        "games_played_including_this": played,
+        "first_meeting_between_groups": bool(first_meeting),
+        "diversity_reward_applied": {
+            group: bool(counted and first_meeting and winner == group) for group in group_ids
+        },
+    }
+
+
 def build_result(
     *, game_id: str, game_uid: str, group_ids: list[str], sub_games: list[dict],
-    aggregate: dict, mutual_sha256: str, token_totals: dict,
+    aggregate: dict, mutual_sha256: str, token_totals: dict, league: dict | None = None,
 ) -> dict:
     """Artifact 4: the aggregated final result both teams must agree on."""
     return {
@@ -118,7 +149,11 @@ def build_result(
         "groups": sorted(group_ids),
         "num_sub_games": len(sub_games),
         "sub_games": sub_games,
-        "final_result": {**aggregate, "tokens_total_series": token_totals},
+        "final_result": {
+            **aggregate,
+            "tokens_total_series": token_totals,
+            **(league or {}),
+        },
         "mutual_agreement": {
             "sha256": mutual_sha256,
             "confirmed": all(
