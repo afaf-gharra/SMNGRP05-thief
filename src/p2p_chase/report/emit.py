@@ -125,7 +125,13 @@ def _sub_game_row(summary: dict, game_id: str, own_id: str, opponent_id: str, ta
         "winner_group": winner,
         "tie": winner is None,
         "github_commit": {own_id: commit, opponent_id: "declared-in-their-own-report"},
-        "tokens": {own_id: summary["tokens_total"], opponent_id: None},
+        # Zero, not null, for the opponent. Their spend is theirs to report and we
+        # cannot know it, but the field is a *numeric map* and a null makes it
+        # unsummable -- the league's artifact checker refuses the whole filing on
+        # it. Both sides therefore declare own-spend-plus-zero, and the token
+        # columns legitimately differ between the two reports while everything
+        # else in final_result must not.
+        "tokens": {own_id: summary["tokens_total"], opponent_id: 0},
         "score": score,
         "log_files": {
             own_id: f"{own_id}/{log_filename(game_id, number)}",

@@ -50,12 +50,25 @@ def test_an_agreed_label_still_lands_on_one_uid_from_either_side():
     )
 
 
-def test_relabelling_changes_the_uid_so_a_rerun_is_a_new_match():
-    """The whole reason for the label: a second warm-up must not look like the
-    first one resumed, and must not overwrite its artifacts."""
-    _, first = derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26")
-    _, second = derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26", "SMNGRP05-vs-uoh-ay26-W011")
-    assert first != second
+def test_relabelling_does_not_change_the_uid_under_the_league_derivation():
+    """A consequence of the pinned formula, and worth stating plainly.
+
+    The kit derives the uid from the canonical terms and the sorted group pair
+    only -- the match label is not in the preimage. So two series between the
+    same two teams on the same terms share a uid however they are labelled.
+
+    We criticised an opponent for exactly this property before adopting the
+    league's own derivation and finding it there too. The label still does its
+    job of separating the artifact *files*; when two series must also be
+    distinguishable by uid, the terms differ (num_games on a one-sub-game
+    friendly) or the uid is agreed in writing via ``agreed_uid``.
+    """
+    _, plain = derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26")
+    _, labelled = derive_game_ids(TERMS, "SMNGRP05", "uoh-ay26", "SMNGRP05-vs-uoh-ay26-W011")
+    assert plain == labelled
+
+    _, other_terms = derive_game_ids({**TERMS, "num_games": 1}, "SMNGRP05", "uoh-ay26")
+    assert other_terms != plain
 
 
 def test_no_label_keeps_the_derived_name():

@@ -7,7 +7,8 @@ two group codes (sorted, so the order of who dialled whom is irrelevant) and the
 signed terms.
 """
 
-from p2p_chase.domain.crypto import digest
+import hashlib
+import json
 
 
 def derive_game_ids(
@@ -44,9 +45,24 @@ def derive_game_ids(
     game_id = agreed_id or f"{first}-vs-{second}"
     if agreed_uid:
         return game_id, agreed_uid
-    fingerprint = digest({"game_id": game_id, "terms": terms})
+    # The league's pinned derivation (interop kit SPEC 4): the canonical terms
+    # and the sorted group pair, joined by pipes. Ours used to hash
+    # {"game_id", "terms"} instead, which is a perfectly good function and the
+    # wrong one -- it agrees with nobody. Playing the kit's sparring peer put the
+    # two uids side by side in one series, which is exactly the mismatch two
+    # teams otherwise discover at report time. Verified against the kit's own
+    # fixtures and against imreeyal's published value for our pairing.
+    fingerprint = _fingerprint(terms, first, second)
     game_uid = "-".join(
         [fingerprint[0:8], fingerprint[8:12], fingerprint[12:16], fingerprint[16:20],
          fingerprint[20:32]]
     )
     return game_id, game_uid
+
+
+def _fingerprint(terms: dict, first: str, second: str) -> str:
+    """SHA-256 over the canonical terms and the sorted pair, as the kit pins it."""
+    canonical = json.dumps(terms, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(
+        f"{canonical}|{first}|{second}".encode()
+    ).hexdigest()
