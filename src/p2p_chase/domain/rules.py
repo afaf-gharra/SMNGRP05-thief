@@ -51,13 +51,26 @@ class GameRules:
 
     @staticmethod
     def is_sealed_in(state: OwnGameState) -> bool:
-        """True when the thief has no legal move left — captured by enclosure.
+        """True when the thief has been taken by a wall rather than by a step.
 
-        This is checked at the *start* of the thief's turn. A thief that cannot
-        move has already lost; letting it pass the turn instead would let a
-        perfectly executed enclosure fizzle into a survival win.
+        Checked at the *start* of the thief's turn, and covering both walled
+        endings the book defines:
+
+        * **rule 46** — a barrier placed on the cell the thief is standing on.
+          We used to notice this only when the officer *claimed* the cell, which
+          made an honest opponent's silence into our survival. The seal is the
+          capture whether or not anyone announces it, and an unclaimed one is
+          exactly how a book-true capture gets filed as a survival by two honest
+          teams who then contradict each other.
+        * **rule 47** — no legal *step* remains. Standing still does not rescue a
+          sealed thief; ``is_immobilised`` counts directional moves only.
+
+        A thief that cannot move has already lost, so passing the turn instead
+        would let a perfectly executed enclosure fizzle into a survival win.
         """
-        return state.role is Role.THIEF and state.is_immobilised()
+        if state.role is not Role.THIEF:
+            return False
+        return tuple(state.position) in state.barriers or state.is_immobilised()
 
     def evaluate_self(self, state: OwnGameState) -> str | None:
         """The terminal condition this peer must declare about itself, if any.

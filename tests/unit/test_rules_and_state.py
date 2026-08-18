@@ -144,3 +144,37 @@ def test_out_of_moves_tracks_the_agreed_ceiling():
 def test_standing_still_obeys_the_negotiated_move_set(move_set, allowed):
     own = OwnGameState(Role.THIEF, (3, 3), 7, move_set)
     assert own.apply_move(MoveType.HOLD, None) is allowed
+
+
+def test_a_barrier_on_the_thiefs_own_cell_is_a_capture(config):
+    """Rule 46, self-checked rather than waiting to be told.
+
+    We used to detect a seal only through the officer's capture claim, so an
+    opponent who sealed us and said nothing left us playing on to step 35 and
+    filing a survival. Two honest teams then file contradictory reports, which
+    rule 35 scores as nobody winning.
+    """
+    from p2p_chase.constants import Role
+    from p2p_chase.domain.own_state import OwnGameState
+    from p2p_chase.domain.rules import GameRules
+
+    state = OwnGameState(Role.THIEF, (3, 3), 7, ["N", "S", "E", "W", "STAY"])
+    rules = GameRules(35)
+    assert rules.is_sealed_in(state) is False
+
+    state.note_barrier((3, 3))          # the officer walls the cell we stand on
+    assert rules.is_sealed_in(state) is True
+
+
+def test_a_thief_with_no_step_is_captured_even_though_stay_is_legal(config):
+    """Rule 47: STAY is in the move set and does not rescue a sealed thief."""
+    from p2p_chase.constants import Role
+    from p2p_chase.domain.own_state import OwnGameState
+    from p2p_chase.domain.rules import GameRules
+
+    state = OwnGameState(Role.THIEF, (0, 0), 7, ["N", "S", "E", "W", "STAY"])
+    assert state.can_stay is True
+    for wall in ((0, 1), (1, 0)):
+        state.note_barrier(wall)
+
+    assert GameRules(35).is_sealed_in(state) is True

@@ -113,7 +113,11 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "afafgharra000@gmail.com"   # FRIENDLY: report to ourselves, NOT the
+recipient = "imreeyal.copthief@gmail.com, imree.c@gmail.com, afafgharra000@gmail.com"
+# FRIENDLY: imreeyal gate their counted series on our report LANDING in their
+# inbox, auto-fired at settlement -- our own Sent copy does not count as
+# evidence, and they are right that it does not. Ourselves kept on the line so
+# we hold a copy too. Flip to the lecturer ALONE before the counted series.   # FRIENDLY: report to ourselves, NOT the
 # lecturer. A warm-up emailed to the lecturer would be a false declaration under
 # rules 37-38. Set this back to rmisegal+uoh26finalgame@gmail.com for the COUNTED
 # series, by hand, before the match starts — never mid-run.
