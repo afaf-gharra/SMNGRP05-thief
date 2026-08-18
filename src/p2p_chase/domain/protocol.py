@@ -99,8 +99,18 @@ class AuditPayload:
     records: list                        # [{"payload": {...}, "nonce": str, "commit": str}]
     result_claim: str                    # "capture" | "survival" | "timeout"
 
+    #: End-of-series agreement digest. The one field allowed to join the three
+    #: above, and only because it is *omitted* when unset: peers built on the
+    #: reference do ``cls(**data)`` and would raise on a key they do not know,
+    #: even one carrying null. Never set this during a sub-game -- it belongs to
+    #: the separate series-consensus envelope, whose records list is empty.
+    consensus_sha: str | None = None
+
     def to_dict(self) -> dict:
-        return asdict(self)
+        message = asdict(self)
+        if message["consensus_sha"] is None:
+            del message["consensus_sha"]
+        return message
 
     @classmethod
     def from_dict(cls, data: dict) -> "AuditPayload":

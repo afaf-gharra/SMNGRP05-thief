@@ -17,6 +17,7 @@ import json
 from pathlib import Path
 
 from p2p_chase.domain import scoring
+from p2p_chase.domain.consensus import series_digest
 from p2p_chase.report.artifacts import (
     build_config,
     build_declaration,
@@ -83,6 +84,13 @@ def emit_series(config, logs_dir: str | Path, series) -> dict:
         sub_games=sub_games, aggregate=aggregate,
         mutual_sha256=mutual_signature(game_id, aggregate, sub_games),
         token_totals=_token_totals(sub_games, [own_id, opponent_id]),
+    )
+    # The end-of-series agreement, alongside (not instead of) the settlement
+    # signature above. They cover the same facts with different separators and
+    # different scope, so both are recorded and neither is derived from the
+    # other; see domain.consensus for why the convention is what it is.
+    result["mutual_agreement"]["series_consensus_sha"] = series_digest(
+        game_id, game_uid, sub_games
     )
     write_json(out_dir, result_filename(game_id), result)
     return result

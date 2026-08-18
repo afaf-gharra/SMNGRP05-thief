@@ -78,6 +78,7 @@ class ChaseSdk:
         result = emit_series(self.config, logs_dir, series)
         group_id = series.own_identity.get("group_id", "unknown-group")
         result_path = logs_dir / group_id / result_filename(result["game_id"])
+        self._settle_series(transport, natural, result, result_path)
 
         email = self._report(result) if send_email else {"sent": False, "reason": "suppressed"}
         return {
@@ -87,6 +88,30 @@ class ChaseSdk:
             "artifacts_dir": str(logs_dir / group_id),
             "email": email,
         }
+
+    def _settle_series(self, transport, role: Role, result: dict, path) -> None:
+        """Exchange the end-of-series agreement, when the opponent implements it.
+
+        Opt-in on purpose: a peer built on the course reference raises on an
+        unknown key in the audit payload, so this must never fire at one. The
+        digest is in our report regardless; only the reciprocal exchange is
+        conditional.
+        """
+        if not self.config.get("league.series_consensus", False):
+            return
+        from p2p_chase.peer.consensus_exchange import exchange
+
+        agreement = result["mutual_agreement"]
+        verdict = exchange(transport, role.value, agreement["series_consensus_sha"])
+        agreement["peer_consensus_sha"] = verdict["theirs"]
+        agreement["series_consensus_agreed"] = verdict["agreed"]
+        if note := verdict.get("note"):
+            agreement["series_consensus_note"] = note
+        # Rewritten rather than patched in memory: the file on disk is the
+        # artifact, and the email is built from this same dict a moment later.
+        path.write_text(
+            json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     # ------------------------------------------------------------ artifacts
 

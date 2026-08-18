@@ -11,21 +11,46 @@ version = "1.00"
 [game]
 group_id   = "SMNGRP05"
 group_name = "SMNGRP05"
+# Agreed with uoh-ay26 in writing for the second warm-up. Without it both peers
+# derive "SMNGRP05-vs-uoh-ay26" from the two group codes, which is the name the
+# first warm-up already used: their runner would resume a finished series and our
+# artifacts would overwrite W010's. Never set this to a label the opponent has
+# not confirmed -- the derivation exists so that neither side names the match
+# alone, and this only stands in when both sides have settled the name.
+series_id  = "SMNGRP05-vs-uoh-ay26-W012"
+# Agreed with uoh-ay26 for W011. It happens to equal what our own derivation
+# produces, but it is pinned here rather than left implicit because their uid is
+# not a function of the match name -- they reported one value for both W010 and
+# W011 -- so the two sides only land on one uid if the string itself is agreed.
+# uid: agreed with them before kickoff (see below); left derived until then
 members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
-mcp_servers = { cop = "http://127.0.0.1:8801/mcp", thief = "http://127.0.0.1:8801/mcp" }
+mcp_servers = { cop = "https://7edc-147-236-163-154.ngrok-free.app/mcp", thief = "https://7edc-147-236-163-154.ngrok-free.app/mcp" }
 
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "http://127.0.0.1:8802/mcp"   # the ONLY thing I know about the opponent
+opponent_url           = "https://cop.uohay26game.com/mcp"  # fallback; see opponent_urls
+# uoh-ay26's cop and thief are two separate programs in two separate repos, each
+# on its own hostname. Roles alternate every sub-game, so the address we dial has
+# to alternate with them: their cop answers on the odd sub-games (we are thief),
+# their thief on the even ones. A single opponent_url would spend half the series
+# negotiating with whichever of their peers is not playing. The misspelling in
+# "theif" is theirs and is the real deployed hostname -- do not correct it.
+opponent_urls = { cop = "https://cop.uohay26game.com/mcp", thief = "https://theif.uohay26game.com/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
-connect_timeout_seconds = 60
+connect_timeout_seconds = 1800  # W010: their cop was still 502 well after kickoff,
+# and both restarts of ours only reset a five-minute clock without changing that.
+# Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
+# technical loss and forcing yet another coordinated restart. Private, local, not
+# a signed term. The per-turn budget stays at 180s, so a peer that connects and
+# then dies is still caught quickly -- this only buys patience before the series
+# has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
 audit_send_timeout_seconds = 10
 watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
@@ -86,16 +111,17 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"
+recipient = "afafgharra000@gmail.com"   # FRIENDLY: report to ourselves, NOT the
+# lecturer. A warm-up emailed to the lecturer would be a false declaration under
+# rules 37-38. Set this back to rmisegal+uoh26finalgame@gmail.com for the COUNTED
+# series, by hand, before the match starts — never mid-run.
 sender    = "me"
 
 [league]
-# Send the end-of-series agreement envelope. OFF by default and it must stay
-# that way: a peer built on the course reference rebuilds the audit payload with
-# cls(**data) and raises on a key it does not know, so enabling this against one
-# kills its process after a complete match. Enable only where the opponent has
-# said in writing that they implement it.
-series_consensus = false
+# One-sub-game friendly whose purpose IS the consensus exchange: uoh-ay26
+# implement series_consensus and we now do too, and neither side has ever seen
+# the other's envelope on the wire.
+series_consensus = true
 
 [play]
 seed               = 19470529

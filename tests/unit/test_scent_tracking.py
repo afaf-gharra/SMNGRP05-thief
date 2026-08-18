@@ -179,21 +179,25 @@ def test_a_silent_opponent_is_not_treated_as_a_cheat(board):
 # --------------------------------------------------------------- wire shape
 
 
-def test_the_audit_reveal_carries_exactly_three_keys():
+def test_the_audit_reveal_serialises_to_exactly_three_keys():
     """The reference peer builds this with ``cls(**data)`` and raises on extras.
 
     An unknown key is not ignored there -- it kills the opponent's process at the
     audit, after a complete and otherwise valid match. This guard exists because
     a well-meant ``commit_scheme`` field, added to explain our hashing to a peer
     whose auditor disagreed with ours, did exactly that against the course
-    reference. Anything we want to tell an opponent about our construction goes
-    in the report or in writing, never on the wire.
-    """
-    from dataclasses import fields
+    reference.
 
+    The dataclass now carries an optional ``consensus_sha`` for the end-of-series
+    envelope, so the invariant has moved from the *field set* to the *serialised*
+    shape, which is the thing that actually crosses the wire: unset, it is not
+    emitted at all, and a null would be just as fatal as a value.
+    """
     from p2p_chase.domain.protocol import AuditPayload
 
-    assert {f.name for f in fields(AuditPayload)} == {"sender", "records", "result_claim"}
+    sent = AuditPayload(sender="thief", records=[], result_claim="survival").to_dict()
+    assert set(sent) == {"sender", "records", "result_claim"}
+    assert "consensus_sha" not in sent
 
 
 def test_a_strict_peer_can_rebuild_our_audit_reveal():
