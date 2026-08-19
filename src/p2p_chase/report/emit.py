@@ -191,3 +191,25 @@ def _settlement_digest(document: dict) -> str:
     """SHA-256 over the settlement form: sorted keys, spaced separators, UTF-8."""
     blob = json.dumps(document, sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def consensus_digest_for(config, series) -> str:
+    """The series digest, computed without writing a single artifact.
+
+    Ordering is the whole point. We used to send the consensus envelope after
+    ``emit_series`` had written fourteen files, and uoh-ay26 run one process per
+    sub-game: by the time our envelope left, the peer that should have received
+    it had exited. Their digest matched ours exactly and their filing still said
+    confirmed=false, because agreement they never received is not agreement.
+    """
+    own = series.own_identity
+    opponent = series.peer_identity or {"group_id": "unknown-opponent"}
+    own_id = own.get("group_id", "unknown-group")
+    opponent_id = opponent.get("group_id", "unknown-opponent")
+    game_id = series.game_id or f"{own_id}-vs-{opponent_id}"
+    table = config.get("scoring") or scoring.DEFAULT_SCORING
+    rows = [
+        _sub_game_row(summary, game_id, own_id, opponent_id, table)
+        for summary in series.summaries
+    ]
+    return series_digest(game_id, series.game_uid or "0", rows)
