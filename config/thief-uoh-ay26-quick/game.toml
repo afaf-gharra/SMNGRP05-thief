@@ -18,6 +18,12 @@ group_name = "SMNGRP05"
 # not confirmed -- the derivation exists so that neither side names the match
 # alone, and this only stands in when both sides have settled the name.
 series_id  = "SMNGRP05-vs-uoh-ay26-W012"
+# Pinned to the value both sides agreed and PLAYED W012 on. Our derivation
+# has since moved to the league kit formula, which drops game_id from the
+# preimage and would now derive 12cb847a... instead -- a different uid for a
+# series already filed under the old one, which is the rule-35 contradiction
+# this field exists to prevent.
+series_uid = "7edf6778-cfe0-70af-206f-0e144b56dd50"
 # Agreed with uoh-ay26 for W011. It happens to equal what our own derivation
 # produces, but it is pinned here rather than left implicit because their uid is
 # not a function of the match name -- they reported one value for both W010 and
