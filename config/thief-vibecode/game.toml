@@ -118,14 +118,14 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "agentsorch@gmail.com, afafgharra000@gmail.com"   # FRIENDLY: mutual exchange
-# FRIENDLY: mutual exchange, which vibecode ask for and are right to. A report
-# each side files only to itself cannot be checked by the other, and the whole
-# point of the mutual audit is that neither side takes the other's result on
-# trust. Ourselves kept on the line so we hold a copy. The lecturer is involved
-# in NOTHING until a counted series; mailing a warm-up there would be a false
-# declaration under rules 37-38. Flip to rmisegal+uoh26finalgame@gmail.com ALONE
-# for the counted, by hand, before the match starts -- never mid-run.
+recipient = "rmisegal+uoh26finalgame@gmail.com"   # COUNTED: the league address ALONE.
+# COUNTED. One report per team to the league address, nobody CC'd -- not vibecode,
+# not ourselves. The friendly used a mutual exchange because a report each side
+# files only to itself cannot be checked by the other; a counted report is read by
+# the lecturer instead, and rule 35 reads the two teams' filings as a pair.
+# This is the line that must NEVER be flipped speculatively. A config carrying
+# counted = true with this address, run by accident, files a series nobody
+# authorised -- a false declaration under rules 37-38.
 sender    = "me"
 
 [league]
@@ -133,8 +133,10 @@ sender    = "me"
 # before anything counts.
 series_consensus = false   # vibecode do not exchange it; never send an unknown
 #                            key to a peer that refuses unknown keys.
-counted       = false   # FRIENDLY. Set true ONLY for the counted series.
-first_meeting = true    # no counted series with vibecode yet
+counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
+first_meeting = true    # first counted meeting with vibecode: a WIN here carries
+#                         diversity_reward +10. Derived, never claimed -- both
+#                         filings mark the winner true, whichever side that is.
 # Declared physics. subtractive_chebyshev_v1, the kit CORE model: vibecode sent
 # this exact hash and it already equalled ours, unchanged, from before their
 # message. They treat it as the one hard gate -- declared-and-different aborts
