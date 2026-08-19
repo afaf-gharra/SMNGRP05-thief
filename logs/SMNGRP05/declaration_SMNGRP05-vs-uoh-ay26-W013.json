@@ -12,8 +12,8 @@
     "result": "result_SMNGRP05-vs-uoh-ay26-W013.json"
   },
   "timezone": "Asia/Jerusalem",
-  "game_started_at": "2026-08-19T09:00:49.811745+00:00",
-  "game_ended_at": "2026-08-19T09:16:58.716730+00:00",
+  "game_started_at": "2026-08-19T09:27:50.765479+00:00",
+  "game_ended_at": "2026-08-19T09:42:56.638405+00:00",
   "num_sub_games": 6,
   "max_tokens_per_game": 200000,
   "groups": {

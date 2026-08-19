@@ -24,13 +24,13 @@
         "SMNGRP05": "thief",
         "uoh-ay26": "police"
       },
-      "started_at": "2026-08-19T09:00:49.811745+00:00",
-      "ended_at": "2026-08-19T09:02:49.701745+00:00",
+      "started_at": "2026-08-19T09:27:50.765479+00:00",
+      "ended_at": "2026-08-19T09:29:44.485479+00:00",
       "result": "survival",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "7eac760bf2f3b7adc3ec1b595fbb6bde7d1d7120",
+        "SMNGRP05": "54b687493890eabae40bca73ddb9dcd21db4b944",
         "uoh-ay26": "declared-in-their-own-report"
       },
       "tokens": {
@@ -56,13 +56,13 @@
         "SMNGRP05": "police",
         "uoh-ay26": "thief"
       },
-      "started_at": "2026-08-19T09:07:42.813506+00:00",
-      "ended_at": "2026-08-19T09:09:38.053506+00:00",
+      "started_at": "2026-08-19T09:33:41.533052+00:00",
+      "ended_at": "2026-08-19T09:35:24.593052+00:00",
       "result": "survival",
       "winner_group": "uoh-ay26",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "7eac760bf2f3b7adc3ec1b595fbb6bde7d1d7120",
+        "SMNGRP05": "54b687493890eabae40bca73ddb9dcd21db4b944",
         "uoh-ay26": "declared-in-their-own-report"
       },
       "tokens": {
@@ -88,13 +88,13 @@
         "SMNGRP05": "thief",
         "uoh-ay26": "police"
       },
-      "started_at": "2026-08-19T09:09:43.470590+00:00",
-      "ended_at": "2026-08-19T09:11:31.660590+00:00",
+      "started_at": "2026-08-19T09:35:30.018933+00:00",
+      "ended_at": "2026-08-19T09:37:23.538933+00:00",
       "result": "survival",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "7eac760bf2f3b7adc3ec1b595fbb6bde7d1d7120",
+        "SMNGRP05": "54b687493890eabae40bca73ddb9dcd21db4b944",
         "uoh-ay26": "declared-in-their-own-report"
       },
       "tokens": {
@@ -120,13 +120,13 @@
         "SMNGRP05": "police",
         "uoh-ay26": "thief"
       },
-      "started_at": "2026-08-19T09:11:37.113264+00:00",
-      "ended_at": "2026-08-19T09:13:17.463264+00:00",
+      "started_at": "2026-08-19T09:37:28.979274+00:00",
+      "ended_at": "2026-08-19T09:39:12.049274+00:00",
       "result": "survival",
       "winner_group": "uoh-ay26",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "7eac760bf2f3b7adc3ec1b595fbb6bde7d1d7120",
+        "SMNGRP05": "54b687493890eabae40bca73ddb9dcd21db4b944",
         "uoh-ay26": "declared-in-their-own-report"
       },
       "tokens": {
@@ -152,13 +152,13 @@
         "SMNGRP05": "thief",
         "uoh-ay26": "police"
       },
-      "started_at": "2026-08-19T09:13:22.937102+00:00",
-      "ended_at": "2026-08-19T09:15:08.847102+00:00",
+      "started_at": "2026-08-19T09:39:17.553685+00:00",
+      "ended_at": "2026-08-19T09:41:08.023685+00:00",
       "result": "survival",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "7eac760bf2f3b7adc3ec1b595fbb6bde7d1d7120",
+        "SMNGRP05": "54b687493890eabae40bca73ddb9dcd21db4b944",
         "uoh-ay26": "declared-in-their-own-report"
       },
       "tokens": {
@@ -184,13 +184,13 @@
         "SMNGRP05": "police",
         "uoh-ay26": "thief"
       },
-      "started_at": "2026-08-19T09:15:14.326730+00:00",
-      "ended_at": "2026-08-19T09:16:58.716730+00:00",
+      "started_at": "2026-08-19T09:41:13.458405+00:00",
+      "ended_at": "2026-08-19T09:42:56.638405+00:00",
       "result": "survival",
       "winner_group": "uoh-ay26",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "7eac760bf2f3b7adc3ec1b595fbb6bde7d1d7120",
+        "SMNGRP05": "54b687493890eabae40bca73ddb9dcd21db4b944",
         "uoh-ay26": "declared-in-their-own-report"
       },
       "tokens": {
@@ -228,7 +228,7 @@
       "uoh-ay26": 0
     },
     "games_played_including_this": {
-      "SMNGRP05": 0,
+      "SMNGRP05": 1,
       "uoh-ay26": 0
     },
     "first_meeting_between_groups": true,
