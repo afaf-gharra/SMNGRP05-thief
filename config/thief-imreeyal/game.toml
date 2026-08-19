@@ -11,15 +11,17 @@ version = "1.00"
 [game]
 group_id   = "SMNGRP05"
 group_name = "SMNGRP05"
-# FRIENDLY #2 gets its own name, and this is not cosmetic. The first friendly
-# filed fourteen artifacts under "SMNGRP05-vs-imreeyal" -- the 70-50 series both
-# sides cross-diffed and agreed, now committed as evidence. Artifact filenames
-# are derived from this label, so a second series reusing it OVERWRITES all
-# fourteen and destroys the record of a match that was already settled and
-# verified. We lost a match's logs to exactly that once before.
-# Proposed to imreeyal in writing; change it if they name a different label,
-# because the derivation exists so that neither side names the match alone.
-series_id  = "SMNGRP05-vs-imreeyal-F2"
+# The DERIVED name, and it must stay derived. We proposed "-F2" for the second
+# friendly to stop it overwriting the first one's artifacts; imreeyal refused,
+# correctly, and the reason is decisive: game_id sits INSIDE the
+# mutual_agreement sha preimage. Two peers filing two different labels for one
+# match produce two hashes that cannot join by construction -- the exact
+# contradiction rule 35 voids both teams for. A label may only differ from the
+# derivation when BOTH sides pin the identical string.
+# The overwrite problem is real and is solved one directory up, not here:
+# previous series are moved to logs/<group>/archive/ before a rerun under the
+# same name. Archive, then play.
+series_id  = "SMNGRP05-vs-imreeyal"
 # Agreed with uoh-ay26 for W011. It happens to equal what our own derivation
 # produces, but it is pinned here rather than left implicit because their uid is
 # not a function of the match name -- they reported one value for both W010 and
