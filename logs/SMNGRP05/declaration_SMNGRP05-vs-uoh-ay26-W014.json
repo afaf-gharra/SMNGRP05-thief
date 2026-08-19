@@ -1,0 +1,73 @@
+{
+  "_schema": "Pre-game declaration covering the WHOLE match (every sub-game) between two teams. This is the single home for everything that does not change while the sub-games are played: team identity, members, the cop and thief repository URLs, MCP server URLs, hardware specification, language model, the agreed token ceiling, and the match start and end times. Roles alternate across sub-games, so no role and no sub_game_number appear here. Both teams sign this and lock it cryptographically before play begins (book ch.5, step zero). Anything that varies per sub-game — the commit hash, the moves, the scores — lives in the log and result artifacts instead.",
+  "schema_version": "1.1",
+  "declaration_type": "pre_game_declaration",
+  "game_id": "SMNGRP05-vs-uoh-ay26-W014",
+  "game_uid": "e8d18cdd-713d-0536-be65-3ed12f4cb2b8",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_SMNGRP05-vs-uoh-ay26-W014.json",
+    "config": "config_SMNGRP05-vs-uoh-ay26-W014_g<NN>.json",
+    "log": "log_SMNGRP05-vs-uoh-ay26-W014_g<NN>.json",
+    "result": "result_SMNGRP05-vs-uoh-ay26-W014.json"
+  },
+  "timezone": "Asia/Jerusalem",
+  "game_started_at": "2026-08-19T10:11:55.109707+00:00",
+  "game_ended_at": "2026-08-19T10:23:57.223483+00:00",
+  "num_sub_games": 6,
+  "max_tokens_per_game": 200000,
+  "groups": {
+    "group_1": {
+      "group_id": "SMNGRP05",
+      "group_name": "SMNGRP05",
+      "members": [
+        "Afaf Gharra",
+        "Reem Awawdy"
+      ],
+      "repos": {
+        "cop": "https://github.com/afaf-gharra/SMNGRP05-police",
+        "thief": "https://github.com/afaf-gharra/SMNGRP05-thief"
+      },
+      "mcp_servers": {
+        "cop": "https://7edc-147-236-163-154.ngrok-free.app/mcp",
+        "thief": "https://7edc-147-236-163-154.ngrok-free.app/mcp"
+      },
+      "llm_model": "template-zero-token",
+      "hardware_spec": {
+        "cpu_type": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "cpu_freq_mhz": null,
+        "cpu_cores": 12,
+        "ram_gb": null,
+        "gpu_model": "NVIDIA GeForce RTX 3070",
+        "vram_gb": 8.0
+      },
+      "signature": "667b77e15d09acb158eed1db4644a27dd160ef754044fb9ea3abcf0901bab407"
+    },
+    "group_2": {
+      "group_id": "uoh-ay26",
+      "group_name": "uoh-ay26",
+      "members": [
+        "Aisha Abu Dahesh",
+        "Yousef Asadi"
+      ],
+      "repos": {
+        "cop": "https://github.com/aishadahesh/uoh-ay26-final-project-cop",
+        "thief": "https://github.com/aishadahesh/uoh-ay26-final-project-thief"
+      },
+      "mcp_servers": {
+        "thief": "https://theif.uohay26game.com/mcp"
+      },
+      "llm_model": "deterministic-brain",
+      "hardware_spec": {
+        "cpu_type": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+        "cpu_freq_mhz": "unknown",
+        "cpu_cores": 8,
+        "ram_gb": 15.7,
+        "gpu_model": "unknown",
+        "vram_gb": "unknown"
+      },
+      "signature": "cb2fa62453c07418eafa6505943e399fd21e46efc17794afba0ae277371fab56"
+    }
+  },
+  "declaration_sha256": "15da94f90dc749f1f3486ab4ccc7d8a9345e130c7fd5d841dd0a154b6b36cfa8"
+}
