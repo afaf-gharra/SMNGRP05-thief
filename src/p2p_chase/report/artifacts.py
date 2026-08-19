@@ -133,6 +133,32 @@ def league_fields(
     }
 
 
+def audit_row(audit: dict) -> dict:
+    """The audit block for one sub-game row of the result rollup.
+
+    It used to carry ``log_verified`` and nothing else, so the three fields an
+    opponent actually reconciles against -- was the other peer there, did the two
+    result claims agree, did anyone tamper -- were simply absent from the rollup
+    while the per-sub-game log artifact carried all three as real booleans. A
+    reader of the result alone could not tell "verified false" from "never
+    checked", and a checker expecting a boolean reads a missing key as null.
+
+    Derived, never asserted: ``tampering_detected`` is true only when the audit
+    actually named a tamperer. A chain that fails to verify is a failed chain,
+    which is ``log_verified`` false; calling that tampering would accuse an
+    opponent of cheating on the evidence of our own bug.
+    """
+    passed = bool(audit.get("passed"))
+    return {
+        "log_verified": passed,
+        "tampered": not passed,
+        "opponent_present": bool(audit.get("opponent_present")),
+        "results_agree": bool(audit.get("results_agree")),
+        "opponent_result_claim": audit.get("opponent_result_claim"),
+        "tampering_detected": audit.get("tampered_by") is not None,
+    }
+
+
 def build_result(
     *, game_id: str, game_uid: str, group_ids: list[str], sub_games: list[dict],
     aggregate: dict, mutual_sha256: str, token_totals: dict, league: dict | None = None,

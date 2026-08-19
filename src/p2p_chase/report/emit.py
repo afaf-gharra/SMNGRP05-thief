@@ -19,6 +19,7 @@ from pathlib import Path
 from p2p_chase.domain import scoring
 from p2p_chase.domain.consensus import series_digest
 from p2p_chase.report.artifacts import (
+    audit_row,
     build_config,
     build_declaration,
     build_log,
@@ -114,7 +115,6 @@ def _sub_game_row(summary: dict, game_id: str, own_id: str, opponent_id: str, ta
     number = summary["sub_game_number"]
     score = scoring.score_subgame(summary["result"], roles, table)
     winner = next((group for group, role in roles.items() if role == summary["winner"]), None)
-    passed = bool((summary.get("audit") or {}).get("passed"))
     commit = _own_commit(summary)
     return {
         "sub_game_number": number,
@@ -137,7 +137,7 @@ def _sub_game_row(summary: dict, game_id: str, own_id: str, opponent_id: str, ta
             own_id: f"{own_id}/{log_filename(game_id, number)}",
             opponent_id: f"{opponent_id}/{log_filename(game_id, number)}",
         },
-        "audit": {"log_verified": passed, "tampered": not passed},
+        "audit": audit_row(summary.get("audit") or {}),
     }
 
 
