@@ -48,7 +48,8 @@ def exchange_audit(runtime) -> dict:
             ),
         }
 
-    opponent = audit_records(reply.get("records", []))
+    their_records = reply.get("records", [])
+    opponent = audit_records(their_records)
     agreed_result = reply.get("result_claim")
     verdict = {
         "passed": self_check["passed"] and opponent["passed"],
@@ -57,6 +58,7 @@ def exchange_audit(runtime) -> dict:
         "opponent_present": True,
         "opponent_result_claim": agreed_result,
         "results_agree": agreed_result == result,
+        "opponent_commit": _declared_commit(their_records),
         "tampered_by": _blame(self_check, opponent, runtime.role.value),
         # Recorded in our own artifacts only, never sent: the reveal message is a
         # fixed three-key shape and a strict peer raises on anything else.
@@ -75,6 +77,32 @@ def exchange_audit(runtime) -> dict:
             opponent["total_steps"], COMMIT_SCHEME,
         )
     return verdict
+
+
+def _declared_commit(records: list) -> str | None:
+    """The opponent's own commit hash, out of the step-zero record they revealed.
+
+    Rule 53 wants the commit that actually played each sub-game recorded in the
+    report, for both teams. We used to write a placeholder in their column and
+    point the reader at their own filing, which is a worse artifact for no
+    reason: they seal their commit into step zero and hand it to us in the audit
+    reveal, so the real hash is already in our possession by settlement.
+
+    Taken from the *revealed* record rather than the handshake identity on
+    purpose -- the sealed one is fixed before the first move and verified against
+    its commitment, so it cannot be edited after the result is known.
+
+    Returns None when they sealed no step zero, and the caller keeps its
+    placeholder. An absent hash is reported as absent, never guessed at.
+    """
+    for record in records:
+        # ``or {}`` rather than a default: a present-but-null payload is a shape
+        # a peer we do not control can send, and .get() on None crashes report
+        # generation *after* the match, when the result is already decided.
+        payload = (record.get("payload") or {}) if isinstance(record, dict) else {}
+        if payload.get("step") == 0 and payload.get("github_commit"):
+            return str(payload["github_commit"])
+    return None
 
 
 def _blame(self_check: dict, opponent: dict, own_role: str) -> str | None:

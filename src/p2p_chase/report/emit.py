@@ -116,6 +116,7 @@ def _sub_game_row(summary: dict, game_id: str, own_id: str, opponent_id: str, ta
     score = scoring.score_subgame(summary["result"], roles, table)
     winner = next((group for group, role in roles.items() if role == summary["winner"]), None)
     commit = _own_commit(summary)
+    audit = summary.get("audit") or {}
     return {
         "sub_game_number": number,
         "roles": roles,
@@ -124,7 +125,15 @@ def _sub_game_row(summary: dict, game_id: str, own_id: str, opponent_id: str, ta
         "result": summary["result"],
         "winner_group": winner,
         "tie": winner is None,
-        "github_commit": {own_id: commit, opponent_id: "declared-in-their-own-report"},
+        # Their real hash, not a pointer to their filing. They seal it into step
+        # zero and reveal it in the audit, so by settlement we hold it -- and a
+        # sealed hash cannot be edited once the result is known, which a hash
+        # copied from the handshake could. Falls back to the placeholder only
+        # when they sealed no step zero: absent is reported, never invented.
+        "github_commit": {
+            own_id: commit,
+            opponent_id: audit.get("opponent_commit") or "declared-in-their-own-report",
+        },
         # Zero, not null, for the opponent. Their spend is theirs to report and we
         # cannot know it, but the field is a *numeric map* and a null makes it
         # unsummable -- the league's artifact checker refuses the whole filing on
@@ -137,7 +146,7 @@ def _sub_game_row(summary: dict, game_id: str, own_id: str, opponent_id: str, ta
             own_id: f"{own_id}/{log_filename(game_id, number)}",
             opponent_id: f"{opponent_id}/{log_filename(game_id, number)}",
         },
-        "audit": audit_row(summary.get("audit") or {}),
+        "audit": audit_row(audit),
     }
 
 
