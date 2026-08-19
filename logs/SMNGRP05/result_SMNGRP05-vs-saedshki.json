@@ -1,0 +1,235 @@
+{
+  "_schema": "Final result for the WHOLE match (all sub-games) between two teams. It condenses the per-sub-game logs into a per-group score for each sub-game plus the aggregate the lecturer needs to build the league standings. Static team metadata is not repeated here — it lives in the declaration and is referenced by game_id and group_id. Both teams must agree on this result and each sends its own copy (book ch.9).",
+  "schema_version": "1.1",
+  "report_type": "final_game_result",
+  "game_id": "SMNGRP05-vs-saedshki",
+  "game_uid": "bbf29792-ddb5-74ac-dab5-dfbaf532ec61",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_SMNGRP05-vs-saedshki.json",
+    "config": "config_SMNGRP05-vs-saedshki_g<NN>.json",
+    "log": "log_SMNGRP05-vs-saedshki_g<NN>.json",
+    "result": "result_SMNGRP05-vs-saedshki.json"
+  },
+  "timezone": "Asia/Jerusalem",
+  "groups": [
+    "SMNGRP05",
+    "saedshki"
+  ],
+  "num_sub_games": 6,
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "roles": {
+        "SMNGRP05": "thief",
+        "saedshki": "police"
+      },
+      "started_at": "2026-08-15T15:11:48.629888+00:00",
+      "ended_at": "2026-08-15T15:12:04.139888+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "3a6de1614218167ade52918a30bcce31ed2ae03e-dirty",
+        "saedshki": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "saedshki": null
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "saedshki": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-saedshki_g01.json",
+        "saedshki": "saedshki/log_SMNGRP05-vs-saedshki_g01.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 2,
+      "roles": {
+        "SMNGRP05": "police",
+        "saedshki": "thief"
+      },
+      "started_at": "2026-08-15T15:12:05.996486+00:00",
+      "ended_at": "2026-08-15T15:12:12.436486+00:00",
+      "result": "capture",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "3a6de1614218167ade52918a30bcce31ed2ae03e-dirty",
+        "saedshki": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "saedshki": null
+      },
+      "score": {
+        "SMNGRP05": 20,
+        "saedshki": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-saedshki_g02.json",
+        "saedshki": "saedshki/log_SMNGRP05-vs-saedshki_g02.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 3,
+      "roles": {
+        "SMNGRP05": "thief",
+        "saedshki": "police"
+      },
+      "started_at": "2026-08-15T15:12:14.101540+00:00",
+      "ended_at": "2026-08-15T15:12:28.311540+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "3a6de1614218167ade52918a30bcce31ed2ae03e-dirty",
+        "saedshki": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "saedshki": null
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "saedshki": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-saedshki_g03.json",
+        "saedshki": "saedshki/log_SMNGRP05-vs-saedshki_g03.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 4,
+      "roles": {
+        "SMNGRP05": "police",
+        "saedshki": "thief"
+      },
+      "started_at": "2026-08-15T15:12:29.955681+00:00",
+      "ended_at": "2026-08-15T15:12:36.175681+00:00",
+      "result": "capture",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "3a6de1614218167ade52918a30bcce31ed2ae03e-dirty",
+        "saedshki": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "saedshki": null
+      },
+      "score": {
+        "SMNGRP05": 20,
+        "saedshki": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-saedshki_g04.json",
+        "saedshki": "saedshki/log_SMNGRP05-vs-saedshki_g04.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 5,
+      "roles": {
+        "SMNGRP05": "thief",
+        "saedshki": "police"
+      },
+      "started_at": "2026-08-15T15:12:37.809238+00:00",
+      "ended_at": "2026-08-15T15:12:51.889238+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "3a6de1614218167ade52918a30bcce31ed2ae03e-dirty",
+        "saedshki": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "saedshki": null
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "saedshki": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-saedshki_g05.json",
+        "saedshki": "saedshki/log_SMNGRP05-vs-saedshki_g05.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 6,
+      "roles": {
+        "SMNGRP05": "police",
+        "saedshki": "thief"
+      },
+      "started_at": "2026-08-15T15:12:53.729677+00:00",
+      "ended_at": "2026-08-15T15:12:59.759677+00:00",
+      "result": "capture",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "3a6de1614218167ade52918a30bcce31ed2ae03e-dirty",
+        "saedshki": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "saedshki": null
+      },
+      "score": {
+        "SMNGRP05": 20,
+        "saedshki": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-saedshki_g06.json",
+        "saedshki": "saedshki/log_SMNGRP05-vs-saedshki_g06.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    }
+  ],
+  "final_result": {
+    "total_score": {
+      "SMNGRP05": 90,
+      "saedshki": 30
+    },
+    "sub_games_won": {
+      "SMNGRP05": 6,
+      "saedshki": 0
+    },
+    "ties": 0,
+    "winner_group": "SMNGRP05",
+    "series_tie": false,
+    "tokens_total_series": {
+      "SMNGRP05": 0,
+      "saedshki": 0
+    }
+  },
+  "mutual_agreement": {
+    "sha256": "4dc93eae55550824fefc3e3ff4b656cfc81dd170815c3d1b00198b59d82c3844",
+    "confirmed": true
+  }
+}

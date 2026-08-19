@@ -1,0 +1,107 @@
+{
+  "_schema": "Final result for the WHOLE match (all sub-games) between two teams. It condenses the per-sub-game logs into a per-group score for each sub-game plus the aggregate the lecturer needs to build the league standings. Static team metadata is not repeated here — it lives in the declaration and is referenced by game_id and group_id. Both teams must agree on this result and each sends its own copy (book ch.9).",
+  "schema_version": "1.1",
+  "report_type": "final_game_result",
+  "game_id": "rival-01-vs-uoh-ag12",
+  "game_uid": "bd97b1a4-a5e8-61ff-cad9-151cd0bd6a94",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_rival-01-vs-uoh-ag12.json",
+    "config": "config_rival-01-vs-uoh-ag12_g<NN>.json",
+    "log": "log_rival-01-vs-uoh-ag12_g<NN>.json",
+    "result": "result_rival-01-vs-uoh-ag12.json"
+  },
+  "timezone": "Asia/Jerusalem",
+  "groups": [
+    "rival-01",
+    "uoh-ag12"
+  ],
+  "num_sub_games": 2,
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "roles": {
+        "rival-01": "police",
+        "uoh-ag12": "thief"
+      },
+      "started_at": "2026-08-02T20:41:48.743353+00:00",
+      "ended_at": "2026-08-02T20:41:51.443353+00:00",
+      "result": "survival",
+      "winner_group": "uoh-ag12",
+      "tie": false,
+      "github_commit": {
+        "rival-01": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
+        "uoh-ag12": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "rival-01": 0,
+        "uoh-ag12": null
+      },
+      "score": {
+        "rival-01": 5,
+        "uoh-ag12": 10
+      },
+      "log_files": {
+        "rival-01": "rival-01/log_rival-01-vs-uoh-ag12_g01.json",
+        "uoh-ag12": "uoh-ag12/log_rival-01-vs-uoh-ag12_g01.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 2,
+      "roles": {
+        "rival-01": "thief",
+        "uoh-ag12": "police"
+      },
+      "started_at": "2026-08-02T20:41:52.707250+00:00",
+      "ended_at": "2026-08-02T20:42:07.747250+00:00",
+      "result": "survival",
+      "winner_group": "rival-01",
+      "tie": false,
+      "github_commit": {
+        "rival-01": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
+        "uoh-ag12": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "rival-01": 0,
+        "uoh-ag12": null
+      },
+      "score": {
+        "rival-01": 10,
+        "uoh-ag12": 5
+      },
+      "log_files": {
+        "rival-01": "rival-01/log_rival-01-vs-uoh-ag12_g02.json",
+        "uoh-ag12": "uoh-ag12/log_rival-01-vs-uoh-ag12_g02.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    }
+  ],
+  "final_result": {
+    "total_score": {
+      "rival-01": 17,
+      "uoh-ag12": 17
+    },
+    "sub_games_won": {
+      "rival-01": 1,
+      "uoh-ag12": 1
+    },
+    "ties": 0,
+    "winner_group": null,
+    "series_tie": true,
+    "tokens_total_series": {
+      "rival-01": 0,
+      "uoh-ag12": 0
+    }
+  },
+  "mutual_agreement": {
+    "sha256": "053169d788e4b577dc3846bd3d6104acb66dce89f07faf549f657810beca92c3",
+    "confirmed": true
+  }
+}

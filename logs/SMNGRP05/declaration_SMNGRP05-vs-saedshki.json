@@ -1,0 +1,74 @@
+{
+  "_schema": "Pre-game declaration covering the WHOLE match (every sub-game) between two teams. This is the single home for everything that does not change while the sub-games are played: team identity, members, the cop and thief repository URLs, MCP server URLs, hardware specification, language model, the agreed token ceiling, and the match start and end times. Roles alternate across sub-games, so no role and no sub_game_number appear here. Both teams sign this and lock it cryptographically before play begins (book ch.5, step zero). Anything that varies per sub-game — the commit hash, the moves, the scores — lives in the log and result artifacts instead.",
+  "schema_version": "1.1",
+  "declaration_type": "pre_game_declaration",
+  "game_id": "SMNGRP05-vs-saedshki",
+  "game_uid": "bbf29792-ddb5-74ac-dab5-dfbaf532ec61",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_SMNGRP05-vs-saedshki.json",
+    "config": "config_SMNGRP05-vs-saedshki_g<NN>.json",
+    "log": "log_SMNGRP05-vs-saedshki_g<NN>.json",
+    "result": "result_SMNGRP05-vs-saedshki.json"
+  },
+  "timezone": "Asia/Jerusalem",
+  "game_started_at": "2026-08-15T15:11:48.629888+00:00",
+  "game_ended_at": "2026-08-15T15:12:59.759677+00:00",
+  "num_sub_games": 6,
+  "max_tokens_per_game": 200000,
+  "groups": {
+    "group_1": {
+      "group_id": "SMNGRP05",
+      "group_name": "SMNGRP05",
+      "members": [
+        "Afaf Gharra",
+        "Reem Awawdy"
+      ],
+      "repos": {
+        "cop": "https://github.com/afaf-gharra/SMNGRP05-police",
+        "thief": "https://github.com/afaf-gharra/SMNGRP05-thief"
+      },
+      "mcp_servers": {
+        "cop": "https://unnecessary-isaac-purpose-firms.trycloudflare.com/mcp",
+        "thief": "https://unnecessary-isaac-purpose-firms.trycloudflare.com/mcp"
+      },
+      "llm_model": "template-zero-token",
+      "hardware_spec": {
+        "cpu_type": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "cpu_freq_mhz": null,
+        "cpu_cores": 12,
+        "ram_gb": null,
+        "gpu_model": "NVIDIA GeForce RTX 3070",
+        "vram_gb": 8.0
+      },
+      "signature": "f8a4197f9d44cb9b84fcf7cb9773191f93eb182dd6b11c7e8dba219c6f3bf76a"
+    },
+    "group_2": {
+      "group_id": "saedshki",
+      "group_name": "saedshki",
+      "members": [
+        "Mohamed Shawki",
+        "Saed-Abdalgani"
+      ],
+      "repos": {
+        "cop": "https://github.com/JCS1029/GRP00001-police-p2p",
+        "thief": "https://github.com/JCS1029/GRP00001-thief-p2p"
+      },
+      "mcp_servers": {
+        "cop": "https://channels-prominent-jul-civil.trycloudflare.com/mcp",
+        "thief": "https://channels-prominent-jul-civil.trycloudflare.com/mcp"
+      },
+      "llm_model": "template",
+      "hardware_spec": {
+        "cpu_type": null,
+        "cpu_freq_mhz": null,
+        "cpu_cores": null,
+        "ram_gb": null,
+        "gpu_model": null,
+        "vram_gb": null
+      },
+      "signature": "1026883292e4ef27e4e3ea994a9878a25f8219a9027e0793c28f6988d74ca3a4"
+    }
+  },
+  "declaration_sha256": "77e40733b3f76c6b857228066476334d9612e6481f678a099d7fcdff476140ba"
+}

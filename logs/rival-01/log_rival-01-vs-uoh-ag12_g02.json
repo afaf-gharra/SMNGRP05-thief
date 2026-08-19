@@ -1,0 +1,776 @@
+{
+  "_schema": "Per-sub-game match log, consumed by the Replay Viewer for cryptographic audit. Each step is committed as SHA-256(state || move || intent || nonce) and revealed only at the final audit (book ch.5 commit-reveal, ch.7 replay). Static team metadata is not repeated here — it lives in the declaration and is joined by game_uid. Step 0 is the signed step-zero record carrying the hardware declaration and the exact commit hash that played. The prompt_discussion block records the natural-language exchange and the reasoning behind each hint, and is covered by the same hash as everything else.",
+  "schema_version": "1.1",
+  "game_id": "rival-01-vs-uoh-ag12",
+  "game_uid": "bd97b1a4-a5e8-61ff-cad9-151cd0bd6a94",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_rival-01-vs-uoh-ag12.json",
+    "config": "config_rival-01-vs-uoh-ag12_g<NN>.json",
+    "log": "log_rival-01-vs-uoh-ag12_g<NN>.json",
+    "result": "result_rival-01-vs-uoh-ag12.json"
+  },
+  "summary": {
+    "sub_game_number": 2,
+    "group_id": "rival-01",
+    "role": "thief",
+    "opponent_group_id": "uoh-ag12",
+    "result": "survival",
+    "winner_role": "thief",
+    "steps": 20,
+    "timezone": "Asia/Jerusalem",
+    "started_at": "2026-08-02T20:41:52.707250+00:00",
+    "ended_at": "2026-08-02T20:42:07.747250+00:00",
+    "duration_seconds": 15.04,
+    "tokens_total": 0,
+    "barriers_used": 0,
+    "phase_trail": [
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AWAITING_REVEAL",
+      "VERIFYING",
+      "WAITING_FOR_OPPONENT",
+      "COMPUTING_MOVE",
+      "COMMITTING",
+      "AUDITING",
+      "GAME_OVER"
+    ],
+    "opponent_profile": {
+      "trust": 0.435,
+      "estimated_lie_rate": 0.565,
+      "hints_seen": 19,
+      "hints_scored": 19,
+      "alpha": 6.052,
+      "beta": 7.846
+    },
+    "talker": {
+      "provider": "template",
+      "tokens": 0,
+      "self_credibility": 0.336,
+      "target_lie_rate": 0.45,
+      "hints_sent": 20,
+      "hints_falsifiable": 20
+    },
+    "audit": {
+      "passed": true,
+      "self_check": {
+        "passed": true,
+        "verified_steps": 21,
+        "total_steps": 21,
+        "failed_steps": []
+      },
+      "opponent": {
+        "passed": true,
+        "verified_steps": 20,
+        "total_steps": 20,
+        "failed_steps": []
+      },
+      "opponent_present": true,
+      "opponent_result_claim": "survival",
+      "results_agree": true,
+      "tampered_by": null
+    }
+  },
+  "records": [
+    {
+      "payload": {
+        "step": 0,
+        "type": "system_spec",
+        "spec": {
+          "os": "Windows 11",
+          "python": "3.14.5",
+          "machine": "AMD64",
+          "cpu_type": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+          "cpu_cores": 12,
+          "cpu_freq_mhz": null,
+          "ram_gb": null,
+          "gpu_type": "NVIDIA GeForce RTX 3070",
+          "vram_gb": 8.0
+        },
+        "model": "template-zero-token",
+        "provider": "template",
+        "code_version": "1.00",
+        "github_commit": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
+        "git": {
+          "commit": "67d486dc92570e5e6bc42f27b6759d4b2f05ae27",
+          "branch": "main",
+          "tag": "v1.0-submission"
+        },
+        "group_id": "rival-01",
+        "group_name": "RIVAL-01",
+        "sub_game_number": 2,
+        "scent_model": {
+          "falloff": "linear",
+          "grid_size": 5,
+          "peak_intensity": 0.9,
+          "decay_per_step": 0.1,
+          "decay_formula": "tau(t+1) = max(0, (1 - rho) * tau(t) + delta_tau)",
+          "worked_example": {
+            "deposit": 0.9,
+            "after_1_turn": 0.81,
+            "after_7_turns": 0.4305
+          }
+        },
+        "declared_at": "2026-08-02T20:41:52.707172+00:00"
+      },
+      "nonce": "19dc76b9932a6bb8c87c0c9c40ab6884",
+      "commit": "4a8bb352a6985144ef1354b97a937731f5b988d1de6dda34e21074b3027a549e"
+    },
+    {
+      "payload": {
+        "step": 1,
+        "state": "grid=7x7;self=[3, 4];barriers=[]",
+        "position": [
+          3,
+          4
+        ],
+        "move": "MOVE:E",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping around broadway while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=4"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.5,
+        "claims_capture": false
+      },
+      "nonce": "8a86343ad5e4d2b9165f9d5352e7b5c5",
+      "commit": "28c8a34e531ab7bd896d6def8d5438e4959fc8256c43653a68f9df6b3f774358"
+    },
+    {
+      "payload": {
+        "step": 2,
+        "state": "grid=7x7;self=[3, 5];barriers=[]",
+        "position": [
+          3,
+          5
+        ],
+        "move": "MOVE:E",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Every alley near un knows me better than you do.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=4"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.508,
+        "claims_capture": false
+      },
+      "nonce": "86afe7b34ed717f0e0d7df76f50b4da7",
+      "commit": "c2fd4a4d9469150d856ea7247b852e3ba071af60a2a945e788eef54449dd7f0f"
+    },
+    {
+      "payload": {
+        "step": 3,
+        "state": "grid=7x7;self=[3, 6];barriers=[]",
+        "position": [
+          3,
+          6
+        ],
+        "move": "MOVE:E",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near un.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.564,
+        "claims_capture": false
+      },
+      "nonce": "e1dcbf54eeff342e2f2060ca0aa7bc71",
+      "commit": "0cb85a16689981be45ab88b72c9547b1d7a6086e50c81a12dcda5a56bbaba493"
+    },
+    {
+      "payload": {
+        "step": 4,
+        "state": "grid=7x7;self=[4, 6];barriers=[]",
+        "position": [
+          4,
+          6
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near un.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=8 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.578,
+        "claims_capture": false
+      },
+      "nonce": "8b0830539f6a270aed79fc623bada729",
+      "commit": "332e531ada420f715c5970202e410cd9f5c8997729666d03005b7a2d7184d85a"
+    },
+    {
+      "payload": {
+        "step": 5,
+        "state": "grid=7x7;self=[5, 6];barriers=[]",
+        "position": [
+          5,
+          6
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near brooklyn.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=9 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.517,
+        "claims_capture": false
+      },
+      "nonce": "8fc80194cb021a0c96cd05c5e21aafb8",
+      "commit": "0f645ba1f1645ac72e7063bb749435539c5b57859412d08758e865bc43b85172"
+    },
+    {
+      "payload": {
+        "step": 6,
+        "state": "grid=7x7;self=[6, 6];barriers=[]",
+        "position": [
+          6,
+          6
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping past dumbo while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=10 exits=2"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.5,
+        "claims_capture": false
+      },
+      "nonce": "c73460b8f6ddf86c35b95b9d12662141",
+      "commit": "fa92d49228973b19aa940380af3b90b93cf51e46ee57cb18b63d52d3aef67f64"
+    },
+    {
+      "payload": {
+        "step": 7,
+        "state": "grid=7x7;self=[6, 5];barriers=[]",
+        "position": [
+          6,
+          5
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "You will not find me anywhere near brooklyn.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=9 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.518,
+        "claims_capture": false
+      },
+      "nonce": "09d3b3b4521edcc230ac6d267f0be3a7",
+      "commit": "492848615c85202d739efe2bb0b0194718913f9af5e033b72f5a6428209df99c"
+    },
+    {
+      "payload": {
+        "step": 8,
+        "state": "grid=7x7;self=[6, 4];barriers=[]",
+        "position": [
+          6,
+          4
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Catch your breath — I am by soho.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.523,
+        "claims_capture": false
+      },
+      "nonce": "57429c1b0da40de6884214dbcd8311b1",
+      "commit": "aa954ba419ad9121f5ffdfd7fddc67198fddbfc4b60a91a4b95e292613abf772"
+    },
+    {
+      "payload": {
+        "step": 9,
+        "state": "grid=7x7;self=[6, 3];barriers=[]",
+        "position": [
+          6,
+          3
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Catch your breath — I am by soho.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=6 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.523,
+        "claims_capture": false
+      },
+      "nonce": "a0faa16fa255eafcef1b1a6dd1d7fa58",
+      "commit": "e90b35956faefef4308322b127099ac1dfa68196b0994ed1839f6bd323a5569b"
+    },
+    {
+      "payload": {
+        "step": 10,
+        "state": "grid=7x7;self=[6, 4];barriers=[]",
+        "position": [
+          6,
+          4
+        ],
+        "move": "MOVE:E",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already near chinatown, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "banking credibility with a true hint",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.485,
+        "claims_capture": false
+      },
+      "nonce": "f6bb6e30b94c8c4aabb7174cc7ad56d6",
+      "commit": "3141752b41b55b0c3ec8e6a44e09bd834f0cbf6a835ecd3c67d6ca7b523f475e"
+    },
+    {
+      "payload": {
+        "step": 11,
+        "state": "grid=7x7;self=[5, 4];barriers=[]",
+        "position": [
+          5,
+          4
+        ],
+        "move": "MOVE:N",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Every alley through chinatown knows me better than you do.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=6 exits=4"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.493,
+        "claims_capture": false
+      },
+      "nonce": "df9004c80c1b6dce4fa8df75d24cc613",
+      "commit": "824a196741aa281f1d7791e31113966fe027f67f765edd43d1cae7546c1ca580"
+    },
+    {
+      "payload": {
+        "step": 12,
+        "state": "grid=7x7;self=[5, 5];barriers=[]",
+        "position": [
+          5,
+          5
+        ],
+        "move": "MOVE:E",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already through dumbo, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=48/49 gap=7 exits=4"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.46,
+        "claims_capture": false
+      },
+      "nonce": "1b0161ad402101670c68390101c819bf",
+      "commit": "a1be4440bc66cfced55ff358cbdf77b506b80c9935d54d66bfc6f022d5f34746"
+    },
+    {
+      "payload": {
+        "step": 13,
+        "state": "grid=7x7;self=[6, 5];barriers=[[6, 6]]",
+        "position": [
+          6,
+          5
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping by brooklyn while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=7 exits=2"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.468,
+        "claims_capture": false
+      },
+      "nonce": "027aa60cdd7429053337ba8b068a9f16",
+      "commit": "0a5eefe8e40bb04d3b3d7ba48f9cb022e4a517c9104f66338c6f52f6233a655d"
+    },
+    {
+      "payload": {
+        "step": 14,
+        "state": "grid=7x7;self=[6, 4];barriers=[[6, 6]]",
+        "position": [
+          6,
+          4
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Every alley around soho knows me better than you do.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=5 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.472,
+        "claims_capture": false
+      },
+      "nonce": "6b373810633e4a2d354173518f4c598a",
+      "commit": "8c5be9736f530cc2b9ae82f5eec2b6e15b62eae1de3834a7ffad6874e7fb3a79"
+    },
+    {
+      "payload": {
+        "step": 15,
+        "state": "grid=7x7;self=[6, 3];barriers=[[6, 6]]",
+        "position": [
+          6,
+          3
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already near soho, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=4 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.466,
+        "claims_capture": false
+      },
+      "nonce": "5c26867a5b272222a6e0b0030771b7a6",
+      "commit": "45252105e8ba4f38e85cdd121d23be67ff69924d176e3bebfd8b47731d220441"
+    },
+    {
+      "payload": {
+        "step": 16,
+        "state": "grid=7x7;self=[6, 2];barriers=[[6, 6]]",
+        "position": [
+          6,
+          2
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already near battery, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=4 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.443,
+        "claims_capture": false
+      },
+      "nonce": "29177ad6fe0a2ebe6f2d10343e42b66c",
+      "commit": "5fe39bbac400d9a5447402f990501740324e4e95d44c1d883d7740e235ffdd09"
+    },
+    {
+      "payload": {
+        "step": 17,
+        "state": "grid=7x7;self=[6, 1];barriers=[[6, 6]]",
+        "position": [
+          6,
+          1
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already through battery, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=6 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.421,
+        "claims_capture": false
+      },
+      "nonce": "1dca748972e592e5b773d91130c5d3ca",
+      "commit": "f26e882b5363524408a66ac68451a6e90dd49b546ad075d2327295785af440bf"
+    },
+    {
+      "payload": {
+        "step": 18,
+        "state": "grid=7x7;self=[6, 0];barriers=[[6, 6]]",
+        "position": [
+          6,
+          0
+        ],
+        "move": "MOVE:W",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Already past battery, and still moving.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=47/49 gap=7 exits=2"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.428,
+        "claims_capture": false
+      },
+      "nonce": "5d2d2a72d0db360554047168310e6e55",
+      "commit": "d87e3e0fd37ca769c79a4e72276b61dd011ab032bef8b7d31803e85f4b2d1e8e"
+    },
+    {
+      "payload": {
+        "step": 19,
+        "state": "grid=7x7;self=[5, 0];barriers=[[6, 5], [6, 6]]",
+        "position": [
+          5,
+          0
+        ],
+        "move": "MOVE:N",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Slipping past tribeca while you waste time.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=46/49 gap=4 exits=3"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.429,
+        "claims_capture": false
+      },
+      "nonce": "b96f67760c321a0afa5ac2deeb0ba2e9",
+      "commit": "a53532fbab241cab5149befe50d162ce02200a2595543d07744809e3eea84d67"
+    },
+    {
+      "payload": {
+        "step": 20,
+        "state": "grid=7x7;self=[6, 0];barriers=[[5, 6], [6, 5], [6, 6]]",
+        "position": [
+          6,
+          0
+        ],
+        "move": "MOVE:S",
+        "intent": "truth",
+        "verdict": "truth",
+        "hint": "Catch your breath — I am near battery.",
+        "prompt_discussion": {
+          "llm_prompt": "",
+          "llm_reasoning": "credibility spent; telling the truth to rebuild it",
+          "bluff_classification": "truth",
+          "move_rationale": "room=45/49 gap=7 exits=2"
+        },
+        "model": "template-zero-token",
+        "tokens_step": 0,
+        "tokens_total": 0,
+        "response_seconds": 0.0,
+        "opponent_trust": 0.435,
+        "claims_capture": false
+      },
+      "nonce": "54646ccb2ce7403c1a15019b65e5bf0b",
+      "commit": "1af72c8133b39819f065738853e412905421a58da7ea88610037223866c519bb"
+    }
+  ],
+  "mutual_agreement": {
+    "opponent_group_id": "uoh-ag12",
+    "sha256": "3d55c20c48604d22c51743e171550bf0531a6f1926cda24e6419b3a9645134b4",
+    "confirmed": true
+  }
+}

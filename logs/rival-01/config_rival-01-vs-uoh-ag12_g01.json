@@ -1,0 +1,80 @@
+{
+  "_schema": "The agreed configuration for one sub-game. Every value traces to the binding parameter table in Appendix F. Both teams must hold byte-identical values, lock them cryptographically via config_sha256, give the file a name unique to the match, and attach it to the GitHub repository. Status recap: 'minimum' may only be raised by mutual agreement, 'permanent' must not change at all, 'negotiation' may take any agreed value.",
+  "schema_version": "1.1",
+  "agreed_between": [
+    "uoh-ag12",
+    "opponent-group"
+  ],
+  "board_and_agents": {
+    "grid_size": 7,
+    "num_agents": 2,
+    "thief_start": [
+      3,
+      3
+    ],
+    "cop_start": [
+      0,
+      0
+    ],
+    "axis_origin_corner": "top-left",
+    "axis_start_index": 0
+  },
+  "world": {
+    "map_area": "New York",
+    "hint_max_words": 15
+  },
+  "movement_and_barriers": {
+    "move_set": [
+      "N",
+      "S",
+      "E",
+      "W",
+      "STAY"
+    ],
+    "max_barriers": 14,
+    "max_moves": 20,
+    "survival_threshold": 20
+  },
+  "scoring": {
+    "capture_cop": 20,
+    "capture_thief": 5,
+    "survival_cop": 5,
+    "survival_thief": 10,
+    "tie_score": 2,
+    "technical_loss": 0
+  },
+  "pheromones": {
+    "pheromone_center_intensity": 0.9,
+    "pheromone_decay": 0.1,
+    "pheromone_grid_size": 5,
+    "pheromone_min_center_intensity": 0.5
+  },
+  "network_and_league": {
+    "response_timeout_sec": 30,
+    "watchdog_timeout_sec": 60,
+    "num_games": 2,
+    "diversity_reward": 10,
+    "min_games_to_pass": 2,
+    "max_games_per_team": 10,
+    "token_budget_per_series": 200000
+  },
+  "rate_limiter_gatekeeper": {
+    "requests_per_minute": 30,
+    "concurrent_requests": 2,
+    "retry_backoff_sec": 5,
+    "max_retries": 3,
+    "queue_depth": 100
+  },
+  "game_id": "rival-01-vs-uoh-ag12",
+  "game_uid": "bd97b1a4-a5e8-61ff-cad9-151cd0bd6a94",
+  "sub_game_number": 1,
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_rival-01-vs-uoh-ag12.json",
+    "config": "config_rival-01-vs-uoh-ag12_g<NN>.json",
+    "log": "log_rival-01-vs-uoh-ag12_g<NN>.json",
+    "result": "result_rival-01-vs-uoh-ag12.json"
+  },
+  "config_name": "config_rival-01-vs-uoh-ag12_g01.json",
+  "config_sha256": "3cae0f6d5e22660585c2fa7d06969ad9918e274dfeb1bce5b6b6c0c304db0b0e"
+}

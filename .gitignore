@@ -26,7 +26,14 @@ coverage.xml
 htmlcov/
 
 # --- Runtime output ---
-logs/
+# --- Match artifacts: TRACKED on purpose -------------------------------------
+# The lecturer asks for the logs and the repository of the games themselves, so
+# the actual conduct of each match can be verified and followed -- not just the
+# four JSON artifacts quoted in the report. These files ARE the evidence: the
+# sealed per-step records, the signed declaration, the agreed config and the
+# result, for every series we have played. They were ignored here for months,
+# which meant a graded counted series existed only on one laptop.
+# state/ stays ignored: it is a resume file, not evidence.
 state/
 *.log
 
