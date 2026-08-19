@@ -234,9 +234,23 @@ class McpTransport:
         its inbox, which kills its server mid-reply even though our payload
         landed. Their payload may already be sitting in our inbox regardless, so
         we always look.
+
+        Best-effort is not the same as unrecorded, and it used to be. A failed
+        send was swallowed silently, so when an opponent later said our reveal
+        never reached them we had no way to agree or disagree -- we could prove
+        we received theirs and nothing about what they received. The send is
+        still non-fatal, because a peer that exits after reading its inbox is
+        normal rather than an error, but now it leaves a trace.
         """
-        with contextlib.suppress(TransportError):
+        self.last_audit_send_failed: str | None = None
+        try:
             self._call_with_retry("submit_audit", payload, timeout=self._audit_timeout)
+        except TransportError as exc:
+            self.last_audit_send_failed = str(exc)
+            logger.warning(
+                "Our audit reveal could not be delivered: %s. Their copy may still "
+                "arrive, and the result stands, but they will not hold ours.", exc
+            )
         try:
             return self._inboxes.audits.get(timeout=self._audit_timeout)
         except queue.Empty:
