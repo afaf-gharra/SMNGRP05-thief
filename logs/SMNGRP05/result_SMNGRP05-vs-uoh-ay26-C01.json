@@ -1,0 +1,247 @@
+{
+  "_schema": "Final result for the WHOLE match (all sub-games) between two teams. It condenses the per-sub-game logs into a per-group score for each sub-game plus the aggregate the lecturer needs to build the league standings. Static team metadata is not repeated here — it lives in the declaration and is referenced by game_id and group_id. Both teams must agree on this result and each sends its own copy (book ch.9).",
+  "schema_version": "1.1",
+  "report_type": "final_game_result",
+  "game_id": "SMNGRP05-vs-uoh-ay26-C01",
+  "game_uid": "a97a2332-d12b-3b1c-8940-1118b83ef07c",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_SMNGRP05-vs-uoh-ay26-C01.json",
+    "config": "config_SMNGRP05-vs-uoh-ay26-C01_g<NN>.json",
+    "log": "log_SMNGRP05-vs-uoh-ay26-C01_g<NN>.json",
+    "result": "result_SMNGRP05-vs-uoh-ay26-C01.json"
+  },
+  "timezone": "Asia/Jerusalem",
+  "groups": [
+    "SMNGRP05",
+    "uoh-ay26"
+  ],
+  "num_sub_games": 6,
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "roles": {
+        "SMNGRP05": "thief",
+        "uoh-ay26": "police"
+      },
+      "started_at": "2026-08-19T10:45:02.550179+00:00",
+      "ended_at": "2026-08-19T10:46:45.180179+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "27e1cb09c4d2010d27b45d296535a84041223ad4",
+        "uoh-ay26": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "uoh-ay26": 0
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "uoh-ay26": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-uoh-ay26-C01_g01.json",
+        "uoh-ay26": "uoh-ay26/log_SMNGRP05-vs-uoh-ay26-C01_g01.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 2,
+      "roles": {
+        "SMNGRP05": "police",
+        "uoh-ay26": "thief"
+      },
+      "started_at": "2026-08-19T10:46:46.721388+00:00",
+      "ended_at": "2026-08-19T10:48:26.181388+00:00",
+      "result": "survival",
+      "winner_group": "uoh-ay26",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "27e1cb09c4d2010d27b45d296535a84041223ad4",
+        "uoh-ay26": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "uoh-ay26": 0
+      },
+      "score": {
+        "SMNGRP05": 5,
+        "uoh-ay26": 10
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-uoh-ay26-C01_g02.json",
+        "uoh-ay26": "uoh-ay26/log_SMNGRP05-vs-uoh-ay26-C01_g02.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 3,
+      "roles": {
+        "SMNGRP05": "thief",
+        "uoh-ay26": "police"
+      },
+      "started_at": "2026-08-19T10:48:31.843022+00:00",
+      "ended_at": "2026-08-19T10:50:15.463022+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "27e1cb09c4d2010d27b45d296535a84041223ad4",
+        "uoh-ay26": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "uoh-ay26": 0
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "uoh-ay26": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-uoh-ay26-C01_g03.json",
+        "uoh-ay26": "uoh-ay26/log_SMNGRP05-vs-uoh-ay26-C01_g03.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 4,
+      "roles": {
+        "SMNGRP05": "police",
+        "uoh-ay26": "thief"
+      },
+      "started_at": "2026-08-19T10:50:20.771501+00:00",
+      "ended_at": "2026-08-19T10:51:57.301501+00:00",
+      "result": "survival",
+      "winner_group": "uoh-ay26",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "27e1cb09c4d2010d27b45d296535a84041223ad4",
+        "uoh-ay26": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "uoh-ay26": 0
+      },
+      "score": {
+        "SMNGRP05": 5,
+        "uoh-ay26": 10
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-uoh-ay26-C01_g04.json",
+        "uoh-ay26": "uoh-ay26/log_SMNGRP05-vs-uoh-ay26-C01_g04.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 5,
+      "roles": {
+        "SMNGRP05": "thief",
+        "uoh-ay26": "police"
+      },
+      "started_at": "2026-08-19T10:52:02.752245+00:00",
+      "ended_at": "2026-08-19T10:53:45.922245+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "27e1cb09c4d2010d27b45d296535a84041223ad4",
+        "uoh-ay26": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "uoh-ay26": 0
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "uoh-ay26": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-uoh-ay26-C01_g05.json",
+        "uoh-ay26": "uoh-ay26/log_SMNGRP05-vs-uoh-ay26-C01_g05.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    },
+    {
+      "sub_game_number": 6,
+      "roles": {
+        "SMNGRP05": "police",
+        "uoh-ay26": "thief"
+      },
+      "started_at": "2026-08-19T10:53:51.311597+00:00",
+      "ended_at": "2026-08-19T10:56:24.101597+00:00",
+      "result": "survival",
+      "winner_group": "uoh-ay26",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "27e1cb09c4d2010d27b45d296535a84041223ad4",
+        "uoh-ay26": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "uoh-ay26": 0
+      },
+      "score": {
+        "SMNGRP05": 5,
+        "uoh-ay26": 10
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-uoh-ay26-C01_g06.json",
+        "uoh-ay26": "uoh-ay26/log_SMNGRP05-vs-uoh-ay26-C01_g06.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false
+      }
+    }
+  ],
+  "final_result": {
+    "total_score": {
+      "SMNGRP05": 47,
+      "uoh-ay26": 47
+    },
+    "sub_games_won": {
+      "SMNGRP05": 3,
+      "uoh-ay26": 3
+    },
+    "ties": 0,
+    "winner_group": null,
+    "series_tie": true,
+    "tokens_total_series": {
+      "SMNGRP05": 0,
+      "uoh-ay26": 0
+    },
+    "games_played_including_this": {
+      "SMNGRP05": 2,
+      "uoh-ay26": 1
+    },
+    "first_meeting_between_groups": true,
+    "diversity_reward_applied": {
+      "SMNGRP05": false,
+      "uoh-ay26": false
+    }
+  },
+  "mutual_agreement": {
+    "sha256": "7992ad0263e5a657b029df65c56ef661f796e1ef6a4f49d07957e2147d7230b9",
+    "confirmed": true,
+    "series_consensus_sha": "67c7e97741342ceae1397982afd5706936df8a32f030596de5ec9b9a3267a6c7",
+    "peer_consensus_sha": "67c7e97741342ceae1397982afd5706936df8a32f030596de5ec9b9a3267a6c7",
+    "series_consensus_agreed": true
+  }
+}
