@@ -30,7 +30,7 @@ counted_games_played = 2  # completed COUNTED series: GRP00001 (saedshki), uoh-a
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
-mcp_servers = { cop = "https://7edc-147-236-163-154.ngrok-free.app/mcp", thief = "https://7edc-147-236-163-154.ngrok-free.app/mcp" }
+mcp_servers = { cop = "https://f0eb-147-236-163-154.ngrok-free.app/mcp", thief = "https://f0eb-147-236-163-154.ngrok-free.app/mcp" }
 
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
