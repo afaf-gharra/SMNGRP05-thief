@@ -114,13 +114,13 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "imreeyal.copthief@gmail.com, imree.c@gmail.com, afafgharra000@gmail.com"
-# FRIENDLY: mutual exchange. imreeyal gate on our report LANDING in their inbox,
-# auto-fired at settlement -- our own Sent copy is not evidence, and they are
-# right that it is not. Ourselves kept on the line so we hold a copy.
-# The lecturer belongs on this line ONLY for the counted series, flipped by hand
-# immediately before it, together with counted = true. Armed early, one
-# accidental run files a warm-up as counted: a false declaration under 37-38.
+recipient = "rmisegal+uoh26finalgame@gmail.com"
+# COUNTED: the league address ALONE, nobody CC'd -- not imreeyal, not ourselves.
+# The two friendlies went to them because they gate on our report LANDING in
+# their inbox and our own Sent copy is not evidence; a counted report is read by
+# the lecturer, and rule 35 reads the two teams' filings as a pair.
+# Flipped by hand immediately before the match, with counted = true, and flipped
+# back straight after. Left armed, one accidental run files a warm-up as counted.
 sender    = "me"
 
 [league]
@@ -128,9 +128,10 @@ sender    = "me"
 # implement series_consensus and we now do too, and neither side has ever seen
 # the other's envelope on the wire.
 series_consensus = false   # imreeyal do not exchange it
-counted       = false   # FRIENDLY #2. Set true ONLY for the counted series, by
-#                         hand, immediately before it -- never left armed.
-first_meeting = true    # no counted series with imreeyal yet
+counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
+first_meeting = true    # first counted meeting with imreeyal: a WIN carries
+#                         diversity_reward +10, derived from the result and never
+#                         claimed -- both filings mark the winner, whichever side.
 # Declared physics, from imreeyal's published table. Both sides declaring the
 # same model is what kills the undeclared-differing-physics class.
 scent_model_sha256 = "81ebee59640e80eae8ca9ee5f86abd26e7edf5cdbb27d15925cb6ee45ca6ddf4"
