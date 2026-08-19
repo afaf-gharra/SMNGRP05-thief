@@ -24,7 +24,7 @@ series_id  = "SMNGRP05-vs-imreeyal"
 # W011 -- so the two sides only land on one uid if the string itself is agreed.
 series_uid = "b9e8c36d-0c11-72a6-2a4c-88451a5e5ad6"  # theirs, reproduced by us
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 1  # completed counted series: vs GRP00001 (saedshki)
+counted_games_played = 2  # completed COUNTED series: GRP00001 (saedshki), uoh-ay26.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
@@ -126,7 +126,7 @@ sender    = "me"
 # the other's envelope on the wire.
 series_consensus = false   # imreeyal do not exchange it
 counted       = false   # FRIENDLY. Set true ONLY for the counted series.
-first_meeting = true    # no counted series with imreeyal yet   # imreeyal do not exchange it; do not send them the key
+first_meeting = true    # no counted series with imreeyal yet
 # Declared physics, from imreeyal's published table. Both sides declaring the
 # same model is what kills the undeclared-differing-physics class.
 scent_model_sha256 = "81ebee59640e80eae8ca9ee5f86abd26e7edf5cdbb27d15925cb6ee45ca6ddf4"
