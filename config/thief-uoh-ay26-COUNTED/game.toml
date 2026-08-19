@@ -1,0 +1,142 @@
+# PRIVATE, LOCAL configuration for THIS peer only.
+#
+# Nothing the opponent must agree on lives here. Every shared term — board size,
+# start cells, movement set, barrier quota, scoring, pheromone model, map area,
+# hint length — lives ONLY in the signed `game.json` beside this file, which both
+# peers hold byte-identically and verify by SHA-256 before the first move.
+#
+# Book: Appendix B (JSON = shared and signed; TOML = private and local).
+version = "1.00"
+
+[game]
+group_id   = "SMNGRP05"
+group_name = "SMNGRP05"
+# Agreed with uoh-ay26 in writing for the second warm-up. Without it both peers
+# derive "SMNGRP05-vs-uoh-ay26" from the two group codes, which is the name the
+# first warm-up already used: their runner would resume a finished series and our
+# artifacts would overwrite W010's. Never set this to a label the opponent has
+# not confirmed -- the derivation exists so that neither side names the match
+# alone, and this only stands in when both sides have settled the name.
+series_id  = "SMNGRP05-vs-uoh-ay26-C01"
+# Agreed in writing. The kit derives the uid from the terms and the sorted
+# pair only, so every label on these terms lands on 6d78d603 -- the uid W010,
+# W011 and W013 already carry. A fourth series sharing it would be four
+# filings the lecturer joins into one match. This pin is also the rehearsal
+# for counted day, which needs the same treatment for the same reason.
+series_uid = "a97a2332-d12b-3b1c-8940-1118b83ef07c"
+members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
+# declaration is exchanged with opponents and archived in their repos, and the
+# lecturer already holds the ID numbers from the submission form.
+counted_games_played = 1  # completed COUNTED series: vs GRP00001 (saedshki).
+# Rule 38 truthfulness: opponents read this from our negotiate identity into
+# their own filing, and our report derives games_played_including_this from it.
+# Absent, it reads as zero and understates us in BOTH teams' reports. Bump it
+# the moment another counted series settles.
+repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
+# Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
+# Until you open a tunnel these stay on loopback, which is fine for local testing.
+mcp_servers = { cop = "https://7edc-147-236-163-154.ngrok-free.app/mcp", thief = "https://7edc-147-236-163-154.ngrok-free.app/mcp" }
+
+[network]
+host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
+my_port                = 8801                          # MY MCP server port
+opponent_url           = "https://cop.uohay26game.com/mcp"  # fallback; see opponent_urls
+# uoh-ay26's cop and thief are two separate programs in two separate repos, each
+# on its own hostname. Roles alternate every sub-game, so the address we dial has
+# to alternate with them: their cop answers on the odd sub-games (we are thief),
+# their thief on the even ones. A single opponent_url would spend half the series
+# negotiating with whichever of their peers is not playing. The misspelling in
+# "theif" is theirs and is the real deployed hostname -- do not correct it.
+opponent_urls = { cop = "https://cop.uohay26game.com/mcp", thief = "https://theif.uohay26game.com/mcp" }
+turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
+poll_interval_seconds  = 0.5
+connect_timeout_seconds = 1800  # W010: their cop was still 502 well after kickoff,
+# and both restarts of ours only reset a five-minute clock without changing that.
+# Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
+# technical loss and forcing yet another coordinated restart. Private, local, not
+# a signed term. The per-turn budget stays at 180s, so a peer that connects and
+# then dies is still caught quickly -- this only buys patience before the series
+# has begun, which is exactly where the waiting has actually been.
+retry_interval_seconds = 1.0
+audit_send_timeout_seconds = 10
+watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
+
+[belief]
+smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass
+hint_trust_initial = 0.5    # prior P(opponent's hint is truthful)
+hint_trust_floor   = 0.05   # never fully trust or fully dismiss a talker
+hint_trust_ceiling = 0.95
+
+[strategy]
+# The graded seam. Point either key at a BrainBase subclass "package.module:Class".
+police_class = "p2p_chase.strategy.police_brain:ArchitectPolice"
+thief_class  = "p2p_chase.strategy.safe_thief:SafeThief"
+
+[strategy.police]
+capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a capture.
+#                             Raised from 0.18 after a live loss: at that bar the officer
+#                             claimed ten times in one sub-game, caught nothing, announced
+#                             its own cell each time, and oscillated chasing the belief peak.
+wall_threshold     = 3.0    # structural value a wall must clear before we give up a turn to build (tuned: docs/RESEARCH-REPORT.md)
+barrier_reserve    = 3      # walls held back for the endgame squeeze
+anchor_bonus       = 1.2    # per side already touching a wall or the board edge
+cut_bonus          = 6.0    # sealing a cut vertex severs a corridor outright
+occupancy_bonus    = 12.0   # sealing a cell the thief is standing on IS a capture
+own_region_floor   = 0.25   # never wall ourselves into less than this share of the board
+pressure_weight    = 1.0    # weight on expected walking distance to the thief
+containment_weight = 0.5    # weight on shrinking the thief's reachable region
+coverage_weight    = 1.2    # weight on belief mass within one step of us
+centrality_weight  = 0.2    # mild pull toward the centre of mass on quiet turns
+
+[strategy.thief]
+region_weight    = 1.0      # weight on "how much room do I still have"
+mobility_weight  = 3.0      # weight on "how many cells can I reach in three moves"
+#                           A corner reports full region size and two exits, so
+#                           without this term nothing sees the trap closing.
+distance_weight  = 0.35     # weight on "how far from the believed officer".
+#                           Lowered from 0.6: raw distance is what walks a thief
+#                           into the far corner, which is exactly how uoh-ay26
+#                           took all three of our thief sub-games at step 12.
+novelty_weight   = 0.15     # mild preference for unvisited cells
+deadend_penalty  = 0.8      # a cell with one exit is one barrier from losing
+contact_penalty  = 1.5      # never volunteer to stand next to the officer
+exposure_weight  = 0.4      # weight on belief mass within two steps
+
+[trash_talk]
+# HOW the natural-language hint is written. The MOVE is ALWAYS pure Python and is
+# never delegated to a model (book ch.6, mandatory rule 25).
+provider      = "template"   # template (0 tokens, default) | claude_api | ollama | claude_cli
+model         = "claude-haiku-4-5-20251001"
+every_n_steps = 1
+lie_rate      = 0.45         # target fraction of hints that are deliberate misdirection
+
+[llm]
+model                  = "template-zero-token"
+step_deadline_seconds  = 20   # hard cap on hint generation; miss => template fallback
+timeout_seconds        = 60
+
+[email]
+enabled   = true
+recipient = "rmisegal+uoh26finalgame@gmail.com"
+# COUNTED. The lecturer ALONE -- not us, not the opponent. Rule 35 scores
+# nobody if a report is missing, and rules 37-38 make a friendly mailed here
+# a false declaration. Set by hand before the match, never mid-run.
+sender    = "me"
+
+[league]
+# Six sub-games with five process boundaries in between: the case a counted
+# series would otherwise exercise for the first time.
+series_consensus = true
+counted       = true    # THE COUNTED SERIES. One per pairing, no rematch (rule 52).
+first_meeting = true    # first COUNTED meeting with uoh-ay26; the friendlies do not count
+
+[play]
+seed               = 19470529
+step_speed_seconds = 0.35
+
+[gui]
+cell_px = 56
+
+[paths]
+logs_dir  = "logs"
+state_dir = "state"
