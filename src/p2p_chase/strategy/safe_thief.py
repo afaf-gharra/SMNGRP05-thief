@@ -165,14 +165,24 @@ class SafeThief(OpenSpaceThief):
         Searching that second ply was tried and is not worth it: it costs about
         twenty solves a turn instead of four and, measured over 300 sub-games,
         changed no outcome at all — the pinch it was meant to catch was already
-        decided several moves earlier, by the choice to be in the corner. What
-        actually prevents it is refusing cramped ground in the first place, which
-        is what ``mobility_weight`` in the inherited score is for, and why the
-        live configuration raises it to 3.0.
+        decided several moves earlier, by the choice to be in the corner. That
+        conclusion still holds. The response to it did not: prevention was left
+        to ``mobility_weight`` in the inherited positional score, which only ever
+        breaks ties *among moves of equal safety*, so it could never outvote the
+        distance that draws a thief to a corner in the first place. Room is now
+        ranked inside :meth:`_safety` where it can actually fire.
 
         So the residual is real and worth stating plainly: against an officer
-        that spends walls to pinch a corner, this thief is not provably safe. In
-        the fixed arena that is roughly one sub-game in three hundred.
+        that spends walls to pinch a corner, this thief is not provably safe.
+
+        This paragraph used to end "in the fixed arena that is roughly one
+        sub-game in three hundred". Live, against an officer that actually
+        pinches, it was three sub-games in three — every thief window of the
+        counted series against imreeyal, same corner, same two walls, same
+        rule-47 concession. The 1-in-300 came from an arena whose only officer
+        never spent a wall on a corner, so it was measuring our own blind spot
+        with our own blind instrument. Do not trust that number again until
+        ``scripts/arena.py`` has a pinching officer in its opponent set.
         """
         return set(board.neighbors(officer, barriers))
 
