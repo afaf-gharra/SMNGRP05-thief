@@ -78,25 +78,49 @@ class SafeThief(OpenSpaceThief):
         finalists = [item[2] for item in contenders if item[1] == best_score]
         return self._rng.choice(finalists) if len(finalists) > 1 else finalists[0]
 
-    def _safety(self, table, target: Cell, threats, context) -> tuple[int, int, int]:
+    def _safety(self, table, target: Cell, threats, context) -> tuple[int, int, int, int]:
         """How safe this destination is, worst case first.
 
-        Three numbers, compared in order:
+        Four numbers, compared in order:
 
         1. the plies guaranteed against *every* plausible officer, allowing for
            the wall it may build — the only one that is a guarantee;
-        2. how many of those officers the move survives at all;
-        3. their total, which separates "briefly safe" from "immediately lost".
+        2. **how many walls it would take to seal this cell** — its open exits,
+           counted only once (1) has saturated at the horizon;
+        3. how many of those officers the move survives at all;
+        4. their total, which separates "briefly safe" from "immediately lost".
+
+        The second number is the fix for a series we lost 30-90, and it belongs
+        here rather than in the positional tie-break where it used to live.
+        ``plies`` is computed against the walls that exist *now*, so on an open
+        board the far corner scores the full horizon precisely **because** it is
+        far away. Every roomy cell scores the same capped number, the corner ties
+        with them, and the tie was then broken by a positional score in which
+        ``mobility_weight`` could never outvote distance. Our thief walked into
+        (6,0), played STAY five times, and was sealed by two walls out of
+        fourteen — the same corner, the same two cells, in all three sub-games it
+        lost. Exits are cheap to count and they are what the officer is actually
+        spending walls against, so they rank above preference and below proof.
 
         The tie-breakers matter more than they look. When the officer might be on
         any side of us, no move guarantees anything and the worst case is zero
         everywhere; falling straight through to a positional score there once
         made standing still look attractive while it was the one certain loss.
         """
+        exits = len(context.state.board.neighbors(target, context.state.barriers))
         plies = [self._against(table, target, officer, context) for officer in threats]
         if not plies:
-            return table.depth, 0, 0
-        return min(plies), sum(1 for p in plies if p > 0), sum(plies)
+            return table.depth, exits, 0, 0
+        worst = min(plies)
+        # Room counts ONLY where the ply count has saturated, and nowhere else.
+        # At the horizon every roomy cell and every corner report the same capped
+        # number, so the first key has stopped discriminating and exits are the
+        # honest way to separate them. Below the cap we are already losing, and
+        # the question becomes which move loses slowest; two tests caught the
+        # cost of forgetting that -- ranking room any lower in the tuple traded a
+        # cell that survives another ply for a roomier one that dies at once.
+        room = exits if worst >= table.depth else 0
+        return worst, room, sum(1 for p in plies if p > 0), sum(plies)
 
     def _against(self, table, target: Cell, officer: Cell, context) -> int:
         """Plies survived against one officer, including the wall it might build.
