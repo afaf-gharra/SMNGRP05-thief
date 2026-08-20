@@ -72,6 +72,43 @@ def plan_barrier(
     return best
 
 
+def evaluate_wall(
+    board: Board,
+    position: Cell,
+    barriers: set[Cell],
+    belief_cells: list[tuple[Cell, float]],
+    direction,
+    cell: Cell,
+    *,
+    anchor_bonus: float = 1.2,
+    cut_bonus: float = 6.0,
+    occupancy_bonus: float = 12.0,
+    own_region_floor: float = 0.25,
+) -> BarrierPlan | None:
+    """Price one *named* wall, rather than picking the best available.
+
+    :func:`plan_barrier` answers "what is the most valuable wall this turn",
+    which is the right question for an officer buying board structure and the
+    wrong one for an officer that has already decided *which* cell it wants to
+    take away -- ``PincherPolice`` choosing an exit of the cornered thief, for
+    instance. Without this, such an officer would have to reach into the private
+    scorer, and would quietly lose the safety checks that come with it: the
+    ``own_region_floor`` guard that stops us walling ourselves into a pocket, and
+    the rule that a wall must never *enlarge* the thief's expected region.
+
+    Returns ``None`` when the wall is not legal from here, so callers can treat
+    "cannot" and "not worth it" alike.
+    """
+    if not belief_cells or cell not in {target for _, target in board.legal_moves(position, barriers)}:
+        return None
+    baseline = reachability.expected_region_size(board, belief_cells, barriers | {position})
+    return _evaluate(
+        board, position, barriers, belief_cells, direction, cell, baseline,
+        dict(belief_cells).get(cell, 0.0), anchor_bonus, cut_bonus, occupancy_bonus,
+        own_region_floor,
+    )
+
+
 def _evaluate(
     board: Board, position: Cell, barriers: set[Cell], belief_cells, direction, cell: Cell,
     baseline: float, occupancy: float, anchor_bonus: float, cut_bonus: float,

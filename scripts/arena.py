@@ -32,12 +32,13 @@ from p2p_chase.domain.trust import TrustEstimator  # noqa: E402
 from p2p_chase.strategy.base import TurnContext  # noqa: E402
 from p2p_chase.strategy.baselines import GreedyPolice, GreedyThief  # noqa: E402
 from p2p_chase.strategy.decode import ScentTracker  # noqa: E402
+from p2p_chase.strategy.pincher_police import PincherPolice  # noqa: E402
 from p2p_chase.strategy.police_brain import ArchitectPolice  # noqa: E402
 from p2p_chase.strategy.safe_thief import SafeThief  # noqa: E402
 from p2p_chase.strategy.thief_brain import OpenSpaceThief  # noqa: E402
 
 BRAINS = {
-    "architect": ArchitectPolice, "greedy": GreedyPolice,
+    "architect": ArchitectPolice, "greedy": GreedyPolice, "pincher": PincherPolice,
     "openspace": OpenSpaceThief, "greedythief": GreedyThief, "safe": SafeThief,
 }
 
@@ -187,7 +188,9 @@ def _done(result: str, cop: Side, thief: Side, how: str) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Benchmark cop/thief strategies head to head")
     parser.add_argument("--matches", type=int, default=40)
-    parser.add_argument("--cop", default="architect", choices=["architect", "greedy"])
+    parser.add_argument(
+        "--cop", default="architect", choices=["architect", "greedy", "pincher"]
+    )
     parser.add_argument(
         "--thief", default="safe", choices=["safe", "openspace", "greedythief"]
     )
