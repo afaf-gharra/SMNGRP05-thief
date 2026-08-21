@@ -28,7 +28,7 @@ series_id  = "SMNGRP05-vs-vibecode"
 # different match. The byte string "SMNGRP05" is load-bearing.
 series_uid = "f3926768-06be-e93c-6cba-bd6ebf142059"  # AGREED IN WRITING with vibecode, not derived.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 4  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal.
+counted_games_played = 5  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }

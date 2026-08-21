@@ -28,7 +28,7 @@ series_id  = "SMNGRP05-vs-yamanagh"
 # different match. The byte string "SMNGRP05" is load-bearing.
 series_uid = "34fd3a87-dae4-1b73-4df7-130c2ff0e416"  # derived natively; equals theirs.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 4  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal.
+counted_games_played = 5  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
@@ -118,7 +118,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"   # COUNTED: league address ALONE.
+recipient = "yamandahle@gmail.com, afafgharra000@gmail.com"   # DISARMED.
 # Nobody CC'd -- not yamanagh, not ourselves. The friendly went to them because a
 # report each side files only to itself cannot be checked by the other; a counted
 # report is read by the lecturer, and rule 35 reads the two filings as a pair.
@@ -139,7 +139,8 @@ sender    = "me"
 # before anything counts.
 series_consensus = false   # vibecode do not exchange it; never send an unknown
 #                            key to a peer that refuses unknown keys.
-counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
+counted       = false   # DISARMED. The counted meeting is played; rule 52
+#                         forbids a rematch, so nothing may arm this again.
 #                         rule 52 forbids a rematch. Arm by hand only for a
 #                         series both sides have authorised in writing.
 first_meeting = true    # first counted meeting with vibecode: a WIN here carries
