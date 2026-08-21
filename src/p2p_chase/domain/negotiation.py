@@ -35,11 +35,26 @@ class Negotiation:
         self.peer_identity: dict = {}
 
     def signed(self) -> dict:
-        """My agreement message: the terms, my nonce, my signature, my identity."""
+        """My agreement message: the terms, my nonce, my signature, my identity.
+
+        ``group_id`` appears at the TOP level as well as inside ``identity``, and
+        the duplication is deliberate. We shipped it nested only, which four
+        opponents accepted and a fifth rejected outright -- their validator reads
+        rule 5 as "the greeting names the group", refused ours for having no
+        group_id, and their peer process died on the refusal. They were right:
+        a field the protocol requires of the *message* should not be reachable
+        only by knowing where we happened to file it.
+
+        Sent as a sibling of terms/nonce/signature rather than moved, because
+        peers already reading it out of ``identity`` must keep working. It is
+        outside the signed preimage either way -- the signature covers the terms
+        alone -- so adding it changes no hash on either side.
+        """
         return {
             "terms": self.terms,
             "nonce": self._nonce,
             "signature": CommitReveal.commit_of(self.terms, self._nonce),
+            "group_id": self.identity.get("group_id", ""),
             "identity": self.identity,
             **self.context,
         }
