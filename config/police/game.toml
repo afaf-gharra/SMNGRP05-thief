@@ -75,7 +75,13 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"
+recipient = "afafgharra000@gmail.com"   # ourselves, and this is the safe default.
+# The league address belongs on this line ONLY for a counted series both sides
+# have authorised in writing, put there by hand immediately before the match
+# together with counted = true, and taken straight back out afterwards. Left
+# standing here it mails the lecturer whatever runs next -- and with counted
+# absent (it defaults to false) that would file a warm-up at the league
+# address: the rule 37-38 false declaration, arrived at from the other side.
 sender    = "me"
 
 [play]

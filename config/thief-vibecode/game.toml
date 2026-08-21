@@ -28,7 +28,7 @@ series_id  = "SMNGRP05-vs-vibecode"
 # different match. The byte string "SMNGRP05" is load-bearing.
 series_uid = "f3926768-06be-e93c-6cba-bd6ebf142059"  # AGREED IN WRITING with vibecode, not derived.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 2  # completed COUNTED series: GRP00001 (saedshki), uoh-ay26.
+counted_games_played = 4  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
@@ -118,7 +118,9 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"   # COUNTED: the league address ALONE.
+recipient = "afafgharra000@gmail.com"   # DISARMED: ourselves only. The league
+# address goes here ONLY for an authorised counted series, by hand, immediately
+# before it, together with counted = true -- and comes straight back out after.
 # COUNTED. One report per team to the league address, nobody CC'd -- not vibecode,
 # not ourselves. The friendly used a mutual exchange because a report each side
 # files only to itself cannot be checked by the other; a counted report is read by
@@ -133,7 +135,9 @@ sender    = "me"
 # before anything counts.
 series_consensus = false   # vibecode do not exchange it; never send an unknown
 #                            key to a peer that refuses unknown keys.
-counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
+counted       = false   # DISARMED. Every counted series with this opponent is played;
+#                         rule 52 forbids a rematch. Arm by hand only for a
+#                         series both sides have authorised in writing.
 first_meeting = true    # first counted meeting with vibecode: a WIN here carries
 #                         diversity_reward +10. Derived, never claimed -- both
 #                         filings mark the winner true, whichever side that is.

@@ -14,7 +14,7 @@ group_name = "SMNGRP05"
 members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
-counted_games_played = 2  # completed COUNTED series: GRP00001 (saedshki), uoh-ay26.
+counted_games_played = 4  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal.
 # Rule 38 truthfulness: opponents read this from our negotiate identity into
 # their own filing, and our report derives games_played_including_this from it.
 # Absent, it reads as zero and understates us in BOTH teams' reports. Bump it
@@ -91,7 +91,13 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"
+recipient = "afafgharra000@gmail.com"   # ourselves, and this is the safe default.
+# The league address belongs on this line ONLY for a counted series both sides
+# have authorised in writing, put there by hand immediately before the match
+# together with counted = true, and taken straight back out afterwards. Left
+# standing here it mails the lecturer whatever runs next -- and with counted
+# absent (it defaults to false) that would file a warm-up at the league
+# address: the rule 37-38 false declaration, arrived at from the other side.
 # COUNTED series against saedshki (GRP00001). The lecturer alone -- rule 35
 # scores nobody if a report is missing, and both teams must send one. The
 # friendly config beside this one reports to the opponent instead; that is the

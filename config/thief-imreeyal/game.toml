@@ -28,7 +28,7 @@ series_id  = "SMNGRP05-vs-imreeyal"
 # W011 -- so the two sides only land on one uid if the string itself is agreed.
 series_uid = "b9e8c36d-0c11-72a6-2a4c-88451a5e5ad6"  # theirs, reproduced by us
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 3  # COUNTED series completed: saedshki, uoh-ay26, vibecode.
+counted_games_played = 4  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
@@ -114,7 +114,9 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"
+recipient = "afafgharra000@gmail.com"   # DISARMED: ourselves only. The league
+# address goes here ONLY for an authorised counted series, by hand, immediately
+# before it, together with counted = true -- and comes straight back out after.
 # COUNTED: the league address ALONE, nobody CC'd -- not imreeyal, not ourselves.
 # The two friendlies went to them because they gate on our report LANDING in
 # their inbox and our own Sent copy is not evidence; a counted report is read by
@@ -128,7 +130,9 @@ sender    = "me"
 # implement series_consensus and we now do too, and neither side has ever seen
 # the other's envelope on the wire.
 series_consensus = false   # imreeyal do not exchange it
-counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
+counted       = false   # DISARMED. Every counted series with this opponent is played;
+#                         rule 52 forbids a rematch. Arm by hand only for a
+#                         series both sides have authorised in writing.
 first_meeting = true    # first counted meeting with imreeyal: a WIN carries
 #                         diversity_reward +10, derived from the result and never
 #                         claimed -- both filings mark the winner, whichever side.
