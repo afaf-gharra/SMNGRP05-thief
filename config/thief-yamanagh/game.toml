@@ -118,7 +118,11 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "yamandahle@gmail.com, afafgharra000@gmail.com"   # FRIENDLY
+recipient = "rmisegal+uoh26finalgame@gmail.com"   # COUNTED: league address ALONE.
+# Nobody CC'd -- not yamanagh, not ourselves. The friendly went to them because a
+# report each side files only to itself cannot be checked by the other; a counted
+# report is read by the lecturer, and rule 35 reads the two filings as a pair.
+# Armed by hand immediately before the match and disarmed straight after.
 # address goes here ONLY for an authorised counted series, by hand, immediately
 # before it, together with counted = true -- and comes straight back out after.
 # COUNTED. One report per team to the league address, nobody CC'd -- not vibecode,
@@ -135,7 +139,7 @@ sender    = "me"
 # before anything counts.
 series_consensus = false   # vibecode do not exchange it; never send an unknown
 #                            key to a peer that refuses unknown keys.
-counted       = false   # DISARMED. Every counted series with this opponent is played;
+counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
 #                         rule 52 forbids a rematch. Arm by hand only for a
 #                         series both sides have authorised in writing.
 first_meeting = true    # first counted meeting with vibecode: a WIN here carries
