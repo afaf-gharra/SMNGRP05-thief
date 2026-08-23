@@ -82,7 +82,16 @@ capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a
 #                             Raised from 0.18 after a live loss: at that bar the officer
 #                             claimed ten times in one sub-game, caught nothing, announced
 #                             its own cell each time, and oscillated chasing the belief peak.
-wall_threshold     = 3.0    # structural value a wall must clear before we give up a turn to build (tuned: docs/RESEARCH-REPORT.md)
+wall_threshold     = 0.5    # structural value a wall must clear before we give up a
+#                             turn to build. Was 3.0, which in four live counted series
+#                             produced ZERO walls out of fourteen -- the gate only opens
+#                             when belief is already concentrated beside us, so it fired
+#                             when we were winning and never when we were not.
+#                             Measured at 0.5 over 60 matches against three thieves:
+#                             capture vs greedythief 0.23 -> 0.90, vs openspace 0.00 ->
+#                             0.12, cop points 1110 -> 1830, and NO regression anywhere.
+#                             Against a thief as careful as our own it is still 0.00-0.02:
+#                             walls do not beat a thief that refuses cramped ground.
 barrier_reserve    = 3      # walls held back for the endgame squeeze
 anchor_bonus       = 1.2    # per side already touching a wall or the board edge
 cut_bonus          = 6.0    # sealing a cut vertex severs a corridor outright
