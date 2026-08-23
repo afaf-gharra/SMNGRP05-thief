@@ -28,7 +28,7 @@ series_id  = "SMNGRP05-vs-imreeyal"
 # W011 -- so the two sides only land on one uid if the string itself is agreed.
 series_uid = "b9e8c36d-0c11-72a6-2a4c-88451a5e5ad6"  # theirs, reproduced by us
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 5  # COUNTED series completed: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh.
+counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
