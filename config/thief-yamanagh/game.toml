@@ -34,7 +34,7 @@ counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, yam
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
-mcp_servers = { cop = "https://53ed-147-236-163-154.ngrok-free.app/mcp", thief = "https://53ed-147-236-163-154.ngrok-free.app/mcp" }
+mcp_servers = { cop = "https://implies-respectively-istanbul-mambo.trycloudflare.com/mcp", thief = "https://implies-respectively-istanbul-mambo.trycloudflare.com/mcp" }
 
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
