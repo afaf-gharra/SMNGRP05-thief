@@ -28,7 +28,8 @@ series_id  = "SMNGRP05-vs-ali-ahm1"
 # different match. The byte string "SMNGRP05" is load-bearing.
 series_uid = "2ef2e779-20c0-25d8-bee1-332c00991f15"  # derived natively; equals theirs.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1.
+counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali-ahm1,
+# and yamanagh (the authorised replay of 24/08, which supersedes the 21/08 run).
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }

@@ -32,7 +32,8 @@ series_uid = "7edf6778-cfe0-70af-206f-0e144b56dd50"
 members    = ["Afaf Gharra", "Reem Awawdy"]  # names, not ID numbers: the
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
-counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1.
+counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali-ahm1,
+# and yamanagh (the authorised replay of 24/08, which supersedes the 21/08 run).
 # Rule 38 truthfulness: opponents read this from our negotiate identity into
 # their own filing, and our report derives games_played_including_this from it.
 # Absent, it reads as zero and understates us in BOTH teams' reports. Bump it
