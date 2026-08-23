@@ -127,7 +127,8 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "ahmadqais1997@gmail.com, atrabe08@gmail.com, afafgharra000@gmail.com"
+recipient = "rmisegal+uoh26finalgame@gmail.com"   # COUNTED: league address ALONE.
+# Nobody CC'd. Armed by hand immediately before the match, disarmed straight after.
 # Nobody CC'd -- not yamanagh, not ourselves. The friendly went to them because a
 # report each side files only to itself cannot be checked by the other; a counted
 # report is read by the lecturer, and rule 35 reads the two filings as a pair.
@@ -156,7 +157,7 @@ series_consensus = false   # ali-ahm1 have no settlement gate; they asked us to
 #                            sub-games settled and only one side could file. The
 #                            lecturer has authorised one replay to fix exactly this.
 #                            key to a peer that refuses unknown keys.
-counted       = false   # DISARMED. The counted meeting is played; rule 52
+counted       = true    # COUNTED, single meeting under rule 52. No rematch, ever.
 #                         forbids a rematch, so nothing may arm this again.
 #                         rule 52 forbids a rematch. Arm by hand only for a
 #                         series both sides have authorised in writing.
