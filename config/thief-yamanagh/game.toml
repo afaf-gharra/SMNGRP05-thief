@@ -146,7 +146,13 @@ sender    = "me"
 [league]
 # Six-sub-game friendly whose purpose is byte-reconciliation in both directions
 # before anything counts.
-series_consensus = false   # vibecode do not exchange it; never send an unknown
+series_consensus = true    # ON for yamanagh, and this is the whole reason for
+#                            the replay. Their finaliser will not file until it has
+#                            received a settlement envelope after the mutual audit.
+#                            Ours was off -- correctly, since it was never agreed and
+#                            a reference peer raises on the unknown key -- so six clean
+#                            sub-games settled and only one side could file. The
+#                            lecturer has authorised one replay to fix exactly this.
 #                            key to a peer that refuses unknown keys.
 counted       = false   # DISARMED. The counted meeting is played; rule 52
 #                         forbids a rematch, so nothing may arm this again.
