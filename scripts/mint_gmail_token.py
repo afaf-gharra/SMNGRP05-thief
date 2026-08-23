@@ -17,7 +17,6 @@ a nuisance; one that can read is a disaster.
 """
 
 import shutil
-import sys
 from pathlib import Path
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
