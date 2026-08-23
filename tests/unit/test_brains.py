@@ -165,7 +165,10 @@ def test_an_unset_selector_falls_back_to_the_shipped_brain(config):
 def test_resolve_brain_injects_the_tuning_block(config):
     brain = resolve_brain(config, Role.POLICE)
     assert isinstance(brain, ArchitectPolice)
-    assert brain.tuning["wall_threshold"] == 3.0
+    # The value itself is config, not contract -- what this pins is that the
+    # [strategy.police] block reaches the brain at all. Read from the config
+    # rather than hard-coded, so tuning a weight never fails a test about wiring.
+    assert brain.tuning["wall_threshold"] == config.get("strategy.police.wall_threshold")
 
 
 def test_tuning_falls_back_when_a_value_is_unusable():
