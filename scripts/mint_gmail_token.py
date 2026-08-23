@@ -32,9 +32,19 @@ def main() -> int:
         print(f"No {credentials} — download it from the Google Cloud console first.")
         return 1
 
-    print("A browser window will open. Approve the 'send email' scope.\n")
+    print("Starting the consent flow. A browser window should open.", flush=True)
+    print("If it does not, copy the URL printed below into a browser by hand.\n", flush=True)
     flow = InstalledAppFlow.from_client_secrets_file(str(credentials), SCOPES)
-    creds = flow.run_local_server(port=0)
+    # The prompt is spelled out and flushed because the first run of this
+    # reported "nothing happened": on Windows the browser does not always come
+    # forward, and a buffered prompt looks identical to a script that never ran.
+    creds = flow.run_local_server(
+        port=0,
+        open_browser=True,
+        authorization_prompt_message="\n>>> OPEN THIS URL TO AUTHORISE:\n\n{url}\n\n"
+        ">>> Waiting for you to approve. This will not return until you do.\n",
+        success_message="Authorised. You can close this tab and go back to the terminal.",
+    )
 
     target = ROOT / "token.json"
     target.write_text(creds.to_json(), encoding="utf-8")
