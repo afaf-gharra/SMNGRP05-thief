@@ -1,0 +1,53 @@
+{
+  "version": "1.00",
+  "_note": "Gatekeeper configuration (book Appendix F table 19 + submission guidelines §5.2). Every outbound external call — Gmail, Anthropic, Ollama — passes the three cumulative gates: quota manager, token bucket, DOS detector. Never hard-code these numbers in source.",
+  "rate_limits": {
+    "version": "1.00",
+    "services": {
+      "default": {
+        "requests_per_minute": 30,
+        "requests_per_hour": 500,
+        "concurrent_max": 2,
+        "retry_after_seconds": 5,
+        "max_retries": 3,
+        "queue_depth": 100,
+        "daily_quota": 400,
+        "dos_window_seconds": 10,
+        "dos_max_in_window": 20
+      },
+      "gmail": {
+        "requests_per_minute": 6,
+        "requests_per_hour": 60,
+        "concurrent_max": 1,
+        "retry_after_seconds": 5,
+        "max_retries": 3,
+        "queue_depth": 50,
+        "daily_quota": 100,
+        "dos_window_seconds": 10,
+        "dos_max_in_window": 5
+      },
+      "anthropic": {
+        "requests_per_minute": 30,
+        "requests_per_hour": 500,
+        "concurrent_max": 2,
+        "retry_after_seconds": 5,
+        "max_retries": 3,
+        "queue_depth": 100,
+        "daily_quota": 2000,
+        "dos_window_seconds": 10,
+        "dos_max_in_window": 25
+      },
+      "ollama": {
+        "requests_per_minute": 120,
+        "requests_per_hour": 5000,
+        "concurrent_max": 2,
+        "retry_after_seconds": 1,
+        "max_retries": 2,
+        "queue_depth": 100,
+        "daily_quota": 100000,
+        "dos_window_seconds": 10,
+        "dos_max_in_window": 60
+      }
+    }
+  }
+}
