@@ -29,9 +29,14 @@ series_id  = "SMNGRP05-vs-vibecode"
 series_uid = "f3926768-06be-e93c-6cba-bd6ebf142059"  # AGREED IN WRITING with vibecode, not derived.
 members    = ["Afaf Gharra", "Reem Awawdy"]
 counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali-ahm1,
-# and yamanagh (the authorised replay of 24/08, which supersedes the 21/08 run).
-# declaration is exchanged with opponents and archived in their repos, and the
-# lecturer already holds the ID numbers from the submission form.
+# and yamanagh (the replay of 24/08). The 21/08 yamanagh series is NOT in this
+# count and never was countable: the lecturer ruled on 22/08 that "any game that
+# did not receive confirmation from both groups with identical code does not
+# count", and that series was filed by one side only. It is not a game we played
+# and then had annulled -- under that ruling it never counted at all, which is
+# also why replaying it does not breach rule 52.
+# The declaration is exchanged with opponents and archived in their repos, and
+# the lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
