@@ -39,7 +39,7 @@ mcp_servers = { cop = "https://53ed-147-236-163-154.ngrok-free.app/mcp", thief =
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "https://arise-political-applies-detection.trycloudflare.com/mcp"
+opponent_url           = "https://stress-gasoline-headphones-substitute.trycloudflare.com/mcp"
 # vibecode run two SEPARATE OS processes, one per role, on a router-forwarded
 # static IP -- two ports, not two hostnames. Their cop answers on 61224 (dial it
 # when we are thief) and their thief on 61223 (dial it when we are cop). Roles
@@ -47,7 +47,7 @@ opponent_url           = "https://arise-political-applies-detection.trycloudflar
 # talking to the peer that is not playing. Their forward DROPS rather than
 # refusing when nothing is behind it, so a probe before they start times out
 # silently and proves nothing -- do not read it as unreachable.
-opponent_urls = { cop = "https://arise-political-applies-detection.trycloudflare.com/mcp", thief = "https://arise-political-applies-detection.trycloudflare.com/mcp" }
+opponent_urls = { cop = "https://stress-gasoline-headphones-substitute.trycloudflare.com/mcp", thief = "https://stress-gasoline-headphones-substitute.trycloudflare.com/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
 connect_timeout_seconds = 300
