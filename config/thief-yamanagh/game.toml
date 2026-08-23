@@ -28,7 +28,13 @@ series_id  = "SMNGRP05-vs-yamanagh"
 # different match. The byte string "SMNGRP05" is load-bearing.
 series_uid = "34fd3a87-dae4-1b73-4df7-130c2ff0e416"  # derived natively; equals theirs.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1.
+counted_games_played = 5  # FIVE, not six, and only for this replay. Our filed
+# counted series are saedshki, uoh-ay26, vibecode, imreeyal, yamanagh 21/08 and
+# ali-ahm1. This run REPLACES the yamanagh 21/08 one rather than adding to it --
+# Dr Segal authorised it precisely because that series could not be filed by both
+# sides -- so the standing count going in is five and this files six. yamanagh
+# declared 5 on the wire tonight and say the same in writing, so the two filings
+# agree by construction. Set back to 6 for everyone once this settles.
 # declaration is exchanged with opponents and archived in their repos, and the
 # lecturer already holds the ID numbers from the submission form.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
