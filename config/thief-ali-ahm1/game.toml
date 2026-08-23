@@ -127,7 +127,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "atrabe08@gmail.com, afafgharra000@gmail.com"   # FRIENDLY
+recipient = "ahmadqais1997@gmail.com, atrabe08@gmail.com, afafgharra000@gmail.com"
 # Nobody CC'd -- not yamanagh, not ourselves. The friendly went to them because a
 # report each side files only to itself cannot be checked by the other; a counted
 # report is read by the lecturer, and rule 35 reads the two filings as a pair.
