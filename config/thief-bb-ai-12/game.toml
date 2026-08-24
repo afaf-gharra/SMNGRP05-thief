@@ -35,7 +35,7 @@ opponent_url           = "https://comic-leverage-paprika.ngrok-free.dev/mcp"  # 
 opponent_urls = { cop = "https://comic-leverage-paprika.ngrok-free.dev/mcp", thief = "https://comic-leverage-paprika.ngrok-free.dev/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
-connect_timeout_seconds = 300
+connect_timeout_seconds = 1800
 call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec of 30  # W010: their cop was still 502 well after kickoff,
 # and both restarts of ours only reset a five-minute clock without changing that.
 # Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
@@ -45,7 +45,7 @@ call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec 
 # has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
 audit_send_timeout_seconds = 10
-watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
+watchdog_timeout_seconds = 2100   # must EXCEED connect_timeout_seconds: the handshake retry loop does not beat the heartbeat.
 
 [belief]
 smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass

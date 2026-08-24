@@ -70,7 +70,7 @@ call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec 
 # has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
 audit_send_timeout_seconds = 10
-watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
+watchdog_timeout_seconds = 600   # must EXCEED connect_timeout_seconds: the handshake retry loop does not beat the heartbeat, so a watchdog at or below the connect budget kills the peer while it is legitimately waiting for a late opponent.
 
 [belief]
 smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass
