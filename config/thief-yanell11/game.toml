@@ -1,0 +1,184 @@
+# PRIVATE, LOCAL configuration for THIS peer only.
+#
+# Nothing the opponent must agree on lives here. Every shared term — board size,
+# start cells, movement set, barrier quota, scoring, pheromone model, map area,
+# hint length — lives ONLY in the signed `game.json` beside this file, which both
+# peers hold byte-identically and verify by SHA-256 before the first move.
+#
+# Book: Appendix B (JSON = shared and signed; TOML = private and local).
+version = "1.00"
+
+[game]
+group_id   = "SMNGRP05"
+group_name = "SMNGRP05"
+# Derived natively from the terms and the two group codes; nothing pinned from
+# their message. anrbj666 published the terms digest a284082dfb15... over the
+# same fourteen fields and ours reproduces it exactly, so the agreement is
+# verified rather than assumed before a single call is made.
+series_id  = "SMNGRP05-vs-yanell11"
+series_uid = "1af32cc1-9f1e-79b6-118c-962bffe9dbdf"  # derived from the Haifa terms; they confirm before T.
+members    = ["Afaf Gharra", "Reem Awawdy"]
+counted_games_played = 7  # The count BEFORE this series: saedshki, uoh-ay26,
+# vibecode, imreeyal, ali-ahm1, yamanagh, anrbj666. The report builder adds one
+# for a counted series, so this files 8 -- do not "correct" it to 8. yanell11
+# declare their prior as 7 as well. Our GREETING does not carry this field; it
+# lives in the sealed step-zero record, so their wire reader sees null and takes
+# our 7 from the written exchange instead.
+repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
+# Cloudflare quick tunnel. We moved off free ngrok on 24/08 after it blocked
+# another opponent entirely: the browser interstitial answers GET, which MCP
+# streamable HTTP uses to open its SSE stream, and the free tier throttles NEW
+# connections once both peers are live.
+mcp_servers = { cop = "https://branches-wedding-holdings-sticker.trycloudflare.com/mcp", thief = "https://branches-wedding-holdings-sticker.trycloudflare.com/mcp" }
+[network]
+host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
+my_port                = 8801                          # MY MCP server port
+opponent_url           = "PENDING"  # they send two doors labelled by role
+# alternate every sub-game, so a single fixed URL would spend half the series
+opponent_urls = { cop = "PENDING", thief = "PENDING" }  # yanell11 run TWO processes: their cop and thief are separate doors
+turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
+poll_interval_seconds  = 0.5
+connect_timeout_seconds = 1800   # they launch on a schedule; wait rather than fail sub-game 1.
+call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec of 30  # W010: their cop was still 502 well after kickoff,
+# and both restarts of ours only reset a five-minute clock without changing that.
+# Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
+# technical loss and forcing yet another coordinated restart. Private, local, not
+# a signed term. The per-turn budget stays at 180s, so a peer that connects and
+# then dies is still caught quickly -- this only buys patience before the series
+# has begun, which is exactly where the waiting has actually been.
+retry_interval_seconds = 1.0
+audit_send_timeout_seconds = 90   # COUNTED: this is BOTH our send budget and the wait for THEIR reveal. At 10s a reveal arriving on second 11 is discarded and logged as absent -- and a counted game whose audit is absent does not count at all under the 22/08 ruling. Cost of waiting: nothing.
+watchdog_timeout_seconds = 2100   # must EXCEED connect_timeout_seconds.
+
+[belief]
+smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass
+hint_trust_initial = 0.5    # prior P(opponent's hint is truthful)
+hint_trust_floor   = 0.05   # never fully trust or fully dismiss a talker
+hint_trust_ceiling = 0.95
+
+[strategy]
+# The graded seam. Point either key at a BrainBase subclass "package.module:Class".
+police_class = "p2p_chase.strategy.police_brain:ArchitectPolice"
+thief_class  = "p2p_chase.strategy.safe_thief:SafeThief"
+
+[strategy.police]
+capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a capture.
+#                             Raised from 0.18 after a live loss: at that bar the officer
+#                             claimed ten times in one sub-game, caught nothing, announced
+#                             its own cell each time, and oscillated chasing the belief peak.
+wall_threshold     = 0.5    # structural value a wall must clear before we give up a
+#                             turn to build. Was 3.0, which in four live counted series
+#                             produced ZERO walls out of fourteen -- the gate only opens
+#                             when belief is already concentrated beside us, so it fired
+#                             when we were winning and never when we were not.
+#                             Measured at 0.5 over 60 matches against three thieves:
+#                             capture vs greedythief 0.23 -> 0.90, vs openspace 0.00 ->
+#                             0.12, cop points 1110 -> 1830, and NO regression anywhere.
+#                             Against a thief as careful as our own it is still 0.00-0.02:
+#                             walls do not beat a thief that refuses cramped ground.
+barrier_reserve    = 3      # walls held back for the endgame squeeze
+anchor_bonus       = 1.2    # per side already touching a wall or the board edge
+cut_bonus          = 6.0    # sealing a cut vertex severs a corridor outright
+occupancy_bonus    = 12.0   # sealing a cell the thief is standing on IS a capture
+own_region_floor   = 0.25   # never wall ourselves into less than this share of the board
+pressure_weight    = 1.0    # weight on expected walking distance to the thief
+containment_weight = 0.5    # weight on shrinking the thief's reachable region
+coverage_weight    = 1.2    # weight on belief mass within one step of us
+centrality_weight  = 0.2    # mild pull toward the centre of mass on quiet turns
+
+[strategy.thief]
+region_weight    = 1.0      # weight on "how much room do I still have"
+mobility_weight  = 3.0      # weight on "how many cells can I reach in three moves"
+#                           A corner reports full region size and two exits, so
+#                           without this term nothing sees the trap closing.
+distance_weight  = 0.35     # weight on "how far from the believed officer".
+#                           Lowered from 0.6: raw distance is what walks a thief
+#                           into the far corner, which is exactly how uoh-ay26
+#                           took all three of our thief sub-games at step 12.
+novelty_weight   = 0.15     # mild preference for unvisited cells
+deadend_penalty  = 0.8      # a cell with one exit is one barrier from losing
+contact_penalty  = 1.5      # never volunteer to stand next to the officer
+exposure_weight  = 0.4      # weight on belief mass within two steps
+
+[trash_talk]
+# HOW the natural-language hint is written. The MOVE is ALWAYS pure Python and is
+# never delegated to a model (book ch.6, mandatory rule 25).
+provider      = "template"   # template (0 tokens, default) | claude_api | ollama | claude_cli
+model         = "claude-haiku-4-5-20251001"
+every_n_steps = 1
+lie_rate      = 0.45         # target fraction of hints that are deliberate misdirection
+
+[llm]
+model                  = "template-zero-token"
+step_deadline_seconds  = 20   # hard cap on hint generation; miss => template fallback
+timeout_seconds        = 60
+
+[email]
+enabled   = true
+recipient = "afafgharra000@gmail.com"   # DISARMED after the counted series of 24/08.
+# The league address ALONE. Nobody CC'd, not anrbj666 and not ourselves: what
+# the lecturer receives is exactly one report per team with nothing else on the
+# line, and rule 35 reads the two teams' filings as a pair. anrbj666 asked to be
+# copied so they hold both halves of the record; we forward them our copy
+# separately after filing, which gives them the reconciliation without putting a
+# second recipient on the filing itself.
+# DISARM IMMEDIATELY AFTER THE SERIES: back to afafgharra000@gmail.com together
+# with counted = false. A config left in this state and run by accident files a
+# series nobody authorised, which is a false declaration under rules 37-38.
+sender    = "me"
+[league]
+series_consensus = false   # They asked for this explicitly and they are right to.
+#                            They send no settlement envelope, and our finaliser
+#                            gates filing on a matching one -- so with it on, six
+#                            clean sub-games would settle and only one side could
+#                            file. That is exactly how the 21/08 yamanagh series
+#                            was lost, and under the 22/08 ruling a game without
+#                            confirmation from both groups does not count at all.
+counted       = false   # DISARMED. The counted meeting with anrbj666 is PLAYED and FILED (30-90, 24/08). Rule 52 forbids a rematch, so nothing may arm this again, ever.
+#                         Files games_played_including_this = 7: the code adds 1
+#                         to game.counted_games_played (6), which is why that
+#                         value must NOT be touched. Seven is truthful under
+#                         Dr Segal's ruling of 24/08 -- "always advance the
+#                         counters, never play with them; the system knows how to
+#                         neutralise a counter whose game was cancelled" -- so it
+#                         counts every series we have played, not only those his
+#                         automation accepted.
+#                         DISARM TO false IMMEDIATELY AFTER THE SERIES.
+first_meeting = true    # First counted meeting with anrbj666, so a WIN carries
+#                         diversity_reward +10. Derived from the result and never
+#                         claimed: both filings mark the winner, whichever side
+#                         that is. Marking it all-false out of modesty would make
+#                         the two filings disagree on a ten-point line, which is
+#                         the contradiction rule 35 scores as nobody winning.
+# SCENT: a KNOWN and ACCEPTED mismatch, not an oversight.
+# We run subtractive_chebyshev_v1 (81ebee59...); they run the book's
+# multiplicative_book_v1 (934c220d...). They proposed staying silent so that one
+# declared value cannot refuse the other, and we checked their reasoning against
+# our own code rather than taking it on trust:
+#   - No scent value is sealed. The commit covers position, move, action,
+#     barriers, claims and hint; smell_grid rides on the turn message OUTSIDE the
+#     commit. A decay-mode difference therefore cannot produce contradictory
+#     sworn records at the audit.
+#   - Scent does not gate legal moves, so the board cannot diverge from it.
+# What it does cost is localisation, and asymmetrically: absorb() merges the
+# received grid and decay_all() then fades it by OUR mode. A 0.9 deposit reads
+# 0.20 on our side at turn 7 and is gone by turn 9; on theirs it still reads
+# 0.43 at turn 7 and 0.35 at turn 10. Their field remembers our thief far longer
+# than ours remembers theirs. Whether that is an edge depends on the belief
+# model -- a lingering trail also misleads a belief that reads absolute
+# intensity, which is why our own decay_all carries a cutoff -- so it is named
+# to them in writing rather than treated as either harmless or as sharp practice.
+# We DO declare ours. Silence is their choice to make, not a reason for us to
+# stop declaring: a value they can check is strictly better than one they cannot.
+scent_model_sha256 = "81ebee59640e80eae8ca9ee5f86abd26e7edf5cdbb27d15925cb6ee45ca6ddf4"
+info_mode_sha256   = "020947daeeb3f73494af9b04201326791742c7184085456e3517d21981ee1202"
+[play]
+seed               = 19470529
+step_speed_seconds = 0.35
+
+[gui]
+cell_px = 56
+
+[paths]
+logs_dir  = "logs"
+state_dir = "state"
