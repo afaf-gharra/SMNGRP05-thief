@@ -18,9 +18,12 @@ group_name = "SMNGRP05"
 series_id  = "SMNGRP05-vs-bb-ai-12"
 series_uid = "f3116b05-86b2-e873-0422-d6d6b84d3c19"  # re-derived after barriers_max returned to the legal 14.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali-ahm1,
-# and yamanagh (the replay of 24/08). This bb-ai-12 series is a FRIENDLY and is
-# deliberately NOT in the count -- see [league] for why it cannot be counted.
+counted_games_played = 7  # The count BEFORE this series: saedshki, uoh-ay26,
+# vibecode, imreeyal, ali-ahm1, yamanagh, anrbj666. The report builder adds one
+# for a counted series, so this would file 8 -- do not "correct" it to 8. Eight
+# is truthful under Dr Segal's ruling of 24/08: always advance the counters,
+# never play with them, the system neutralises a counter whose game was
+# cancelled. It therefore counts every series played, not only those accepted.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Our live tunnel, announced to them in writing. Verified against the running
 # ngrok agent rather than copied forward from a previous opponent's config --
