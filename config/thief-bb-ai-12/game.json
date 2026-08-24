@@ -15,7 +15,7 @@
   },
   "movement_and_barriers": {
     "move_set": ["N", "S", "E", "W", "STAY"],
-    "max_barriers": 0,
+    "max_barriers": 14,
     "max_moves": 35,
     "survival_threshold": 35
   },

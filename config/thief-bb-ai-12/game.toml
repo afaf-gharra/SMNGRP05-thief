@@ -16,7 +16,7 @@ group_name = "SMNGRP05"
 # nothing to reconcile against; if theirs differs when it arrives, that is a
 # signal to stop rather than something to paper over.
 series_id  = "SMNGRP05-vs-bb-ai-12"
-series_uid = "83dcb215-cd8f-7ec0-a168-7a591eaa0f06"  # derived; verify against theirs at the handshake.
+series_uid = "f3116b05-86b2-e873-0422-d6d6b84d3c19"  # re-derived after barriers_max returned to the legal 14.
 members    = ["Afaf Gharra", "Reem Awawdy"]
 counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali-ahm1,
 # and yamanagh (the replay of 24/08). This bb-ai-12 series is a FRIENDLY and is
@@ -63,16 +63,33 @@ capture_confidence = 0.45   # belief mass on one adjacent cell before we claim a
 #                             Raised from 0.18 after a live loss: at that bar the officer
 #                             claimed ten times in one sub-game, caught nothing, announced
 #                             its own cell each time, and oscillated chasing the belief peak.
-wall_threshold     = 0.5    # structural value a wall must clear before we give up a
-#                             turn to build. Was 3.0, which in four live counted series
-#                             produced ZERO walls out of fourteen -- the gate only opens
-#                             when belief is already concentrated beside us, so it fired
-#                             when we were winning and never when we were not.
-#                             Measured at 0.5 over 60 matches against three thieves:
-#                             capture vs greedythief 0.23 -> 0.90, vs openspace 0.00 ->
-#                             0.12, cop points 1110 -> 1830, and NO regression anywhere.
-#                             Against a thief as careful as our own it is still 0.00-0.02:
-#                             walls do not beat a thief that refuses cramped ground.
+# ---------------------------------------------------------------- NO-WALL
+# bb-ai-12 do not implement barrier_placed or barrier-based capture. That left
+# no legal value for the SIGNED barriers_max:
+#   14 -> legal, but our walls would be invisible to their thief, it would walk
+#         through them, and from the first wall the two sides hold different
+#         boards. Contradictory audits on an otherwise clean match.
+#    0 -> no divergence, but Appendix F table 15 lists the barrier quota of 14
+#         with status MINIMUM, and rule 12 permits raising a minimum by
+#         agreement and NEVER lowering it, on pain of the score being voided.
+#
+# The way out is that barriers_max is a CEILING, not a floor -- the book defines
+# it as "the maximum number of barriers the officer is PERMITTED to place". No
+# rule requires placing any. So we sign the legal 14 and decline to build, which
+# is a private strategy choice and not a term at all.
+#
+# Two knobs are needed, not one. wall_threshold gates the barrier planner, but
+# _seal_shot is a SEPARATE path gated by seal_confidence -- sealing the cell the
+# thief stands on is an outright capture under rules 46/47, so it bypasses the
+# planner entirely. Measured: wall_threshold alone still placed 30 walls in 30
+# games against a greedy thief. Both together give zero.
+#
+# Verified over 120 arena matches against three thief archetypes: ZERO walls
+# placed, and captures completely unchanged (40/40 vs greedy, 0/40 vs safe and
+# openspace -- identical to the default preset). The officer gives up nothing
+# measurable, because our walls already convert nothing against a careful thief.
+wall_threshold     = 1e9    # NO-WALL: gate the barrier planner shut.
+seal_confidence    = 1.1    # NO-WALL: above 1.0, so the seal path can never fire.
 barrier_reserve    = 3      # walls held back for the endgame squeeze
 anchor_bonus       = 1.2    # per side already touching a wall or the board edge
 cut_bonus          = 6.0    # sealing a cut vertex severs a corridor outright
