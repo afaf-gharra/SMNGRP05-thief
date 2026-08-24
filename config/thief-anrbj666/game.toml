@@ -26,7 +26,7 @@ repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "
 # Read from the running ngrok agent, not copied forward. We are on a FREE ngrok
 # tunnel, so this hostname re-mints on every restart and must be re-confirmed to
 # them at T-1. anrbj666 assumed we were on Cloudflare; we are not.
-mcp_servers = { cop = "https://3731-147-236-163-154.ngrok-free.app/mcp", thief = "https://3731-147-236-163-154.ngrok-free.app/mcp" }
+mcp_servers = { cop = "https://e6d6-147-236-163-154.ngrok-free.app/mcp", thief = "https://e6d6-147-236-163-154.ngrok-free.app/mcp" }
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
