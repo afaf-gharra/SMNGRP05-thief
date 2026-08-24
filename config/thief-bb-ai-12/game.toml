@@ -29,7 +29,7 @@ repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "
 # ngrok agent rather than copied forward from a previous opponent's config --
 # a stale URL here is how we once told a peer their tunnel was down when it was
 # ours that had moved.
-mcp_servers = { cop = "https://success-regular-annex-icons.trycloudflare.com/mcp", thief = "https://success-regular-annex-icons.trycloudflare.com/mcp" }
+mcp_servers = { cop = "https://branches-wedding-holdings-sticker.trycloudflare.com/mcp", thief = "https://branches-wedding-holdings-sticker.trycloudflare.com/mcp" }
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
