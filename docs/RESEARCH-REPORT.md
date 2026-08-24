@@ -163,10 +163,31 @@ Two genuine conflicts. The book states it governs, and we followed it.
 — and describes a trail readable for six to seven turns, with a figure showing
 exponential decay crossing half-peak near turn 7. The reference simulator
 *subtracts* ρ each turn. With ρ = 0.10 that empties a fresh deposit in nine turns
-and crosses half-peak at turn 4.5, which changes the game materially. We implement
-the book's formula; `0.9 → 0.81 → 0.729` is asserted in the tests, and half-peak
-lands at turn 7 as described. This does not affect interoperability: each peer's
-decay only shapes the field it broadcasts about itself.
+and crosses half-peak at turn 4.5, which changes the game materially.
+
+Both are implemented and selectable by `smell.decay_mode`. **What we ship, and
+what we declare to opponents, is the subtractive mode** — `subtractive_chebyshev_v1`,
+the league kit's core model, which is what every team we have met actually plays.
+An earlier revision of this section claimed we shipped the book's multiplicative
+form; that was true of the code path, not of the default, and the discrepancy is
+corrected here rather than left to be found in the source.
+
+The choice is interoperability, not a judgement that the book is wrong. The decay
+mode is **not one of the fourteen signed terms**, so two peers can agree every hash
+and still fade their fields differently — the worst shape a disagreement can take,
+because the match plays out cleanly and only the audits disagree, with nothing to
+point at. That is why the mode is declared in writing as a named model with a
+worked example, and why we keep declaring ours even against a peer who declines to
+declare theirs.
+
+The divergence is real and measurable. A 0.9 deposit under our subtractive mode
+reads 0.20 at turn 7 and is gone by turn 9; under the book's multiplicative mode it
+reads 0.43 at turn 7 and still 0.31 at turn 10. Played against a multiplicative
+peer (anrbj666, 24/08), their field therefore remembers our thief substantially
+longer than ours remembers theirs. Whether that is an advantage depends on the
+belief model — a long tail misleads a belief that reads absolute intensity, which
+is why `decay_all` carries a cutoff — and the friendly was inconclusive on the
+point, because neither officer captured once.
 
 **Sub-games per series.** Appendix F fixes `[num_minigames]` at 6 (permanent); the
 reference ships `num_games: 1`. We default to 6.
@@ -179,3 +200,95 @@ peer simply absorbs whatever numbers arrive, we default to the reference's linea
 falloff so a stock opponent's readings and ours are on the same scale — and
 implement the Gaussian exactly (it reproduces the figure to two decimal places,
 verified in the tests) as a negotiable option.
+
+## 7. Closing the loop: the defect an opponent found, and what fixing it did not fix
+
+The strongest evidence in this project came from losing.
+
+### 7.1 The defect
+
+We lost the counted series to imreeyal 30–90 after beating them 70–50 twice the
+same evening in friendlies. Their operator then explained the gap: in a friendly
+they run their real brain in sub-games 1–2 and a practice brain in 3–6; in a
+counted series the real brain plays all six. They volunteered this. Without it we
+would have drawn conclusions from four windows of a brain that was not trying.
+
+The signed logs showed the three lost thief windows were not three failures but
+one failure three times. Our thief walked into `(6,0)`, played STAY five times, and
+was sealed by **two** of their fourteen barriers. `_safety()` ranked survival
+probability above open exits, so a corner reported "safe" right until it was not.
+
+### 7.2 The fix, and what we measured before claiming anything
+
+Open exits now rank directly below proof and above preference, but only where the
+ply count has saturated at the horizon — below the horizon survival still decides,
+a constraint two existing tests caught us violating. Over 400 random states: 10%
+of decisions change, mean open exits of the chosen cell rise 3.68 → 3.78, and in
+**zero** cases does the new ranking choose a more cramped cell.
+
+An earlier docstring described this failure as "one sub-game in three hundred."
+Live it was three in three. The estimate came from an arena that could not produce
+the position — the arena had no officer that would spend a wall to seal a low-exit
+cell, so it certified a rate for a scenario it was structurally unable to generate.
+That is the sharpest methodological lesson of the project: **a benchmark that cannot
+produce the failure will always report that the failure is rare.**
+
+### 7.3 Live validation, 24/08
+
+imreeyal agreed, on request and with nothing in it for them, to field their real
+stack in **all six windows** — including the officer that did the sealing. This is
+the same test that produced the 30–90, re-run against the same opponent.
+
+| | before (counted, 20/08) | after (friendly, 24/08) |
+|---|---|---|
+| series | **30–90 loss** | **47–47 draw** |
+| our thief windows | captured 3 / 3 | **survived 3 / 3** |
+| corner entries | 3 | **0** |
+
+Across all six thief windows played that day — three against imreeyal and three
+against anrbj666 — the thief entered a corner **zero times**. The defect is closed.
+
+### 7.4 What the score hides, and why we are recording it
+
+The 47–47 credits us with more than we earned.
+
+| opponent | STAYs / 35 | longest STAY run | distinct cells |
+|---|---|---|---|
+| anrbj666 | 12–20 | 4–10 | 10–13 |
+| imreeyal | **23–27** | **21–25** | **6–8** |
+
+Against imreeyal's officer specifically our thief nearly freezes: twenty-five
+consecutive STAYs in two of three windows, six distinct cells in a thirty-five step
+game. **It survived as a stationary target their officer did not find** — which is
+not the same as surviving because it moved well. Since a peer deposits its full
+0.9 at its own cell every turn, and the maximum cell of a transmitted field is
+therefore the emitter's current position, a thief that stands still is broadcasting
+a stable beacon at itself. That it was not punished says as much about their
+officer's search as about our thief.
+
+**Corners fixed; mobility not.** The safety ranking refuses the trap but still
+prefers standing still to taking ground, and under a high-pressure officer that
+preference dominates. This is left as a stated, measured, open weakness rather
+than repaired in the hours before submission, where an unmeasured change to the
+graded tree is the larger risk.
+
+### 7.5 A methodological note on decoy loadouts
+
+Our three police sub-games against anrbj666 were byte-identical — same move
+sequence, same hash, all three — because their friendly thief is deterministic and
+so is our officer. The thief windows differed, so their officer does vary. A
+six-sub-game friendly therefore yielded **four distinct games, not six**.
+
+Generalised: when one side fields a practice brain and the other fields its real
+one, the shakeout under-tests the side playing seriously, and its length overstates
+its evidential value. Both opponents disclosed their loadout split unprompted, and
+that disclosure was worth more to us than either result.
+
+### 7.6 Barriers
+
+Our officer placed 27 barriers across the anrbj666 series — nine per police window,
+against **zero in fourteen** before the `wall_threshold` change described in §3.
+The gate now opens. It converted none of them: one capture claim per window, no
+capture, against either opponent. This matches the arena measurement against a
+careful thief (0.00–0.02) rather than contradicting it. Walls do not beat a thief
+that refuses cramped ground, and both of these refuse.
