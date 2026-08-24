@@ -259,17 +259,49 @@ The 47–47 credits us with more than we earned.
 
 Against imreeyal's officer specifically our thief nearly freezes: twenty-five
 consecutive STAYs in two of three windows, six distinct cells in a thirty-five step
-game. **It survived as a stationary target their officer did not find** — which is
-not the same as surviving because it moved well. Since a peer deposits its full
-0.9 at its own cell every turn, and the maximum cell of a transmitted field is
-therefore the emitter's current position, a thief that stands still is broadcasting
-a stable beacon at itself. That it was not punished says as much about their
-officer's search as about our thief.
+game.
 
-**Corners fixed; mobility not.** The safety ranking refuses the trap but still
-prefers standing still to taking ground, and under a high-pressure officer that
-preference dominates. This is left as a stated, measured, open weakness rather
-than repaired in the hours before submission, where an unmeasured change to the
+> **Correction (24/08, after imreeyal's forensic pass).** This section originally
+> read "it survived as a stationary target their officer did not find." That is
+> wrong, and imreeyal disproved it from their own logs: their belief matched our
+> thief's true cell on 34 of 34 steps at p = 0.980, in all three windows. The
+> reasoning that misled us was half-right — a peer does re-deposit its full 0.9 at
+> its own cell every turn, so the maximum of a transmitted field *is* the emitter's
+> position — but we drew the wrong conclusion from it. A frozen thief re-peaks its
+> own scent, so nothing ever goes stale and tracking gets *easier*, not harder.
+> They saw us the whole time.
+>
+> Our own logs corroborate them rather than contradicting them: across all three
+> thief windows they answered **zero** capture claims and placed **zero** barriers,
+> and our thief sat in open middle ground (rows 3–5, columns 1–4) — never a corner.
+>
+> The real reason it survived is structural, and it is a better result for the fix
+> than the one we claimed. With the thief moving first and a proven escape always in
+> hand, an officer cannot convert a landing in the open: perfect information does
+> not help if every cell you can reach, the thief can leave. That is a stalemate
+> between two correct programs, not a tracking failure.
+>
+> imreeyal also traced their zero barriers to a gate in their own counted
+> configuration, tuned against our August thief, requiring every wall to buy at
+> least two cells of believed-region shrink. Corner geometry offers such walls;
+> open-board geometry cannot, because the most a single first wall can shrink is
+> exactly one. Against a thief that no longer enters corners, their first wall was
+> arithmetically impossible. Our §7.6 conclusion — that "walls do not beat a thief
+> that refuses cramped ground" — is therefore not established by this series: their
+> officer was not choosing to withhold walls, it was unable to place one.
+
+**Corners fixed; mobility still open, and now for a sharper reason.** The safety
+ranking refuses the trap but still prefers standing still to taking ground. With
+their gate returned to its default, imreeyal report 32 of 32 cages against this
+same fixed thief — median step 20, six walls a game, no seals. Not a corner trap
+but a slow campaign built in the open, which a stationary thief lets stand and a
+moving one would force to be rebuilt. Our own `safe_thief` docstring already named
+this limit: *not provably safe against an officer that spends walls to pinch.*
+
+So the fix did not remove the threat; it moved it from the final seal to the long
+campaign. That is progress and it is not a solution. Left as a stated, measured,
+open weakness rather than repaired in the hours before submission, where an
+unmeasured change to the
 graded tree is the larger risk.
 
 ### 7.5 A methodological note on decoy loadouts
@@ -290,5 +322,27 @@ Our officer placed 27 barriers across the anrbj666 series — nine per police wi
 against **zero in fourteen** before the `wall_threshold` change described in §3.
 The gate now opens. It converted none of them: one capture claim per window, no
 capture, against either opponent. This matches the arena measurement against a
-careful thief (0.00–0.02) rather than contradicting it. Walls do not beat a thief
-that refuses cramped ground, and both of these refuse.
+careful thief (0.00–0.02) rather than contradicting it.
+
+We first wrote here that "walls do not beat a thief that refuses cramped ground."
+That conclusion does not survive §7.4's correction, and it was over-drawn in two
+directions at once.
+
+On the imreeyal side it was never tested: their officer placed no barriers because
+a gate in their own configuration made the first one arithmetically impossible
+against a thief that avoids corners, so their silence was inability rather than
+choice. On our own side, twenty-seven barriers converting nothing shows that *our*
+wall policy does not convert against a careful thief — which is a claim about our
+officer, not about barriers.
+
+imreeyal's own sweep points the other way: with their gate at default they report
+32 of 32 against this same thief, built entirely in the open with roughly six walls
+a game. Walls appear to beat a careful thief perfectly well; ours are simply spent
+badly. The officer prices a wall by the region it shrinks *now*, which on an open
+board is almost always one cell, so it never opens a campaign — it only takes the
+seals that a cornered thief hands it, and our thief no longer hands those to
+anyone either.
+
+That is the sharper statement of the same limit, and it is the natural successor
+to the `wall_threshold` work in §3: the threshold controls *whether* the officer
+builds, and nothing yet controls whether what it builds accumulates.
