@@ -26,7 +26,7 @@ repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "
 # Read from the running ngrok agent, not copied forward. We are on a FREE ngrok
 # tunnel, so this hostname re-mints on every restart and must be re-confirmed to
 # them at T-1. anrbj666 assumed we were on Cloudflare; we are not.
-mcp_servers = { cop = "https://e6d6-147-236-163-154.ngrok-free.app/mcp", thief = "https://e6d6-147-236-163-154.ngrok-free.app/mcp" }
+mcp_servers = { cop = "https://success-regular-annex-icons.trycloudflare.com/mcp", thief = "https://success-regular-annex-icons.trycloudflare.com/mcp" }
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
@@ -35,7 +35,7 @@ opponent_url           = "https://thief-mcp.alon.website/mcp"  # fallback; see o
 opponent_urls = { cop = "https://cop-mcp.alon.website/mcp", thief = "https://thief-mcp.alon.website/mcp" }  # two named Cloudflare doors, one process per role
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
-connect_timeout_seconds = 300
+connect_timeout_seconds = 1800   # they launch on a schedule; wait rather than fail sub-game 1.
 call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec of 30  # W010: their cop was still 502 well after kickoff,
 # and both restarts of ours only reset a five-minute clock without changing that.
 # Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
@@ -44,8 +44,8 @@ call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec 
 # then dies is still caught quickly -- this only buys patience before the series
 # has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
-audit_send_timeout_seconds = 10
-watchdog_timeout_seconds = 600   # must EXCEED connect_timeout_seconds: the handshake retry loop does not beat the heartbeat, so a watchdog at or below the connect budget kills the peer while it is legitimately waiting for a late opponent.
+audit_send_timeout_seconds = 90   # COUNTED: this is BOTH our send budget and the wait for THEIR reveal. At 10s a reveal arriving on second 11 is discarded and logged as absent -- and a counted game whose audit is absent does not count at all under the 22/08 ruling. Cost of waiting: nothing.
+watchdog_timeout_seconds = 2100   # must EXCEED connect_timeout_seconds.
 
 [belief]
 smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass
