@@ -18,14 +18,16 @@ group_name = "SMNGRP05"
 series_id  = "SMNGRP05-vs-anrbj666"
 series_uid = "fdeee45d-6d82-b4c8-3491-0fa35930a348"
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali-ahm1,
-# and yamanagh (the replay of 24/08). This anrbj666 series is a FRIENDLY and is
-# NOT in the count. If a counted series with them is later authorised in writing
-# by both sides, this becomes 7 and the value moves by hand, not by accident.
+counted_games_played = 6  # The count BEFORE this series: saedshki, uoh-ay26,
+# vibecode, imreeyal, ali-ahm1, yamanagh. The report builder adds one for a
+# counted series, so this filed 7 -- do not "correct" it to 7 or the next filing
+# says 8. Seven is truthful under Dr Segal's ruling of 24/08: always advance the
+# counters, never play with them, the system neutralises a cancelled one.
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
-# Read from the running ngrok agent, not copied forward. We are on a FREE ngrok
-# tunnel, so this hostname re-mints on every restart and must be re-confirmed to
-# them at T-1. anrbj666 assumed we were on Cloudflare; we are not.
+# Cloudflare quick tunnel. We moved off free ngrok on 24/08 after it blocked
+# another opponent entirely: the browser interstitial answers GET, which MCP
+# streamable HTTP uses to open its SSE stream, and the free tier throttles NEW
+# connections once both peers are live.
 mcp_servers = { cop = "https://success-regular-annex-icons.trycloudflare.com/mcp", thief = "https://success-regular-annex-icons.trycloudflare.com/mcp" }
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
@@ -112,7 +114,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"   # *** ARMED — COUNTED ***
+recipient = "afafgharra000@gmail.com"   # DISARMED after the counted series of 24/08.
 # The league address ALONE. Nobody CC'd, not anrbj666 and not ourselves: what
 # the lecturer receives is exactly one report per team with nothing else on the
 # line, and rule 35 reads the two teams' filings as a pair. anrbj666 asked to be
@@ -131,7 +133,7 @@ series_consensus = false   # They asked for this explicitly and they are right t
 #                            file. That is exactly how the 21/08 yamanagh series
 #                            was lost, and under the 22/08 ruling a game without
 #                            confirmation from both groups does not count at all.
-counted       = true    # *** ARMED — COUNTED SERIES, authorised in writing by both sides ***
+counted       = false   # DISARMED. The counted meeting with anrbj666 is PLAYED and FILED (30-90, 24/08). Rule 52 forbids a rematch, so nothing may arm this again, ever.
 #                         Files games_played_including_this = 7: the code adds 1
 #                         to game.counted_games_played (6), which is why that
 #                         value must NOT be touched. Seven is truthful under
