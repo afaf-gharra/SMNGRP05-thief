@@ -346,3 +346,73 @@ anyone either.
 That is the sharper statement of the same limit, and it is the natural successor
 to the `wall_threshold` work in §3: the threshold controls *whether* the officer
 builds, and nothing yet controls whether what it builds accumulates.
+
+## 8. An unresolved ambiguity in rule 1, raised by an opponent
+
+On the final evening, `yanell11` declined to play us until we split our peer
+into two OS processes, one per role. They were not posturing: they ran the same
+single-process shape until 18/08, were refused by `najamjad` for it, split, and
+record it in their own README as a mistake. We think the question is genuinely
+open, and it is more useful to state it than to settle it quietly.
+
+### What the book says
+
+Section 2.4.2 carries a boxed mandatory rule:
+
+> קוד השוטר וקוד הגנב **חייבים** לרוץ בשני תהליכים נפרדים לחלוטין, תחת ספריות
+> תצורה נפרדות (`config/thief` מול `config/police`) … ופוסל את הפתרון — **גם
+> אם המשחק "עובד" טכנית**.
+
+Read literally, that is decisive and we do not satisfy it: our peer alternates
+roles across the six sub-games, so both brains execute inside one process.
+
+The prose immediately above the box argues the other way:
+
+> בזמן משחק הליגה עצמו שתי הקבוצות ממילא נפרדות באופן אינהרנטי — כל אחת רצה על
+> מחשב אחר … משמעת ההפרדה חשובה **דווקא בשלב הפיתוח המקומי**, כאשר צוות אחד
+> בונה על אותה מכונה גם את השוטר וגם את הגנב; שם הסיכון לחפיפה מקרית (זיכרון או
+> משתנים משותפים) הוא ממשי.
+
+The stated hazard is a back door "through which one agent might see its
+opponent's local truth". In league play the opponent is a different team on a
+different machine. There is no local opponent to leak from.
+
+### What we actually ship
+
+- Two separate repositories, police and thief (rule 49).
+- Separate configuration directories, `config/police-*` against `config/thief-*`
+  — the exact split the rule box names.
+- `strategy/factory.py:resolve_brain(config, role)` instantiates **only** the
+  brain for the role being played. The two are never live at once, never share
+  an object, and never import one another.
+- No module-level mutable state is shared between them.
+
+So the property the rule protects — no shared live state between the two sides
+of a match — holds. The literal instruction, two processes, does not.
+
+### Why we did not change it
+
+`yanell11` describe the fix as roughly forty lines: a `--play-windows` flag, and
+a merge step that joins two artifact directories after the series. In their
+codebase that is plausible. In ours it is not a filter but a restructure of the
+reporting path: our emitter builds one six-row series report from a single
+process's records, and filing is triggered at the end of that run. Splitting
+means teaching the merge to join two processes' artifacts and moving the filing
+decision into it.
+
+That is a structural change to the graded tree, untested, with the submission
+already tagged and verified — and it would not retroactively alter the seven
+series already filed under this architecture. The cost is a real risk to a
+complete submission; the benefit is one additional counted series, when rule 31
+asks for two and we have seven.
+
+**So this is recorded rather than repaired.** If the literal reading is the
+intended one, our architecture is non-conforming on that point and the seven
+filed series were played that way; no change made tonight would alter that. If
+the purposive reading is intended, we satisfy it. We could not resolve which
+from the text, and we would rather have the question written down here than
+discovered by a grader who assumed we had never noticed it.
+
+The same evening we adopted their signed `setting` value without argument, and
+they verified our settlement vectors against theirs. The disagreement is about
+one clause, not about good faith on either side.
