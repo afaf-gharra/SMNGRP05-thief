@@ -44,7 +44,7 @@ call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec 
 # then dies is still caught quickly -- this only buys patience before the series
 # has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
-audit_send_timeout_seconds = 10
+audit_send_timeout_seconds = 90   # bb-ai-12: their reveal may be sent late. This is BOTH the send budget and the WAIT budget for theirs (mcp_client.exchange_audit), so 10s discards a reveal that arrives on second 11. Nothing in the rules requires the reveal to be prompt.
 watchdog_timeout_seconds = 2100   # must EXCEED connect_timeout_seconds: the handshake retry loop does not beat the heartbeat.
 
 [belief]
