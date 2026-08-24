@@ -40,7 +40,7 @@ counted_games_played = 6  # COUNTED: saedshki, uoh-ay26, vibecode, imreeyal, ali
 repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "https://github.com/afaf-gharra/SMNGRP05-thief" }
 # Public tunnel URLs announced to the opponent in the handshake (ngrok/Localtonet).
 # Until you open a tunnel these stay on loopback, which is fine for local testing.
-mcp_servers = { cop = "https://f0eb-147-236-163-154.ngrok-free.app/mcp", thief = "https://f0eb-147-236-163-154.ngrok-free.app/mcp" }
+mcp_servers = { cop = "https://e6d6-147-236-163-154.ngrok-free.app/mcp", thief = "https://e6d6-147-236-163-154.ngrok-free.app/mcp" }
 
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
@@ -52,7 +52,7 @@ opponent_url           = "https://cop.imreeyal.com/mcp"  # fallback; see opponen
 opponent_urls = { cop = "https://cop.imreeyal.com/mcp", thief = "https://thief.imreeyal.com/mcp" }
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
-connect_timeout_seconds = 300
+connect_timeout_seconds = 1800   # friendly: they confirmed but launch loosely; wait 30 min rather than score sub-game 1 a technical loss. Private/local, not a signed term.
 call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec of 30  # W010: their cop was still 502 well after kickoff,
 # and both restarts of ours only reset a five-minute clock without changing that.
 # Wait half an hour for the opponent to appear rather than scoring sub-game 1 a
@@ -62,7 +62,7 @@ call_timeout_seconds    = 10   # strictly under the signed response_timeout_sec 
 # has begun, which is exactly where the waiting has actually been.
 retry_interval_seconds = 1.0
 audit_send_timeout_seconds = 10
-watchdog_timeout_seconds = 300                         # Watchdog: main-loop freeze budget
+watchdog_timeout_seconds = 2100   # must EXCEED connect_timeout_seconds: the handshake retry loop does not beat the heartbeat, so a 300s watchdog kills the peer while it is legitimately waiting for a late opponent. Learned the hard way waiting on imreeyal.
 
 [belief]
 smell_trust_weight = 4.0    # how sharply a scent reading concentrates the belief mass
