@@ -112,13 +112,16 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "afafgharra000@gmail.com"   # DISARMED: ourselves only.
-# FRIENDLY: uncounted, not filed, and no lecturer email from either side --
-# agreed with them in writing. The league address goes here ONLY for a counted
-# series both sides have authorised, by hand, immediately before it, together
-# with counted = true, and comes straight back out after. A config carrying
-# counted = true with that address, run by accident, files a series nobody
-# authorised: a false declaration under rules 37-38.
+recipient = "rmisegal+uoh26finalgame@gmail.com"   # *** ARMED — COUNTED ***
+# The league address ALONE. Nobody CC'd, not anrbj666 and not ourselves: what
+# the lecturer receives is exactly one report per team with nothing else on the
+# line, and rule 35 reads the two teams' filings as a pair. anrbj666 asked to be
+# copied so they hold both halves of the record; we forward them our copy
+# separately after filing, which gives them the reconciliation without putting a
+# second recipient on the filing itself.
+# DISARM IMMEDIATELY AFTER THE SERIES: back to afafgharra000@gmail.com together
+# with counted = false. A config left in this state and run by accident files a
+# series nobody authorised, which is a false declaration under rules 37-38.
 sender    = "me"
 [league]
 series_consensus = false   # They asked for this explicitly and they are right to.
@@ -128,10 +131,22 @@ series_consensus = false   # They asked for this explicitly and they are right t
 #                            file. That is exactly how the 21/08 yamanagh series
 #                            was lost, and under the 22/08 ruling a game without
 #                            confirmation from both groups does not count at all.
-counted       = false   # DISARMED. Friendly only. Arm by hand only for a series
-#                         both sides have authorised in writing.
-first_meeting = true    # first meeting with anrbj666. Irrelevant while counted is
-#                         false, but recorded truthfully rather than left wrong.
+counted       = true    # *** ARMED — COUNTED SERIES, authorised in writing by both sides ***
+#                         Files games_played_including_this = 7: the code adds 1
+#                         to game.counted_games_played (6), which is why that
+#                         value must NOT be touched. Seven is truthful under
+#                         Dr Segal's ruling of 24/08 -- "always advance the
+#                         counters, never play with them; the system knows how to
+#                         neutralise a counter whose game was cancelled" -- so it
+#                         counts every series we have played, not only those his
+#                         automation accepted.
+#                         DISARM TO false IMMEDIATELY AFTER THE SERIES.
+first_meeting = true    # First counted meeting with anrbj666, so a WIN carries
+#                         diversity_reward +10. Derived from the result and never
+#                         claimed: both filings mark the winner, whichever side
+#                         that is. Marking it all-false out of modesty would make
+#                         the two filings disagree on a ten-point line, which is
+#                         the contradiction rule 35 scores as nobody winning.
 # SCENT: a KNOWN and ACCEPTED mismatch, not an oversight.
 # We run subtractive_chebyshev_v1 (81ebee59...); they run the book's
 # multiplicative_book_v1 (934c220d...). They proposed staying silent so that one
