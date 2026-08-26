@@ -132,12 +132,15 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "afafgharra000@gmail.com"   # DISARMED: ourselves only.
-# FRIENDLY. Nobody else on any recipient line -- not bb-ai-12, and above all not
-# the league address. This series cannot be counted (see [league]), so there is
-# no circumstance in which the lecturer's address belongs here. The line must
-# never be flipped speculatively: a config carrying counted = true together with
-# the league address, run by accident, files a series nobody authorised, which is
+recipient = "rmisegal+uoh26finalgame@gmail.com"   # *** ARMED - COUNTED ***
+# The league address ALONE. Nobody CC'd, not bb-ai-12 and not ourselves: the
+# lecturer receives exactly one report per team with nothing else on the line,
+# and rule 35 reads the two teams' filings as a pair. Authorised by Dr Segal on
+# 26/08 in writing, in the thread where he approved bb-ai-12's late submission
+# and the late repo update for SMNGRP05 and ZeroOne0.
+# DISARM TO afafgharra000@gmail.com IMMEDIATELY AFTER THE SERIES, together with
+# counted = false. A config left in this state and run by accident files a
+# series nobody authorised, which is a false declaration under rules 37-38 and
 # a false declaration under rules 37-38.
 sender    = "me"
 [league]
@@ -160,10 +163,28 @@ sender    = "me"
 # never reaches for one. Symmetric, so neither side is handicapped.
 series_consensus = false   # bb-ai-12 do not implement it; never send an unknown
 #                            key to a peer that may refuse unknown keys.
-counted       = false   # DISARMED, and not merely pending. A counted series needs
-#                         a handshake that REFUSES on mismatch, and theirs does
-#                         not. Arming this would file a series whose physics the
-#                         opponent never verified.
+counted       = true    # *** ARMED - COUNTED ***  Rule 52 allows exactly one
+#                         counted meeting per pairing and we have never had one
+#                         with bb-ai-12: our seven filed opponents are saedshki,
+#                         uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1 and
+#                         anrbj666. Files games_played_including_this = 8, being
+#                         counted_games_played (7) + 1 -- do not "correct" that
+#                         value or the next filing says 9. Eight is truthful
+#                         under Dr Segal's ruling of 24/08: always advance the
+#                         counters, never play with them, the system neutralises
+#                         a counter whose game was cancelled.
+#
+#                         KNOWN AND ACCEPTED: their handshake still does not
+#                         REFUSE on a terms mismatch -- it warns and plays on,
+#                         which is what released the deadlock on 26/08. That is
+#                         their exposure, not ours: WE verify the digest before
+#                         move one and our records are sealed either way. And it
+#                         is not theoretical comfort -- the friendly series of
+#                         26/08 ran all six sub-games at 35 turns with every
+#                         audit verified in both directions, which is direct
+#                         evidence the physics did match. Named here rather than
+#                         left as a stale objection in a comment.
+#                         DISARM TO false IMMEDIATELY AFTER THE SERIES.
 first_meeting = true    # first meeting with bb-ai-12. Irrelevant while counted is
 #                         false -- diversity_reward applies to counted play only --
 #                         but recorded truthfully rather than left wrong.
