@@ -132,7 +132,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"   # *** ARMED - COUNTED ***
+recipient = "afafgharra000@gmail.com"   # DISARMED: ourselves ALONE.
 # The league address ALONE. Nobody CC'd, not bb-ai-12 and not ourselves: the
 # lecturer receives exactly one report per team with nothing else on the line,
 # and rule 35 reads the two teams' filings as a pair. Authorised by Dr Segal on
@@ -163,7 +163,7 @@ sender    = "me"
 # never reaches for one. Symmetric, so neither side is handicapped.
 series_consensus = false   # bb-ai-12 do not implement it; never send an unknown
 #                            key to a peer that may refuse unknown keys.
-counted       = true    # *** ARMED - COUNTED ***  Rule 52 allows exactly one
+counted       = false  # DISARMED. Friendly rehearsal only.
 #                         counted meeting per pairing and we have never had one
 #                         with bb-ai-12: our seven filed opponents are saedshki,
 #                         uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1 and
