@@ -33,9 +33,9 @@ mcp_servers = { cop = "https://meetings-compound-hospitality-three.trycloudflare
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "https://symphony-vista-neo-rational.trycloudflare.com/mcp"  # single endpoint, both roles
+opponent_url           = "https://fur-posts-reed-titled.trycloudflare.com/mcp"  # single endpoint, both roles
 # alternate every sub-game, so a single fixed URL would spend half the series
-opponent_urls = { cop = "https://symphony-vista-neo-rational.trycloudflare.com/mcp", thief = "https://task-plastic-micro-gates.trycloudflare.com/mcp" }  # two cloudflared doors, one process per role
+opponent_urls = { cop = "https://fur-posts-reed-titled.trycloudflare.com/mcp", thief = "https://herein-arguments-guarantees-wallet.trycloudflare.com/mcp" }  # rotated 27/08 21:45 after their first pair died. Dial the side we play AGAINST.
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
 connect_timeout_seconds = 1800
@@ -132,7 +132,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "rmisegal+uoh26finalgame@gmail.com"   # *** ARMED - COUNTED *** league address ALONE. DISARM IMMEDIATELY AFTER FILING.
+recipient = "afafgharra000@gmail.com"   # DISARMED after filing, 27/08 22:08. The lecturer's address must never return to this line.
 # The league address ALONE. Nobody CC'd, not bb-ai-12 and not ourselves: the
 # lecturer receives exactly one report per team with nothing else on the line,
 # and rule 35 reads the two teams' filings as a pair. Authorised by Dr Segal on
@@ -163,7 +163,7 @@ sender    = "me"
 # never reaches for one. Symmetric, so neither side is handicapped.
 series_consensus = false   # bb-ai-12 do not implement it; never send an unknown
 #                            key to a peer that may refuse unknown keys.
-counted       = true   # *** ARMED - COUNTED *** Rule 52: our one counted meeting with aviayeli. Files games_played_including_this = 9 (counted_games_played 8 + 1). DISARM TO false IMMEDIATELY AFTER FILING.
+counted       = false  # DISARMED after filing. The one counted meeting with aviayeli is PLAYED and FILED (90-30 win, 27/08, message id 1a0449f86ec00302). Rule 52 forbids a rematch, so nothing may ever arm this again.
 #                         counted meeting per pairing and we have never had one
 #                         with bb-ai-12: our seven filed opponents are saedshki,
 #                         uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1 and

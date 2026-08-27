@@ -12,8 +12,8 @@
     "result": "result_SMNGRP05-vs-aviayeli.json"
   },
   "timezone": "Asia/Jerusalem",
-  "game_started_at": "2026-08-27T18:52:05.345083+00:00",
-  "game_ended_at": "2026-08-27T19:07:58.729879+00:00",
+  "game_started_at": "2026-08-27T17:38:55.954464+00:00",
+  "game_ended_at": "2026-08-27T17:48:48.422738+00:00",
   "num_sub_games": 6,
   "max_tokens_per_game": 200000,
   "groups": {
@@ -29,8 +29,8 @@
         "thief": "https://github.com/afaf-gharra/SMNGRP05-thief"
       },
       "mcp_servers": {
-        "cop": "https://meetings-compound-hospitality-three.trycloudflare.com/mcp",
-        "thief": "https://meetings-compound-hospitality-three.trycloudflare.com/mcp"
+        "cop": "https://store-maritime-ser-maintain.trycloudflare.com/mcp",
+        "thief": "https://store-maritime-ser-maintain.trycloudflare.com/mcp"
       },
       "llm_model": "template-zero-token",
       "hardware_spec": {
@@ -41,7 +41,7 @@
         "gpu_model": "NVIDIA GeForce RTX 3070",
         "vram_gb": 8.0
       },
-      "signature": "167fdec5636f7c70bdd2eafc6197195b841b109ae43904723c83879d2375a041"
+      "signature": "223c3a7931eb58dd920fefa2ef87cf3dd2342563af19a65b31b5080954c87555"
     },
     "group_2": {
       "group_id": "aviayeli",
@@ -63,5 +63,5 @@
       "signature": "ec9b072593ca2037dfe765c67c5b2837a5ea15805e1cd09e58f60a01ef097324"
     }
   },
-  "declaration_sha256": "e81ee0f1d178e9fc22da4cab74c414f9f64cd3b772d031dabebf401469e9cdb7"
+  "declaration_sha256": "fa64e13a5fd00043e1950986436a0f527789fee1e87b15421b1506a9e428482b"
 }

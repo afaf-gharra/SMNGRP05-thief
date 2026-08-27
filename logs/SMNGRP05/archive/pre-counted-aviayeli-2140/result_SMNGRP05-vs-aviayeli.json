@@ -24,13 +24,13 @@
         "SMNGRP05": "thief",
         "aviayeli": "police"
       },
-      "started_at": "2026-08-27T18:52:05.345083+00:00",
-      "ended_at": "2026-08-27T18:53:11.555083+00:00",
+      "started_at": "2026-08-27T17:38:55.954464+00:00",
+      "ended_at": "2026-08-27T17:40:01.894464+00:00",
       "result": "survival",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
         "aviayeli": "declared-in-their-own-report"
       },
       "tokens": {
@@ -63,13 +63,13 @@
         "SMNGRP05": "police",
         "aviayeli": "thief"
       },
-      "started_at": "2026-08-27T19:02:43.778636+00:00",
-      "ended_at": "2026-08-27T19:03:35.218636+00:00",
+      "started_at": "2026-08-27T17:43:49.780483+00:00",
+      "ended_at": "2026-08-27T17:44:37.500483+00:00",
       "result": "capture",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
         "aviayeli": "declared-in-their-own-report"
       },
       "tokens": {
@@ -91,7 +91,7 @@
         "results_agree": false,
         "opponent_result_claim": {
           "outcome": "capture",
-          "steps": 27
+          "steps": 25
         },
         "tampering_detected": false
       }
@@ -102,13 +102,13 @@
         "SMNGRP05": "thief",
         "aviayeli": "police"
       },
-      "started_at": "2026-08-27T19:03:55.258944+00:00",
-      "ended_at": "2026-08-27T19:05:01.508944+00:00",
+      "started_at": "2026-08-27T17:44:57.477484+00:00",
+      "ended_at": "2026-08-27T17:46:03.737484+00:00",
       "result": "survival",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
         "aviayeli": "declared-in-their-own-report"
       },
       "tokens": {
@@ -141,13 +141,13 @@
         "SMNGRP05": "police",
         "aviayeli": "thief"
       },
-      "started_at": "2026-08-27T19:05:21.438832+00:00",
-      "ended_at": "2026-08-27T19:05:46.978832+00:00",
+      "started_at": "2026-08-27T17:46:23.890435+00:00",
+      "ended_at": "2026-08-27T17:46:36.510435+00:00",
       "result": "capture",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
         "aviayeli": "declared-in-their-own-report"
       },
       "tokens": {
@@ -169,7 +169,7 @@
         "results_agree": false,
         "opponent_result_claim": {
           "outcome": "capture",
-          "steps": 13
+          "steps": 6
         },
         "tampering_detected": false
       }
@@ -180,13 +180,13 @@
         "SMNGRP05": "thief",
         "aviayeli": "police"
       },
-      "started_at": "2026-08-27T19:06:07.032586+00:00",
-      "ended_at": "2026-08-27T19:07:13.312586+00:00",
+      "started_at": "2026-08-27T17:46:56.577255+00:00",
+      "ended_at": "2026-08-27T17:48:02.887255+00:00",
       "result": "survival",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
         "aviayeli": "declared-in-their-own-report"
       },
       "tokens": {
@@ -219,13 +219,13 @@
         "SMNGRP05": "police",
         "aviayeli": "thief"
       },
-      "started_at": "2026-08-27T19:07:33.279879+00:00",
-      "ended_at": "2026-08-27T19:07:58.729879+00:00",
+      "started_at": "2026-08-27T17:48:22.722738+00:00",
+      "ended_at": "2026-08-27T17:48:48.422738+00:00",
       "result": "capture",
       "winner_group": "SMNGRP05",
       "tie": false,
       "github_commit": {
-        "SMNGRP05": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
         "aviayeli": "declared-in-their-own-report"
       },
       "tokens": {
@@ -270,12 +270,12 @@
       "aviayeli": 0
     },
     "games_played_including_this": {
-      "SMNGRP05": 9,
-      "aviayeli": 3
+      "SMNGRP05": 8,
+      "aviayeli": 0
     },
     "first_meeting_between_groups": true,
     "diversity_reward_applied": {
-      "SMNGRP05": true,
+      "SMNGRP05": false,
       "aviayeli": false
     }
   },

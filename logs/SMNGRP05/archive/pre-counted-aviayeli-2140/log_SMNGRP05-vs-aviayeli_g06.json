@@ -11,7 +11,7 @@
     "result": "result_SMNGRP05-vs-aviayeli.json"
   },
   "summary": {
-    "sub_game_number": 4,
+    "sub_game_number": 6,
     "group_id": "SMNGRP05",
     "role": "police",
     "opponent_group_id": "aviayeli",
@@ -19,9 +19,9 @@
     "winner_role": "police",
     "steps": 13,
     "timezone": "Asia/Jerusalem",
-    "started_at": "2026-08-27T19:05:21.438832+00:00",
-    "ended_at": "2026-08-27T19:05:46.978832+00:00",
-    "duration_seconds": 25.54,
+    "started_at": "2026-08-27T17:48:22.722738+00:00",
+    "ended_at": "2026-08-27T17:48:48.422738+00:00",
+    "duration_seconds": 25.7,
     "tokens_total": 0,
     "barriers_used": 0,
     "phase_trail": [
@@ -95,17 +95,17 @@
       "GAME_OVER"
     ],
     "opponent_profile": {
-      "trust": 0.368,
-      "estimated_lie_rate": 0.632,
+      "trust": 0.37,
+      "estimated_lie_rate": 0.63,
       "hints_seen": 14,
       "hints_scored": 10,
-      "alpha": 2.839,
-      "beta": 4.875
+      "alpha": 2.854,
+      "beta": 4.86
     },
     "talker": {
       "provider": "template",
       "tokens": 0,
-      "self_credibility": 0.407,
+      "self_credibility": 0.356,
       "target_lie_rate": 0.45,
       "hints_sent": 13,
       "hints_falsifiable": 2
@@ -154,15 +154,15 @@
         "model": "template-zero-token",
         "provider": "template",
         "code_version": "1.00",
-        "github_commit": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+        "github_commit": "30d58ef418134a77c81033d753e696f2bb699d77",
         "git": {
-          "commit": "5c52cd5c46306d022120cf99e876aa50024648ef-dirty",
+          "commit": "30d58ef418134a77c81033d753e696f2bb699d77",
           "branch": "main",
-          "tag": "v1.1-final-submission-9-g5c52cd5"
+          "tag": "v1.1-final-submission-8-g30d58ef"
         },
         "group_id": "SMNGRP05",
         "group_name": "SMNGRP05",
-        "sub_game_number": 4,
+        "sub_game_number": 6,
         "scent_model": {
           "falloff": "linear",
           "grid_size": 5,
@@ -176,10 +176,10 @@
             "after_7_turns": 0.2
           }
         },
-        "declared_at": "2026-08-27T19:05:21.438756+00:00"
+        "declared_at": "2026-08-27T17:48:22.722664+00:00"
       },
-      "nonce": "fa4cebc86aec0b9435e2016031d50265",
-      "commit": "8676e5b2cf86e56ab899ffd4ce5324218d78aff5a46dd1f01cccaa1859bdc9a2"
+      "nonce": "ff98d23196ccc285177dd90f8c2b4cf2",
+      "commit": "d01f524a8e2d17df26aedc6f3621d5db1cf3d0b854b1777ea119dbeb9c78a830"
     },
     {
       "payload": {
@@ -200,13 +200,13 @@
           "llm_prompt": "",
           "llm_reasoning": "saying nothing that narrows the board",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=5.17 containment=48.0 walls_left=14"
+          "move_rationale": "pressure=4.77 containment=48.0 walls_left=14"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.565,
+        "opponent_trust": 0.503,
         "claims_capture": false,
         "capture_claim": [
           0,
@@ -214,14 +214,14 @@
         ],
         "claim_response": {
           "claim": [
-            2,
-            5
+            1,
+            4
           ],
           "caught": false
         }
       },
-      "nonce": "c3d0dad6789d029f2558a1ab4924d1c1",
-      "commit": "a95ec0024ed5d6162fec9681e38e8b92ac57990767248498b01570ea67c5d7fa"
+      "nonce": "f45f8abb63961207cc4721d9b7bfb6ed",
+      "commit": "be2487d67d5c81d33fa62a0bd4bd5d5de4eb9fe683feeab8c0769f1afd6d7c9c"
     },
     {
       "payload": {
@@ -242,13 +242,13 @@
           "llm_prompt": "",
           "llm_reasoning": "saying nothing that narrows the board",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=4.81 containment=48.0 walls_left=14"
+          "move_rationale": "pressure=4.71 containment=48.0 walls_left=14"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.488,
+        "opponent_trust": 0.492,
         "claims_capture": false,
         "capture_claim": [
           1,
@@ -256,20 +256,20 @@
         ],
         "claim_response": null
       },
-      "nonce": "9a118f2ba4d499242d472290145b0db7",
-      "commit": "a64a81565b52fe76684fca15c1722694e9044a9649c66dd7c275fc5fd4b06927"
+      "nonce": "abdf8e6136fb655d5354e1bb3d924f7c",
+      "commit": "f26b8a7d3c2d62b5a278c2a188cb23336cd57756bd728aad3cd443fa7da4564d"
     },
     {
       "payload": {
         "step": 3,
         "role": "police",
-        "state": "grid=7x7;self=[2, 1];barriers=[]",
+        "state": "grid=7x7;self=[1, 2];barriers=[]",
         "position": [
-          2,
-          1
+          1,
+          2
         ],
-        "move": "S",
-        "action": "MOVE:S",
+        "move": "E",
+        "action": "MOVE:E",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -278,34 +278,34 @@
           "llm_prompt": "",
           "llm_reasoning": "saying nothing that narrows the board",
           "bluff_classification": "truth",
-          "move_rationale": "pressure=4.85 containment=48.0 walls_left=14"
+          "move_rationale": "pressure=4.84 containment=48.0 walls_left=14"
         },
         "model": "template-zero-token",
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.426,
+        "opponent_trust": 0.441,
         "claims_capture": false,
         "capture_claim": [
-          2,
-          1
+          1,
+          2
         ],
         "claim_response": null
       },
-      "nonce": "1353d02d6dcf1c18621fb54ab4ee72bd",
-      "commit": "f5d26baa9461b8b643247c06d7741e4319a708daa06bbee5498c93a1496623c3"
+      "nonce": "30bd47e2356b43658383fd15a47bcd1d",
+      "commit": "4ce4b60c6d86e572d1cfe57012925b578204ee8f7fa70fd3d1d1c360180584bf"
     },
     {
       "payload": {
         "step": 4,
         "role": "police",
-        "state": "grid=7x7;self=[3, 1];barriers=[]",
+        "state": "grid=7x7;self=[1, 3];barriers=[]",
         "position": [
-          3,
-          1
+          1,
+          3
         ],
-        "move": "S",
-        "action": "MOVE:S",
+        "move": "E",
+        "action": "MOVE:E",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -320,32 +320,32 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.4,
+        "opponent_trust": 0.409,
         "claims_capture": false,
         "capture_claim": [
-          3,
-          1
+          1,
+          3
         ],
         "claim_response": null
       },
-      "nonce": "5bd48ddaca50b886bdf766746772b154",
-      "commit": "35755b99bfbe2ec390c5a77694c214d3255479b0be70c410d1e51607feea62f7"
+      "nonce": "a7c49ede7b0ea86b54976a00ce5d9f43",
+      "commit": "b00db109b5ba572a8296b78f806612a570948ebfcfa39d8b9176902f30759c3b"
     },
     {
       "payload": {
         "step": 5,
         "role": "police",
-        "state": "grid=7x7;self=[3, 2];barriers=[]",
+        "state": "grid=7x7;self=[2, 3];barriers=[]",
         "position": [
-          3,
-          2
+          2,
+          3
         ],
-        "move": "E",
-        "action": "MOVE:E",
+        "move": "S",
+        "action": "MOVE:S",
         "barrier_placed": null,
         "intent": "lie",
         "verdict": "lie",
-        "hint": "Sweeping around gramercy, you left more of a trail than you think.",
+        "hint": "Sweeping around soho, you left more of a trail than you think.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "naming a decoy sector (urgency 0.20)",
@@ -356,25 +356,25 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.367,
+        "opponent_trust": 0.366,
         "claims_capture": false,
         "capture_claim": [
-          3,
-          2
+          2,
+          3
         ],
         "claim_response": null
       },
-      "nonce": "489ec7d12964047c8591f46cb9624696",
-      "commit": "3e428b4c13b8d38a406e00e2f34eb3a97e25ab065a787e4a10fd6a3ec3c1d40d"
+      "nonce": "1a08de500316f0d5f7bb57f3d9f4ba12",
+      "commit": "39bfe8bf045babb5a62b3fdeb7051db939a07a8a9b2cfdbfe5bf8db9aa057411"
     },
     {
       "payload": {
         "step": 6,
         "role": "police",
-        "state": "grid=7x7;self=[3, 3];barriers=[]",
+        "state": "grid=7x7;self=[2, 4];barriers=[]",
         "position": [
-          3,
-          3
+          2,
+          4
         ],
         "move": "E",
         "action": "MOVE:E",
@@ -392,25 +392,25 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.328,
+        "opponent_trust": 0.333,
         "claims_capture": false,
         "capture_claim": [
-          3,
-          3
+          2,
+          4
         ],
         "claim_response": null
       },
-      "nonce": "0d1a175c6fca0851996f59644f1d3f20",
-      "commit": "82cff102de52da4e17538ab160f9663e989209f96ae6d38e41c168323e408887"
+      "nonce": "d5be65d603eba243532c1014383d178b",
+      "commit": "5e386b843002f8bfc4e5eed1b0ffa1b9fa2a21396ecbeed188b0ca534790a84a"
     },
     {
       "payload": {
         "step": 7,
         "role": "police",
-        "state": "grid=7x7;self=[4, 3];barriers=[]",
+        "state": "grid=7x7;self=[3, 4];barriers=[]",
         "position": [
-          4,
-          3
+          3,
+          4
         ],
         "move": "S",
         "action": "MOVE:S",
@@ -428,32 +428,32 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.299,
+        "opponent_trust": 0.302,
         "claims_capture": false,
         "capture_claim": [
-          4,
-          3
+          3,
+          4
         ],
         "claim_response": null
       },
-      "nonce": "a05f90e5a45b87c7f8fc8f23eac8e4cf",
-      "commit": "a7ed0eb793ef7c66dc4104ee04993e791518eec15e9dc8a4816e2bf75ac5a376"
+      "nonce": "ac810c1c4513bed30e4d56c9c278c173",
+      "commit": "8d7f32d8e7dbfd72c06a3930a13a50b34eb8b38d2feddb913e8a9c6182edcf5d"
     },
     {
       "payload": {
         "step": 8,
         "role": "police",
-        "state": "grid=7x7;self=[5, 3];barriers=[]",
+        "state": "grid=7x7;self=[3, 5];barriers=[]",
         "position": [
-          5,
-          3
+          3,
+          5
         ],
-        "move": "S",
-        "action": "MOVE:S",
+        "move": "E",
+        "action": "MOVE:E",
         "barrier_placed": null,
         "intent": "lie",
         "verdict": "lie",
-        "hint": "I am closing around yankee; the doors are shutting.",
+        "hint": "I am closing around highline; the doors are shutting.",
         "prompt_discussion": {
           "llm_prompt": "",
           "llm_reasoning": "naming a decoy sector (urgency 0.31)",
@@ -464,28 +464,28 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.299,
+        "opponent_trust": 0.302,
         "claims_capture": false,
         "capture_claim": [
-          5,
-          3
+          3,
+          5
         ],
         "claim_response": null
       },
-      "nonce": "d986ccc1c34d05e0894e3ab73c409afd",
-      "commit": "658ffdcbfc6686700b4cc73906c84eff192e7b76d426bc4c431d243b55cc7e1a"
+      "nonce": "bbf1b1f17e2fc9ce4ccfc23e39ef6d0f",
+      "commit": "41c0b295020788d7439400f9de1f8a0a3c2d53ef9f290a34cb7a4723c13abb09"
     },
     {
       "payload": {
         "step": 9,
         "role": "police",
-        "state": "grid=7x7;self=[5, 4];barriers=[]",
+        "state": "grid=7x7;self=[4, 5];barriers=[]",
         "position": [
-          5,
-          4
+          4,
+          5
         ],
-        "move": "E",
-        "action": "MOVE:E",
+        "move": "S",
+        "action": "MOVE:S",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -500,28 +500,28 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.299,
+        "opponent_trust": 0.302,
         "claims_capture": false,
         "capture_claim": [
-          5,
-          4
+          4,
+          5
         ],
         "claim_response": null
       },
-      "nonce": "60e435fc55068b8e78550dfa9897bfc2",
-      "commit": "2be8129340545b359d5b03e4f5ca1a22e90a473324ff2a2e91536da078250088"
+      "nonce": "598dd1f6b036a3085ff5a1abc5082ab0",
+      "commit": "a91f2314a50a3ae57c7cae4da41773a3b7e5038bc85ce376519fddc4e1e4a8ef"
     },
     {
       "payload": {
         "step": 10,
         "role": "police",
-        "state": "grid=7x7;self=[6, 4];barriers=[]",
+        "state": "grid=7x7;self=[4, 6];barriers=[]",
         "position": [
-          6,
-          4
+          4,
+          6
         ],
-        "move": "S",
-        "action": "MOVE:S",
+        "move": "E",
+        "action": "MOVE:E",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -536,28 +536,28 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.299,
+        "opponent_trust": 0.302,
         "claims_capture": false,
         "capture_claim": [
-          6,
-          4
+          4,
+          6
         ],
         "claim_response": null
       },
-      "nonce": "9f8aca60cc30e669f56d72706e907bc6",
-      "commit": "bdb3172bbe0d65cc4ea1c37c3ab01933bf0d171f572ce61e939576f75705930f"
+      "nonce": "3c1e7fcfde38dfabc2e70a197527ea2b",
+      "commit": "5f00be699567175ef2ef1515c71d70ad92a2290c68e1e770c0d8d5b97a041bb7"
     },
     {
       "payload": {
         "step": 11,
         "role": "police",
-        "state": "grid=7x7;self=[6, 5];barriers=[]",
+        "state": "grid=7x7;self=[5, 6];barriers=[]",
         "position": [
-          6,
-          5
+          5,
+          6
         ],
-        "move": "E",
-        "action": "MOVE:E",
+        "move": "S",
+        "action": "MOVE:S",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -572,16 +572,16 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.353,
+        "opponent_trust": 0.355,
         "claims_capture": true,
         "capture_claim": [
-          6,
-          5
+          5,
+          6
         ],
         "claim_response": null
       },
-      "nonce": "4f243aa82e91d661e22483ec7fa5d4fd",
-      "commit": "aa0900cd2eeeafa7427c8de034c76313753183036b5cd1f6bb9a5c8ba6e61339"
+      "nonce": "a9c3102fe3284393c05df780e4cf5996",
+      "commit": "b6fe470ab49f2a3b910e2518c5c8d19c442f77d1742c8546625a303abc5b2b7c"
     },
     {
       "payload": {
@@ -592,8 +592,8 @@
           6,
           6
         ],
-        "move": "E",
-        "action": "MOVE:E",
+        "move": "S",
+        "action": "MOVE:S",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -608,7 +608,7 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.324,
+        "opponent_trust": 0.326,
         "claims_capture": true,
         "capture_claim": [
           6,
@@ -616,20 +616,20 @@
         ],
         "claim_response": null
       },
-      "nonce": "a857021b25510437fb32acd77224607e",
-      "commit": "e9fac535c27656c4c62c7908295cbf351100cdef2ea3e07aa5bb747e5080dbb9"
+      "nonce": "9a965ed09cad5bc95dcbf7a079d7167a",
+      "commit": "fa26e513cb16f988afe2ad2fc0dd6d7f771652ff004aa7155173c315e4be9a6a"
     },
     {
       "payload": {
         "step": 13,
         "role": "police",
-        "state": "grid=7x7;self=[6, 5];barriers=[]",
+        "state": "grid=7x7;self=[5, 6];barriers=[]",
         "position": [
-          6,
-          5
+          5,
+          6
         ],
-        "move": "W",
-        "action": "MOVE:W",
+        "move": "N",
+        "action": "MOVE:N",
         "barrier_placed": null,
         "intent": "truth",
         "verdict": "truth",
@@ -644,21 +644,21 @@
         "tokens_step": 0,
         "tokens_total": 0,
         "response_seconds": 0.0,
-        "opponent_trust": 0.324,
+        "opponent_trust": 0.326,
         "claims_capture": true,
         "capture_claim": [
-          6,
-          5
+          5,
+          6
         ],
         "claim_response": null
       },
-      "nonce": "2faaae09981dca4b3f33e4a563315aa4",
-      "commit": "8e15a54c5134cc3d53151b617b9830602db38536b9c9f689bd27ec7b411218a0"
+      "nonce": "1d1537902e434859969f87e65e681e8a",
+      "commit": "4390024ee0ef2f8d79afab152f754f460a53613efc3e03f752554e75e034d086"
     }
   ],
   "mutual_agreement": {
     "opponent_group_id": "aviayeli",
-    "sha256": "8430666e915ed6f3e1435c07ce3921db92d5baba3c6f8d0a1ba5f90f2dcc0782",
+    "sha256": "a1e412633b8e0f641221e4228d5c0432213e0476fd8d2cf90b0f08e41e7f1b48",
     "confirmed": true
   }
 }
