@@ -61,6 +61,50 @@ FLOORS = {
 WARMUP_EXEMPT = {("network_and_league", "num_games")}
 
 
+#: Config artifacts are named ``config_<game_id>_g<NN>.json``, so a checker
+#: globbing ``game.json`` never sees them -- the blind spot aviayeli found in
+#: their own checker on 27/08, where 21 files carrying mandated values were
+#: invisible to a test that passed.
+#:
+#: We scan them and we do NOT fail on them, and the reason belongs here rather
+#: than hidden in a glob. A logged config records what was AGREED for a series
+#: already played. Editing it falsifies the record and breaks hashes an
+#: opponent independently verified. A test that FAILED on these would put the
+#: shortest path back to green through rewriting history. Reported, never
+#: enforced.
+ARTIFACT_EXEMPT_REASON = {
+    "SMNGRP05-vs-uoh-ay26-W012": "one-sub-game warm-up; uncounted, never filed",
+    "rival-01-vs-uoh-ag12": "the local reference peer under its own group id",
+    "rival-01-vs-SMNGRP05": "docs/sample-run: the shipped demo bundle, never played for score",
+}
+
+
+def audit_artifacts(roots):
+    """Report -- never enforce -- on logged config artifacts."""
+    findings = []
+    for root in roots:
+        pattern = os.path.join(root, "**", "config_*.json")
+        for path in sorted(glob.glob(pattern, recursive=True)):
+            try:
+                with open(path, encoding="utf-8") as handle:
+                    terms = json.load(handle)
+            except Exception:  # noqa: BLE001 - a corrupt artifact is not this check's job
+                continue
+            deviations = []
+            for (section, key), want in PERMANENT.items():
+                got = (terms.get(section) or {}).get(key, "<missing>")
+                if got != want:
+                    deviations.append(f"{key}={got!r} vs permanent {want!r}")
+            for (section, key), floor in FLOORS.items():
+                got = (terms.get(section) or {}).get(key)
+                if got is None or got < floor:
+                    deviations.append(f"{key}={got!r} vs floor {floor}")
+            if deviations:
+                findings.append((path, terms.get("game_id"), deviations))
+    return findings
+
+
+
 def audit(roots):
     findings = []
     files = sorted(f for r in roots for f in glob.glob(os.path.join(r, "*", "game.json")))
@@ -91,6 +135,17 @@ def main():
     print(f"deviations              : {len(findings)}")
     for path, field, why in findings:
         print(f"   {path}\n     {field}: {why}")
+
+    artifacts = audit_artifacts(["logs", "docs", "../SMNGRP05-thief/logs"])
+    print()
+    print("logged config artifacts (reported, NOT enforced -- see above):")
+    print(f"  artifacts with deviations : {len(artifacts)}")
+    for path, game_id, deviations in artifacts:
+        why = ARTIFACT_EXEMPT_REASON.get(game_id, "NOT a known exemption -- INVESTIGATE")
+        print(f"   {path}")
+        print(f"     game_id={game_id}  [{why}]")
+        for line in deviations:
+            print(f"       {line}")
     return 1 if findings else 0
 
 
