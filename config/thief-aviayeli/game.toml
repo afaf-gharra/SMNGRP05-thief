@@ -15,10 +15,10 @@ group_name = "SMNGRP05"
 # anyone's message. bb-ai-12 have not published a uid of their own, so there is
 # nothing to reconcile against; if theirs differs when it arrives, that is a
 # signal to stop rather than something to paper over.
-series_id  = "SMNGRP05-vs-bb-ai-12"
-series_uid = "f3116b05-86b2-e873-0422-d6d6b84d3c19"  # re-derived after barriers_max returned to the legal 14.
+series_id  = "SMNGRP05-vs-aviayeli"
+series_uid = "84288aaf-1830-2f1a-8d5c-65bf2c134c80"  # re-derived after barriers_max returned to the legal 14.
 members    = ["Afaf Gharra", "Reem Awawdy"]
-counted_games_played = 7  # The count BEFORE this series: saedshki, uoh-ay26,
+counted_games_played = 8  # The count BEFORE this series: saedshki, uoh-ay26,
 # vibecode, imreeyal, ali-ahm1, yamanagh, anrbj666. The report builder adds one
 # for a counted series, so this would file 8 -- do not "correct" it to 8. Eight
 # is truthful under Dr Segal's ruling of 24/08: always advance the counters,
@@ -33,9 +33,9 @@ mcp_servers = { cop = "https://store-maritime-ser-maintain.trycloudflare.com/mcp
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
-opponent_url           = "https://comic-leverage-paprika.ngrok-free.dev/mcp"  # single endpoint, both roles
+opponent_url           = "https://symphony-vista-neo-rational.trycloudflare.com/mcp"  # single endpoint, both roles
 # alternate every sub-game, so a single fixed URL would spend half the series
-opponent_urls = { cop = "https://comic-leverage-paprika.ngrok-free.dev/mcp", thief = "https://comic-leverage-paprika.ngrok-free.dev/mcp" }
+opponent_urls = { cop = "https://symphony-vista-neo-rational.trycloudflare.com/mcp", thief = "https://task-plastic-micro-gates.trycloudflare.com/mcp" }  # two cloudflared doors, one process per role
 turn_timeout_seconds   = 180                           # DeadlineTracker: opponent silence budget
 poll_interval_seconds  = 0.5
 connect_timeout_seconds = 1800
@@ -132,7 +132,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "afafgharra000@gmail.com"   # DISARMED after filing, 27/08 01:47. The counted series is PLAYED and FILED; the lecturer's address must never return to this line.
+recipient = "afafgharra000@gmail.com"   # FRIENDLY: ourselves ALONE. The lecturer's address belongs on no line in this file.
 # The league address ALONE. Nobody CC'd, not bb-ai-12 and not ourselves: the
 # lecturer receives exactly one report per team with nothing else on the line,
 # and rule 35 reads the two teams' filings as a pair. Authorised by Dr Segal on
@@ -163,7 +163,7 @@ sender    = "me"
 # never reaches for one. Symmetric, so neither side is handicapped.
 series_consensus = false   # bb-ai-12 do not implement it; never send an unknown
 #                            key to a peer that may refuse unknown keys.
-counted       = false  # DISARMED after filing. The one counted meeting with bb-ai-12 is PLAYED and FILED (47-47 tie, 27/08, message id 1a04041fd1dee728). Rule 52 forbids a rematch, so nothing may ever arm this again.
+counted       = false  # FRIENDLY. Nothing is reported. Rule 52 untouched: the one counted meeting with aviayeli stays available afterwards.
 #                         counted meeting per pairing and we have never had one
 #                         with bb-ai-12: our seven filed opponents are saedshki,
 #                         uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1 and
@@ -185,7 +185,7 @@ counted       = false  # DISARMED after filing. The one counted meeting with bb-
 #                         evidence the physics did match. Named here rather than
 #                         left as a stale objection in a comment.
 #                         DISARM TO false IMMEDIATELY AFTER THE SERIES.
-first_meeting = true    # first meeting with bb-ai-12. Irrelevant while counted is
+first_meeting = true   # First meeting with aviayeli. Irrelevant while counted is false.
 #                         false -- diversity_reward applies to counted play only --
 #                         but recorded truthfully rather than left wrong.
 # Declared physics, sent to them in writing so a mismatch surfaces before move one
