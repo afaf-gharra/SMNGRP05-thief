@@ -29,7 +29,7 @@ repos      = { cop = "https://github.com/afaf-gharra/SMNGRP05-police", thief = "
 # ngrok agent rather than copied forward from a previous opponent's config --
 # a stale URL here is how we once told a peer their tunnel was down when it was
 # ours that had moved.
-mcp_servers = { cop = "https://store-maritime-ser-maintain.trycloudflare.com/mcp", thief = "https://store-maritime-ser-maintain.trycloudflare.com/mcp" }
+mcp_servers = { cop = "https://meetings-compound-hospitality-three.trycloudflare.com/mcp", thief = "https://meetings-compound-hospitality-three.trycloudflare.com/mcp" }  # one process, one port, one tunnel: they dial this whichever role they play.
 [network]
 host                   = "0.0.0.0"                     # bind wide so a tunnel can reach us
 my_port                = 8801                          # MY MCP server port
@@ -132,7 +132,7 @@ timeout_seconds        = 60
 
 [email]
 enabled   = true
-recipient = "afafgharra000@gmail.com"   # FRIENDLY: ourselves ALONE. The lecturer's address belongs on no line in this file.
+recipient = "rmisegal+uoh26finalgame@gmail.com"   # *** ARMED - COUNTED *** league address ALONE. DISARM IMMEDIATELY AFTER FILING.
 # The league address ALONE. Nobody CC'd, not bb-ai-12 and not ourselves: the
 # lecturer receives exactly one report per team with nothing else on the line,
 # and rule 35 reads the two teams' filings as a pair. Authorised by Dr Segal on
@@ -163,7 +163,7 @@ sender    = "me"
 # never reaches for one. Symmetric, so neither side is handicapped.
 series_consensus = false   # bb-ai-12 do not implement it; never send an unknown
 #                            key to a peer that may refuse unknown keys.
-counted       = false  # FRIENDLY. Nothing is reported. Rule 52 untouched: the one counted meeting with aviayeli stays available afterwards.
+counted       = true   # *** ARMED - COUNTED *** Rule 52: our one counted meeting with aviayeli. Files games_played_including_this = 9 (counted_games_played 8 + 1). DISARM TO false IMMEDIATELY AFTER FILING.
 #                         counted meeting per pairing and we have never had one
 #                         with bb-ai-12: our seven filed opponents are saedshki,
 #                         uoh-ay26, vibecode, imreeyal, yamanagh, ali-ahm1 and

@@ -1,0 +1,287 @@
+{
+  "_schema": "Final result for the WHOLE match (all sub-games) between two teams. It condenses the per-sub-game logs into a per-group score for each sub-game plus the aggregate the lecturer needs to build the league standings. Static team metadata is not repeated here — it lives in the declaration and is referenced by game_id and group_id. Both teams must agree on this result and each sends its own copy (book ch.9).",
+  "schema_version": "1.1",
+  "report_type": "final_game_result",
+  "game_id": "SMNGRP05-vs-aviayeli",
+  "game_uid": "84288aaf-1830-2f1a-8d5c-65bf2c134c80",
+  "links": {
+    "_remark": "Logical roles, NOT fixed filenames. Every actual filename is derived from the game_id so files from different matches can never be confused. Match-level files (declaration, result) are named <role>_<game_id>.json; per-sub-game files (config, log) are named <role>_<game_id>_g<NN>.json where <NN> is the sub_game_number.",
+    "declaration": "declaration_SMNGRP05-vs-aviayeli.json",
+    "config": "config_SMNGRP05-vs-aviayeli_g<NN>.json",
+    "log": "log_SMNGRP05-vs-aviayeli_g<NN>.json",
+    "result": "result_SMNGRP05-vs-aviayeli.json"
+  },
+  "timezone": "Asia/Jerusalem",
+  "groups": [
+    "SMNGRP05",
+    "aviayeli"
+  ],
+  "num_sub_games": 6,
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "roles": {
+        "SMNGRP05": "thief",
+        "aviayeli": "police"
+      },
+      "started_at": "2026-08-27T17:38:55.954464+00:00",
+      "ended_at": "2026-08-27T17:40:01.894464+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
+        "aviayeli": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "aviayeli": 0
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "aviayeli": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-aviayeli_g01.json",
+        "aviayeli": "aviayeli/log_SMNGRP05-vs-aviayeli_g01.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false,
+        "opponent_present": true,
+        "results_agree": false,
+        "opponent_result_claim": {
+          "outcome": "survival",
+          "steps": 35
+        },
+        "tampering_detected": false
+      }
+    },
+    {
+      "sub_game_number": 2,
+      "roles": {
+        "SMNGRP05": "police",
+        "aviayeli": "thief"
+      },
+      "started_at": "2026-08-27T17:43:49.780483+00:00",
+      "ended_at": "2026-08-27T17:44:37.500483+00:00",
+      "result": "capture",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
+        "aviayeli": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "aviayeli": 0
+      },
+      "score": {
+        "SMNGRP05": 20,
+        "aviayeli": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-aviayeli_g02.json",
+        "aviayeli": "aviayeli/log_SMNGRP05-vs-aviayeli_g02.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false,
+        "opponent_present": true,
+        "results_agree": false,
+        "opponent_result_claim": {
+          "outcome": "capture",
+          "steps": 25
+        },
+        "tampering_detected": false
+      }
+    },
+    {
+      "sub_game_number": 3,
+      "roles": {
+        "SMNGRP05": "thief",
+        "aviayeli": "police"
+      },
+      "started_at": "2026-08-27T17:44:57.477484+00:00",
+      "ended_at": "2026-08-27T17:46:03.737484+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
+        "aviayeli": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "aviayeli": 0
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "aviayeli": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-aviayeli_g03.json",
+        "aviayeli": "aviayeli/log_SMNGRP05-vs-aviayeli_g03.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false,
+        "opponent_present": true,
+        "results_agree": false,
+        "opponent_result_claim": {
+          "outcome": "survival",
+          "steps": 35
+        },
+        "tampering_detected": false
+      }
+    },
+    {
+      "sub_game_number": 4,
+      "roles": {
+        "SMNGRP05": "police",
+        "aviayeli": "thief"
+      },
+      "started_at": "2026-08-27T17:46:23.890435+00:00",
+      "ended_at": "2026-08-27T17:46:36.510435+00:00",
+      "result": "capture",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
+        "aviayeli": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "aviayeli": 0
+      },
+      "score": {
+        "SMNGRP05": 20,
+        "aviayeli": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-aviayeli_g04.json",
+        "aviayeli": "aviayeli/log_SMNGRP05-vs-aviayeli_g04.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false,
+        "opponent_present": true,
+        "results_agree": false,
+        "opponent_result_claim": {
+          "outcome": "capture",
+          "steps": 6
+        },
+        "tampering_detected": false
+      }
+    },
+    {
+      "sub_game_number": 5,
+      "roles": {
+        "SMNGRP05": "thief",
+        "aviayeli": "police"
+      },
+      "started_at": "2026-08-27T17:46:56.577255+00:00",
+      "ended_at": "2026-08-27T17:48:02.887255+00:00",
+      "result": "survival",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
+        "aviayeli": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "aviayeli": 0
+      },
+      "score": {
+        "SMNGRP05": 10,
+        "aviayeli": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-aviayeli_g05.json",
+        "aviayeli": "aviayeli/log_SMNGRP05-vs-aviayeli_g05.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false,
+        "opponent_present": true,
+        "results_agree": false,
+        "opponent_result_claim": {
+          "outcome": "survival",
+          "steps": 35
+        },
+        "tampering_detected": false
+      }
+    },
+    {
+      "sub_game_number": 6,
+      "roles": {
+        "SMNGRP05": "police",
+        "aviayeli": "thief"
+      },
+      "started_at": "2026-08-27T17:48:22.722738+00:00",
+      "ended_at": "2026-08-27T17:48:48.422738+00:00",
+      "result": "capture",
+      "winner_group": "SMNGRP05",
+      "tie": false,
+      "github_commit": {
+        "SMNGRP05": "30d58ef418134a77c81033d753e696f2bb699d77",
+        "aviayeli": "declared-in-their-own-report"
+      },
+      "tokens": {
+        "SMNGRP05": 0,
+        "aviayeli": 0
+      },
+      "score": {
+        "SMNGRP05": 20,
+        "aviayeli": 5
+      },
+      "log_files": {
+        "SMNGRP05": "SMNGRP05/log_SMNGRP05-vs-aviayeli_g06.json",
+        "aviayeli": "aviayeli/log_SMNGRP05-vs-aviayeli_g06.json"
+      },
+      "audit": {
+        "log_verified": true,
+        "tampered": false,
+        "opponent_present": true,
+        "results_agree": false,
+        "opponent_result_claim": {
+          "outcome": "capture",
+          "steps": 13
+        },
+        "tampering_detected": false
+      }
+    }
+  ],
+  "final_result": {
+    "total_score": {
+      "SMNGRP05": 90,
+      "aviayeli": 30
+    },
+    "sub_games_won": {
+      "SMNGRP05": 6,
+      "aviayeli": 0
+    },
+    "ties": 0,
+    "winner_group": "SMNGRP05",
+    "series_tie": false,
+    "tokens_total_series": {
+      "SMNGRP05": 0,
+      "aviayeli": 0
+    },
+    "games_played_including_this": {
+      "SMNGRP05": 8,
+      "aviayeli": 0
+    },
+    "first_meeting_between_groups": true,
+    "diversity_reward_applied": {
+      "SMNGRP05": false,
+      "aviayeli": false
+    }
+  },
+  "mutual_agreement": {
+    "sha256": "25631e300509b57b6288df7fe5f1f561385f852c41281661db938dc5e652a614",
+    "confirmed": true,
+    "series_consensus_sha": "44bcbf667e76ea957be5895e60b3f246620b86ed5ee3a0046eeb3826c95d501b"
+  }
+}
