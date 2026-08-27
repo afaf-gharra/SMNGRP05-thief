@@ -61,10 +61,27 @@ FLOORS = {
 WARMUP_EXEMPT = {("network_and_league", "num_games")}
 
 
-#: Config artifacts are named ``config_<game_id>_g<NN>.json``, so a checker
-#: globbing ``game.json`` never sees them -- the blind spot aviayeli found in
-#: their own checker on 27/08, where 21 files carrying mandated values were
-#: invisible to a test that passed.
+#: The sections a terms-bearing artifact carries. We select files by STRUCTURE
+#: rather than by filename, which closes two holes at once -- both of them
+#: found by aviayeli in their own checker on 27/08 and passed to us unprompted:
+#:
+#: * a checker globbing ``game.json`` never sees ``config_<game_id>_g<NN>.json``;
+#:   21 of their files carrying mandated values were invisible to a test that
+#:   was passing. Ours had the identical hole over 205 artifacts.
+#: * their first structural draft ran over a *declaration* -- identity, members,
+#:   hardware -- which carries none of these sections, and reported 22 spurious
+#:   "absent" findings. Noise disables a tool exactly as thoroughly as silence.
+#:
+#: Requiring four of the five sections selects real terms and rejects both.
+TERMS_SECTIONS = frozenset({
+    "board_and_agents", "movement_and_barriers", "scoring",
+    "pheromones", "network_and_league",
+})
+
+
+def _is_terms(document) -> bool:
+    """Structurally a terms-bearing artifact, whatever it happens to be named."""
+    return isinstance(document, dict) and len(TERMS_SECTIONS & set(document)) >= 4
 #:
 #: We scan them and we do NOT fail on them, and the reason belongs here rather
 #: than hidden in a glob. A logged config records what was AGREED for a series
@@ -83,12 +100,14 @@ def audit_artifacts(roots):
     """Report -- never enforce -- on logged config artifacts."""
     findings = []
     for root in roots:
-        pattern = os.path.join(root, "**", "config_*.json")
+        pattern = os.path.join(root, "**", "*.json")
         for path in sorted(glob.glob(pattern, recursive=True)):
             try:
                 with open(path, encoding="utf-8") as handle:
                     terms = json.load(handle)
             except Exception:  # noqa: BLE001 - a corrupt artifact is not this check's job
+                continue
+            if not _is_terms(terms):
                 continue
             deviations = []
             for (section, key), want in PERMANENT.items():
